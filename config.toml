@@ -94,19 +94,19 @@ url = "https://mirror.rosa.ru/rosa/rosa2021.1/iso/ROSA.FRESH.12/server/ROSA.FRES
 # Навигация
 [[extra.nav]]
 name = "Главная"
-url = "/"
+url = "@/_index.md"
 
 [[extra.nav]]
 name = "Загрузить"
-url = "/download/"
+url = "@/download/_index.md"
 
 [[extra.nav]]
 name = "Блог"
-url = "/blog/"
+url = "@/blog/_index.md"
 
 [[extra.nav]]
 name = "Документация"
-url = "/docs/"
+url = "@/docs/_index.md"
 
 [[extra.nav]]
 name = "Сообщество"

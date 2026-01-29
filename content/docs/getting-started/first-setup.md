@@ -73,5 +73,5 @@ sudo dnf install timeshift
 
 ## Следующие шаги
 
-- [Управление пакетами](/docs/guides/package-management/)
-- [Основы терминала](/docs/guides/terminal-basics/)
+- [Управление пакетами](@/docs/guides/package-management.md)
+- [Основы терминала](@/docs/guides/terminal-basics.md)

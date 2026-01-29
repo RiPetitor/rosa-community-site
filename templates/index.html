@@ -12,7 +12,10 @@
         <button class="btn btn-primary" data-open-modal="download-modal">
             Скачать РОСА Linux
         </button>
-        <a href="/docs/getting-started/" class="btn btn-secondary">
+        <a
+            href="{{ get_url(path='@/docs/getting-started/_index.md') }}"
+            class="btn btn-secondary"
+        >
             Начать работу
         </a>
     </div>
@@ -76,22 +79,26 @@
                 <h3 class="sidebar-block-title">★ Быстрые ссылки</h3>
                 <ul>
                     <li>
-                        <a href="/docs/getting-started/installation/"
+                        <a
+                            href="{{ get_url(path='@/docs/getting-started/installation.md') }}"
                             >Руководство по установке</a
                         >
                     </li>
                     <li>
-                        <a href="/docs/getting-started/first-setup/"
+                        <a
+                            href="{{ get_url(path='@/docs/getting-started/first-setup.md') }}"
                             >Первые шаги</a
                         >
                     </li>
                     <li>
-                        <a href="/docs/guides/package-management/"
+                        <a
+                            href="{{ get_url(path='@/docs/guides/package-management.md') }}"
                             >Установка программ</a
                         >
                     </li>
                     <li>
-                        <a href="/docs/guides/terminal-basics/"
+                        <a
+                            href="{{ get_url(path='@/docs/guides/terminal-basics.md') }}"
                             >Основы терминала</a
                         >
                     </li>
@@ -230,7 +237,11 @@
     </div>
 
     <div class="text-center mt-3">
-        <a href="/blog/" class="btn btn-secondary">Все новости</a>
+        <a
+            href="{{ get_url(path='@/blog/_index.md') }}"
+            class="btn btn-secondary"
+            >Все новости</a
+        >
     </div>
 </section>
 

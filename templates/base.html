@@ -37,7 +37,10 @@
 
         {% block extra_head %}{% endblock %}
     </head>
-    <body class="{% block body_class %}{% endblock %}">
+    <body
+        class="{% block body_class %}{% endblock %}"
+        data-base-url="{{ config.base_url }}"
+    >
         <header class="newspaper-header">
             <div class="header-ornament top"></div>
 
@@ -49,7 +52,7 @@
             <div class="masthead">
                 <div class="soviet-star">★</div>
                 <h1 class="site-title">
-                    <a href="{{ get_url(path='/') }}"
+                    <a href="{{ get_url(path='@/_index.md') }}"
                         >{{ config.extra.site_name | upper }}</a
                     >
                 </h1>
@@ -61,7 +64,9 @@
                 <ul>
                     {% for item in config.extra.nav %}
                     <li>
-                        <a href="{{ item.url }}">{{ item.name | upper }}</a>
+                        <a href="{{ get_url(path=item.url) }}"
+                            >{{ item.name | upper }}</a
+                        >
                     </li>
                     {% endfor %}
                 </ul>
@@ -79,9 +84,21 @@
                 <div class="footer-col">
                     <h4>Ресурсы</h4>
                     <ul>
-                        <li><a href="/docs/">Документация</a></li>
-                        <li><a href="/blog/">Новости</a></li>
-                        <li><a href="/download/">Загрузить</a></li>
+                        <li>
+                            <a href="{{ get_url(path='@/docs/_index.md') }}"
+                                >Документация</a
+                            >
+                        </li>
+                        <li>
+                            <a href="{{ get_url(path='@/blog/_index.md') }}"
+                                >Новости</a
+                            >
+                        </li>
+                        <li>
+                            <a href="{{ get_url(path='@/download/_index.md') }}"
+                                >Загрузить</a
+                            >
+                        </li>
                     </ul>
                 </div>
 
@@ -118,8 +135,16 @@
                                 >Официальный сайт</a
                             >
                         </li>
-                        <li><a href="/about/">О РОСА Linux</a></li>
-                        <li><a href="/community/">Сообщество</a></li>
+                        <li>
+                            <a href="{{ get_url(path='@/about.md') }}"
+                                >О РОСА Linux</a
+                            >
+                        </li>
+                        <li>
+                            <a href="{{ get_url(path='@/community.md') }}"
+                                >Сообщество</a
+                            >
+                        </li>
                     </ul>
                 </div>
             </div>

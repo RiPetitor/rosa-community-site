@@ -62,5 +62,5 @@ chmod +x скрипт.sh
 
 ## Следующие шаги
 
-- [Управление пакетами](/docs/guides/package-management/)
+- [Управление пакетами](@/docs/guides/package-management.md)
 - Bash-скрипты и автоматизация

@@ -7,7 +7,11 @@ truncate(length=160)) }}{% endblock %} {% block content %}
         <article class="blog-post">
             <header class="post-header">
                 <nav class="blog-nav">
-                    <a href="/blog/" class="nav-btn">← ко всем статьям</a>
+                    <a
+                        href="{{ get_url(path='@/blog/_index.md') }}"
+                        class="nav-btn"
+                        >← ко всем статьям</a
+                    >
                 </nav>
 
                 {% if page.taxonomies.categories %}

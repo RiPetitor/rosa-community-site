@@ -9,7 +9,9 @@ get_taxonomy(kind="tags") %}
 
     {% if categories and categories.items %}
     <nav class="blog-nav">
-        <a href="/blog/" class="nav-btn active">Все</a>
+        <a href="{{ get_url(path='@/blog/_index.md') }}" class="nav-btn active"
+            >Все</a
+        >
         {% for term in categories.items %}
         <a href="{{ term.permalink }}" class="nav-btn">{{ term.name }}</a>
         {% endfor %}

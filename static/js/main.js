@@ -6,6 +6,22 @@
 (function () {
   "use strict";
 
+  const baseUrl = document.body?.dataset?.baseUrl || "";
+  let basePath = "";
+
+  try {
+    if (baseUrl) basePath = new URL(baseUrl).pathname.replace(/\/$/, "");
+  } catch (err) {
+    basePath = "";
+  }
+
+  const withBasePath = (path) => {
+    if (!path || !path.startsWith("/")) return path;
+    if (!basePath || basePath === "/") return path;
+    if (path.startsWith(basePath + "/") || path === basePath) return path;
+    return `${basePath}${path}`;
+  };
+
   // ==========================================
   // Модальные окна
   // ==========================================
@@ -137,7 +153,9 @@
     if (!input || !resultsEl) return;
 
     const sidebar = input.closest(".docs-sidebar");
-    const indexUrl = input.dataset.searchIndex || "/search_index.json";
+    const indexUrl =
+      input.dataset.searchIndex ||
+      (basePath ? `${basePath}/search_index.json` : "/search_index.json");
     const scope = input.dataset.searchScope || "/docs/";
     let docs = [];
     let indexLoaded = false;
@@ -172,7 +190,11 @@
             if (!res.ok) throw new Error("index fetch failed");
             return res.json();
           })
-          .catch(() => fetch("/search_index.json").then((res) => res.json()))
+          .catch(() =>
+            fetch(
+              basePath ? `${basePath}/search_index.json` : "/search_index.json",
+            ).then((res) => res.json()),
+          )
           .then((data) => {
             buildDocs(data);
             indexLoaded = true;
@@ -243,7 +265,7 @@
 
         const title = document.createElement("a");
         title.className = "search-result-title";
-        title.href = doc.path;
+        title.href = withBasePath(doc.path);
         title.textContent = doc.title;
 
         const path = document.createElement("span");
