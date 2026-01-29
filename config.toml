@@ -1,7 +1,7 @@
 # Конфигурация сайта ROSA Linux Community
 # Стиль: Советская газета
 
-base_url = "https://rosa-linux.community"
+base_url = "https://rcom.github.io/rosa-community-site"
 title = "РОСА Linux"
 description = "Народная операционная система - свободная, надёжная, отечественная"
 default_language = "ru"
