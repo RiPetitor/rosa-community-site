@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Установка - РОСА GNU&#x2F;Linux</title>
+        <meta
+            name="description"
+            content="Народная операционная система - свободная, надёжная, отечественная"
+        />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Old+Standard+TT:wght@400;700&family=PT+Sans+Narrow:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap"
+            rel="stylesheet"
+        />
+
+        <link rel="stylesheet" href="https://rosa-linux.community/style.css" />
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="https://rosa-linux.community/images/favicon.svg"
+        />
+        <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="RSS"
+            href="https://rosa-linux.community/rss.xml"
+        />
+        <link
+            rel="alternate"
+            type="application/atom+xml"
+            title="Atom"
+            href="https://rosa-linux.community/atom.xml"
+        />
+
+        
+    </head>
+    <body class="docs-page">
+        <header class="newspaper-header">
+            <div class="header-ornament top"></div>
+
+            <div class="header-meta">
+                <span class="date">30 January 2026</span>
+                <span class="issue">№ 1 (2026)</span>
+            </div>
+
+            <div class="masthead">
+                <div class="soviet-star">★</div>
+                <h1 class="site-title">
+                    <a href="https://rosa-linux.community"
+                        >РОСА GNU&#x2F;LINUX</a
+                    >
+                </h1>
+                <p class="site-subtitle">газета советского программиста</p>
+                <div class="soviet-star">★</div>
+            </div>
+
+            <nav class="main-nav">
+                <ul>
+                    
+                    <li>
+                        <a href="&#x2F;">ГЛАВНАЯ</a>
+                    </li>
+                    
+                    <li>
+                        <a href="&#x2F;download&#x2F;">ЗАГРУЗИТЬ</a>
+                    </li>
+                    
+                    <li>
+                        <a href="&#x2F;blog&#x2F;">БЛОГ</a>
+                    </li>
+                    
+                    <li>
+                        <a href="&#x2F;docs&#x2F;">ДОКУМЕНТАЦИЯ</a>
+                    </li>
+                    
+                    <li>
+                        <a href="&#x2F;community&#x2F;">СООБЩЕСТВО</a>
+                    </li>
+                    
+                    <li>
+                        <a href="&#x2F;about&#x2F;">О ПРОЕКТЕ</a>
+                    </li>
+                    
+                </ul>
+            </nav>
+
+            <div class="header-ornament bottom"></div>
+        </header>
+
+        <main class="newspaper-content">
+<div class="docs-layout">
+    <aside class="docs-sidebar">
+        
+        <div class="docs-search">
+            <input
+                type="search"
+                placeholder="Поиск..."
+                aria-label="Поиск"
+                data-search-input
+                data-search-index="https://rosa-linux.community/search_index.ru.json"
+                data-search-scope="/docs/"
+            />
+            <kbd>/</kbd>
+        </div>
+        <div
+            class="docs-search-results"
+            data-search-results
+            hidden
+            aria-live="polite"
+        ></div>
+
+        <nav class="docs-nav">
+              
+            <div class="nav-group">
+                <h4 class="nav-group-title">Начало работы</h4>
+                <ul>
+                    
+                    <li>
+                        <a href="https:&#x2F;&#x2F;rosa-linux.community&#x2F;docs&#x2F;getting-started&#x2F;installation&#x2F;"
+                            >Установка</a
+                        >
+                    </li>
+                    
+                    <li>
+                        <a href="https:&#x2F;&#x2F;rosa-linux.community&#x2F;docs&#x2F;getting-started&#x2F;first-setup&#x2F;"
+                            >Первоначальная настройка</a
+                        >
+                    </li>
+                    
+                </ul>
+            </div>
+             
+            <div class="nav-group">
+                <h4 class="nav-group-title">Руководства</h4>
+                <ul>
+                    
+                    <li>
+                        <a href="https:&#x2F;&#x2F;rosa-linux.community&#x2F;docs&#x2F;guides&#x2F;package-management&#x2F;"
+                            >Управление пакетами</a
+                        >
+                    </li>
+                    
+                    <li>
+                        <a href="https:&#x2F;&#x2F;rosa-linux.community&#x2F;docs&#x2F;guides&#x2F;terminal-basics&#x2F;"
+                            >Основы терминала</a
+                        >
+                    </li>
+                    
+                </ul>
+            </div>
+            
+        </nav>
+    </aside>
+
+    <main class="docs-main">
+        <div class="docs-content">
+            <header class="docs-header">
+                <nav class="docs-breadcrumb">
+                    <a href="/docs/">Документация</a>
+                </nav>
+                <h1>Установка</h1>
+                
+                <p class="docs-description">Пошаговое руководство по установке ROSA Linux</p>
+                
+            </header>
+
+            <div class="docs-body"><p>Эта страница поможет вам установить ROSA Linux на компьютер или ноутбук.</p>
+<h2 id="sistemnye-trebovaniia">Системные требования</h2>
+<table><thead><tr><th>Компонент</th><th>Минимум</th><th>Рекомендуется</th></tr></thead><tbody>
+<tr><td>Процессор</td><td>64-bit (x86_64)</td><td>Многоядерный</td></tr>
+<tr><td>ОЗУ</td><td>2 ГБ</td><td>4 ГБ и более</td></tr>
+<tr><td>Диск</td><td>20 ГБ</td><td>50 ГБ и более</td></tr>
+<tr><td>Видео</td><td>Совместимое с Linux</td><td>С поддержкой 3D</td></tr>
+</tbody></table>
+<h2 id="skachivanie-obraza">Скачивание образа</h2>
+<ol>
+<li>Перейдите на <a href="/download/">страницу загрузки</a>.</li>
+<li>Выберите редакцию (ROSA Fresh, LTS или Server).</li>
+<li>Скачайте ISO-образ.</li>
+<li>Проверьте контрольную сумму, чтобы убедиться в целостности файла.</li>
+</ol>
+<h2 id="sozdanie-zagruzochnogo-nositelia">Создание загрузочного носителя</h2>
+<h3 id="linux">Linux</h3>
+<p>Используйте <code>dd</code>:</p>
+<pre><code data-lang="bash">sudo dd if=ROSA.FRESH.iso of=/dev/sdX bs=4M status=progress
+sync
+</code></pre>
+<p>Замените <code>/dev/sdX</code> на устройство вашей флешки (например, <code>/dev/sdb</code>).</p>
+<h3 id="windows">Windows</h3>
+<p>Рекомендуемые программы:</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer external" target="_blank" href="https://rufus.ie/">Rufus</a> — простой и надёжный.</li>
+<li><a rel="noopener nofollow noreferrer external" target="_blank" href="https://etcher.balena.io/">balenaEtcher</a> — кроссплатформенный.</li>
+</ul>
+<h3 id="macos">macOS</h3>
+<pre><code data-lang="bash">diskutil list  # найдите вашу флешку
+sudo diskutil unmountDisk /dev/diskN
+sudo dd if=ROSA.FRESH.iso of=/dev/rdiskN bs=4m
+</code></pre>
+<h2 id="ustanovka">Установка</h2>
+<p>После загрузки с USB вы увидите рабочий стол ROSA Linux в режиме Live. Это
+позволяет протестировать систему без установки и запустить установщик.</p>
+<h3 id="zapusk-ustanovshchika">Запуск установщика</h3>
+<p>Дважды кликните <strong>«Установить ROSA»</strong> на рабочем столе.</p>
+<h3 id="osnovnye-shagi">Основные шаги</h3>
+<ol>
+<li><strong>Язык и раскладка</strong> — выберите русский интерфейс и нужную раскладку.</li>
+<li><strong>Часовой пояс</strong> — укажите свой регион и город.</li>
+<li><strong>Разметка диска</strong> — автоматически или вручную.</li>
+<li><strong>Пользователь</strong> — создайте учётную запись и пароль.</li>
+<li><strong>Подтверждение</strong> — проверьте параметры и начните установку.</li>
+</ol>
+<div class="warning">
+  <div class="title">Внимание</div>
+  Перед изменением разделов сделайте резервную копию важных данных.
+</div>
+<h2 id="posle-ustanovki">После установки</h2>
+<p>Перезагрузите компьютер, извлеките USB-флешку и перейдите к
+<a href="/docs/getting-started/first-setup/">первоначальной настройке</a>.</p>
+<h2 id="vozmozhnye-problemy">Возможные проблемы</h2>
+<h3 id="komp-iuter-ne-zagruzhaetsia-s-usb">Компьютер не загружается с USB</h3>
+<ul>
+<li>Проверьте настройки UEFI/BIOS.</li>
+<li>Отключите Secure Boot.</li>
+<li>Попробуйте другой USB-порт.</li>
+</ul>
+<h3 id="ustanovshchik-ne-vidit-disk">Установщик не видит диск</h3>
+<ul>
+<li>Проверьте подключение накопителя.</li>
+<li>Убедитесь, что диск не зашифрован другой ОС.</li>
+<li>Включите режим AHCI вместо RAID.</li>
+</ul>
+</div>
+
+            <nav class="docs-footer-nav">
+                 
+                <a href="https:&#x2F;&#x2F;rosa-linux.community&#x2F;docs&#x2F;getting-started&#x2F;first-setup&#x2F;" class="nav-link next">
+                    <span class="nav-label">Следующая</span>
+                    <span class="nav-title">Первоначальная настройка</span>
+                </a>
+                
+            </nav>
+        </div>
+
+        
+        <aside class="docs-toc">
+            <div class="toc-container">
+                <h4>На этой странице</h4>
+                <ul>
+                    
+                    <li>
+                        <a href="#sistemnye-trebovaniia">Системные требования</a>
+                        
+                    </li>
+                    
+                    <li>
+                        <a href="#skachivanie-obraza">Скачивание образа</a>
+                        
+                    </li>
+                    
+                    <li>
+                        <a href="#sozdanie-zagruzochnogo-nositelia">Создание загрузочного носителя</a>
+                        
+                        <ul>
+                            
+                            <li><a href="#linux">Linux</a></li>
+                            
+                            <li><a href="#windows">Windows</a></li>
+                            
+                            <li><a href="#macos">macOS</a></li>
+                            
+                        </ul>
+                        
+                    </li>
+                    
+                    <li>
+                        <a href="#ustanovka">Установка</a>
+                        
+                        <ul>
+                            
+                            <li><a href="#zapusk-ustanovshchika">Запуск установщика</a></li>
+                            
+                            <li><a href="#osnovnye-shagi">Основные шаги</a></li>
+                            
+                        </ul>
+                        
+                    </li>
+                    
+                    <li>
+                        <a href="#posle-ustanovki">После установки</a>
+                        
+                    </li>
+                    
+                    <li>
+                        <a href="#vozmozhnye-problemy">Возможные проблемы</a>
+                        
+                        <ul>
+                            
+                            <li><a href="#komp-iuter-ne-zagruzhaetsia-s-usb">Компьютер не загружается с USB</a></li>
+                            
+                            <li><a href="#ustanovshchik-ne-vidit-disk">Установщик не видит диск</a></li>
+                            
+                        </ul>
+                        
+                    </li>
+                    
+                </ul>
+            </div>
+        </aside>
+        
+    </main>
+</div>
+</main>
+
+        <footer class="newspaper-footer">
+            <div class="footer-ornament"></div>
+
+            <div class="footer-columns">
+                <div class="footer-col">
+                    <h4>Ресурсы</h4>
+                    <ul>
+                        <li><a href="/docs/">Документация</a></li>
+                        <li><a href="/blog/">Новости</a></li>
+                        <li><a href="/download/">Загрузить</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Сообщество</h4>
+                    <ul>
+                        <li>
+                            <a href="https:&#x2F;&#x2F;forum.rosa.ru" target="_blank"
+                                >Форум</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="https:&#x2F;&#x2F;t.me&#x2F;rosalinux"
+                                target="_blank"
+                                >Telegram</a
+                            >
+                        </li>
+                        <li>
+                            <a href="https:&#x2F;&#x2F;wiki.rosa.ru" target="_blank"
+                                >Wiki</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>О проекте</h4>
+                    <ul>
+                        <li>
+                            <a
+                                href="https:&#x2F;&#x2F;rosa.ru"
+                                target="_blank"
+                                >Официальный сайт</a
+                            >
+                        </li>
+                        <li><a href="/about/">О РОСА Linux</a></li>
+                        <li><a href="/community/">Сообщество</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="slogan">«Пролетарии всех стран, обновляйтесь!»</p>
+                <p class="copyright">
+                    © 2026 РОСА Linux. Свободное
+                    программное обеспечение.
+                </p>
+                <p class="disclaimer">
+                    Неофициальный сайт сообщества. ROSA Linux — товарный знак
+                    правообладателя.
+                </p>
+            </div>
+        </footer>
+
+        <div id="download-modal" class="modal" aria-hidden="true">
+            <div class="modal-overlay" tabindex="-1" data-close-modal>
+                <div
+                    class="modal-container"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="modal-title"
+                >
+                    <button
+                        class="modal-close"
+                        aria-label="Закрыть"
+                        data-close-modal
+                    >
+                        &times;
+                    </button>
+
+                    <header class="modal-header">
+                        <div class="soviet-emblem">☭</div>
+                        <h2 id="modal-title">ВЫБОР РЕДАКЦИИ</h2>
+                        <p>Выберите подходящую версию операционной системы</p>
+                    </header>
+
+                    <div class="modal-body">
+                        <div class="download-options">
+                            <div class="download-card">
+                                <div class="card-badge">НОВЕЙШАЯ</div>
+                                <h3>ROSA Fresh</h3>
+                                <p class="version">
+                                    Версия 13.1
+                                </p>
+                                <p class="desc">
+                                    Для дома и повседневной работы
+                                </p>
+                                <div class="de-options">
+                                    <a
+                                        href="https:&#x2F;&#x2F;mirror.rosa.ru&#x2F;rosa&#x2F;rosa13&#x2F;iso&#x2F;ROSA.FRESH.13&#x2F;plasma6&#x2F;ROSA.FRESH.PLASMA6.13.1.x86_64.iso"
+                                        class="btn btn-primary"
+                                        >Plasma 6</a
+                                    >
+                                    <a
+                                        href="https:&#x2F;&#x2F;mirror.rosa.ru&#x2F;rosa&#x2F;rosa13&#x2F;iso&#x2F;ROSA.FRESH.13&#x2F;gnome&#x2F;ROSA.FRESH.GNOME.13.1.x86_64.iso"
+                                        class="btn btn-secondary"
+                                        >GNOME</a
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="download-card">
+                                <div class="card-badge">СТАБИЛЬНАЯ</div>
+                                <h3>ROSA Fresh LTS</h3>
+                                <p class="version">
+                                    Версия 12.5.1
+                                </p>
+                                <p class="desc">
+                                    Для тех, кому важна стабильность
+                                </p>
+                                <div class="de-options">
+                                    <a
+                                        href="https:&#x2F;&#x2F;mirror.rosa.ru&#x2F;rosa&#x2F;rosa2021.1&#x2F;iso&#x2F;ROSA.FRESH.12&#x2F;plasma5&#x2F;ROSA.FRESH.PLASMA5.12.5.1.x86_64.iso"
+                                        class="btn btn-primary"
+                                        >Plasma 5</a
+                                    >
+                                    <a
+                                        href="https:&#x2F;&#x2F;mirror.rosa.ru&#x2F;rosa&#x2F;rosa2021.1&#x2F;iso&#x2F;ROSA.FRESH.12&#x2F;gnome&#x2F;ROSA.FRESH.GNOME.12.5.1.x86_64.iso"
+                                        class="btn btn-secondary"
+                                        >GNOME</a
+                                    >
+                                    <div class="de-options-alt">
+                                        <a
+                                            href="https:&#x2F;&#x2F;mirror.rosa.ru&#x2F;rosa&#x2F;rosa2021.1&#x2F;iso&#x2F;ROSA.FRESH.12&#x2F;xfce&#x2F;ROSA.FRESH.XFCE.12.5.1.x86_64.iso"
+                                            class="btn btn-outline btn-small"
+                                            >XFCE 64-bit</a
+                                        >
+                                        <a
+                                            href="https:&#x2F;&#x2F;mirror.rosa.ru&#x2F;rosa&#x2F;rosa2021.1&#x2F;iso&#x2F;ROSA.FRESH.12&#x2F;lxqt&#x2F;ROSA.FRESH.LXQT.12.5.1.x86_64.iso"
+                                            class="btn btn-outline btn-small"
+                                            >LXQt 64-bit</a
+                                        >
+                                        <a
+                                            href="https:&#x2F;&#x2F;mirror.rosa.ru&#x2F;rosa&#x2F;rosa2021.1&#x2F;iso&#x2F;ROSA.FRESH.12&#x2F;lxqt&#x2F;ROSA.FRESH.LXQT.12.5.1.i686.iso"
+                                            class="btn btn-outline btn-small"
+                                            >LXQt 32-bit</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="download-card">
+                                <div class="card-badge">СЕРВЕР</div>
+                                <h3>
+                                    ROSA Fresh Server
+                                </h3>
+                                <p class="version">
+                                    Версия 13.1
+                                </p>
+                                <p class="desc">
+                                    Для серверных задач и лабораторий
+                                </p>
+                                <div class="de-options">
+                                    <a
+                                        href="https:&#x2F;&#x2F;mirror.rosa.ru&#x2F;rosa&#x2F;rosa13&#x2F;iso&#x2F;ROSA.FRESH.13&#x2F;server&#x2F;ROSA.FRESH.SERVER.13.1.x86_64.iso"
+                                        class="btn btn-primary"
+                                        >Server ISO</a
+                                    >
+                                    <a
+                                        href="https:&#x2F;&#x2F;mirror.rosa.ru&#x2F;rosa&#x2F;rosa2021.1&#x2F;iso&#x2F;ROSA.FRESH.12&#x2F;server&#x2F;ROSA.FRESH.SERVER.12.5.1.x86_64.iso"
+                                        class="btn btn-outline"
+                                        >Server 12.5.1</a
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <footer class="modal-footer">
+                        <p>Минимальные требования: 2 ГБ ОЗУ, 20 ГБ на диске</p>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://rosa-linux.community/js/main.js"></script>
+        
+    </body>
+</html>

@@ -1,0 +1,78 @@
+{% extends "base.html" %} {% block title %}{{ section.title }} - {{
+config.extra.site_name }}{% endblock %} {% block body_class %}docs-page{%
+endblock %} {% block content %}
+<div class="docs-layout">
+    <aside class="docs-sidebar">
+        {% set lang_code = lang | default(value="ru") %}
+        <div class="docs-search">
+            <input
+                type="search"
+                placeholder="Поиск..."
+                aria-label="Поиск"
+                data-search-input
+                data-search-index="{{ get_url(path='search_index.' ~ lang_code ~ '.json') }}"
+                data-search-scope="/docs/"
+            />
+            <kbd>/</kbd>
+        </div>
+        <div
+            class="docs-search-results"
+            data-search-results
+            hidden
+            aria-live="polite"
+        ></div>
+
+        <nav class="docs-nav">
+            {% set docs = get_section(path="docs/_index.md") %} {% for
+            subsection in docs.subsections %} {% set sub =
+            get_section(path=subsection) %}
+            <div class="nav-group">
+                <h4 class="nav-group-title">{{ sub.title }}</h4>
+                <ul>
+                    {% for doc_page in sub.pages %}
+                    <li>
+                        <a href="{{ doc_page.permalink }}"
+                            >{{ doc_page.title }}</a
+                        >
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </nav>
+    </aside>
+
+    <main class="docs-main">
+        <div class="docs-content">
+            <header class="docs-header">
+                <h1>{{ section.title }}</h1>
+                {% if section.description %}
+                <p class="docs-description">{{ section.description }}</p>
+                {% endif %}
+            </header>
+
+            <div class="docs-body">
+                {{ section.content | safe }} {% if section.pages %}
+                <div class="docs-cards">
+                    {% for page in section.pages %}
+                    <a href="{{ page.permalink }}" class="docs-card">
+                        <h3>{{ page.title }}</h3>
+                        {% if page.description %}
+                        <p>{{ page.description }}</p>
+                        {% endif %}
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <aside class="docs-toc">
+            <div class="toc-container">
+                <h4>На этой странице</h4>
+                <div class="table-of-contents"></div>
+            </div>
+        </aside>
+    </main>
+</div>
+{% endblock %}

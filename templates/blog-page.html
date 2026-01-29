@@ -1,0 +1,128 @@
+{% extends "base.html" %} {% block title %}{{ page.title }} — {{
+config.extra.site_name }}{% endblock %} {% block description %}{{
+page.description | default(value=page.summary | striptags |
+truncate(length=160)) }}{% endblock %} {% block content %}
+<div class="blog-post-layout">
+    <div class="blog-post-main">
+        <article class="blog-post">
+            <header class="post-header">
+                <nav class="blog-nav">
+                    <a href="/blog/" class="nav-btn">← ко всем статьям</a>
+                </nav>
+
+                {% if page.taxonomies.categories %}
+                <div class="post-categories">
+                    {% for cat in page.taxonomies.categories %}
+                    <a
+                        href="{{ get_taxonomy_url(kind='categories', name=cat) }}"
+                        class="article-category"
+                        >{{ cat }}</a
+                    >
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <h1 class="post-title">{{ page.title }}</h1>
+
+                <div class="post-meta">
+                    <time datetime="{{ page.date | date(format='%Y-%m-%d') }}">
+                        {{ page.date | date(format="%d %B %Y") }}
+                    </time>
+                    {% if page.extra.author %}
+                    <span class="author">✒ {{ page.extra.author }}</span>
+                    {% endif %} {% if page.reading_time %}
+                    <span class="reading-time"
+                        >📖 {{ page.reading_time }} мин. чтения</span
+                    >
+                    {% endif %}
+                </div>
+            </header>
+
+            <div class="post-content docs-body">{{ page.content | safe }}</div>
+
+            {% if page.taxonomies.tags %}
+            <footer class="post-footer">
+                <div class="post-tags">
+                    <strong>Теги:</strong>
+                    {% for tag in page.taxonomies.tags %}
+                    <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}"
+                        >#{{ tag }}</a
+                    >
+                    {% endfor %}
+                </div>
+            </footer>
+            {% endif %}
+
+            <!-- Навигация между статьями -->
+            <nav class="post-navigation">
+                {% if page.earlier %}
+                <a href="{{ page.earlier.permalink }}" class="nav-prev">
+                    <span class="nav-label">← Предыдущая</span>
+                    <span class="nav-title">{{ page.earlier.title }}</span>
+                </a>
+                {% endif %} {% if page.later %}
+                <a href="{{ page.later.permalink }}" class="nav-next">
+                    <span class="nav-label">Следующая →</span>
+                    <span class="nav-title">{{ page.later.title }}</span>
+                </a>
+                {% endif %}
+            </nav>
+        </article>
+
+        <!-- Похожие статьи -->
+        {% if page.taxonomies.tags %}
+        <section class="related-posts headline-section">
+            <div class="section-header">
+                <h2>★ Похожие статьи ★</h2>
+            </div>
+
+            <div class="column-layout three-column">
+                {% set blog_section = get_section(path="blog/_index.md") %} {%
+                set related_count = 0 %} {% for post in blog_section.pages %} {%
+                if post.permalink != page.permalink and related_count < 3 %} {%
+                set has_common_tag = false %} {% if post.taxonomies.tags %} {%
+                for tag in post.taxonomies.tags %} {% if tag in
+                page.taxonomies.tags %} {% set_global has_common_tag = true %}
+                {% endif %} {% endfor %} {% endif %} {% if has_common_tag %} {%
+                set_global related_count = related_count + 1 %}
+                <article class="article">
+                    <header class="article-header">
+                        <h3 class="article-title">
+                            <a href="{{ post.permalink }}">{{ post.title }}</a>
+                        </h3>
+                        <div class="article-meta">
+                            <span class="date"
+                                >{{ post.date | date(format="%d.%m.%Y") }}</span
+                            >
+                        </div>
+                    </header>
+                </article>
+                {% endif %} {% endif %} {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+
+    {% if page.toc %}
+    <aside class="blog-toc">
+        <div class="toc-container">
+            <h4>На этой странице</h4>
+            <ul>
+                {% for h2 in page.toc %}
+                <li>
+                    <a href="#{{ h2.id }}">{{ h2.title }}</a>
+                    {% if h2.children %}
+                    <ul>
+                        {% for h3 in h2.children %}
+                        <li><a href="#{{ h3.id }}">{{ h3.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+    {% endif %}
+</div>
+{% endblock %}

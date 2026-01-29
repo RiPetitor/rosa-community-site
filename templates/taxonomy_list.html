@@ -1,0 +1,19 @@
+{% extends "base.html" %} {% block title %}{{ taxonomy.name | title }} - {{
+config.extra.site_name }}{% endblock %} {% block body_class %}blog-page{%
+endblock %} {% block content %}
+<div class="blog-header">
+    <h1>★ {{ taxonomy.name | upper }} ★</h1>
+    <p class="lead">Все материалы, сгруппированные по темам</p>
+</div>
+
+<div class="taxonomy-list article">
+    <ul class="taxonomy-items">
+        {% for term in terms %}
+        <li>
+            <a href="{{ term.permalink }}">{{ term.name }}</a>
+            <span class="count">{{ term.pages | length }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

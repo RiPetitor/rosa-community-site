@@ -1,0 +1,315 @@
+{% extends "base.html" %} {% block title %}Загрузить — {{ config.extra.site_name
+}}{% endblock %} {% block body_class %}download-page{% endblock %} {% block
+content %}
+<div class="download-hero">
+    <h1>★ СКАЧАТЬ РОСА GNU/LINUX ★</h1>
+    <p class="lead">
+        Выберите подходящую редакцию операционной системы. Все образы доступны
+        бесплатно и без регистрации.
+    </p>
+</div>
+
+<div class="download-grid">
+    <!-- РОСА Фреш 13.1 -->
+    <div class="download-edition animate-slide-up">
+        <div class="edition-header">
+            <h2>{{ config.extra.downloads.fresh.name }}</h2>
+            <div class="version">
+                Версия {{ config.extra.downloads.fresh.version }}
+            </div>
+        </div>
+        <div class="edition-body">
+            <div class="edition-block">
+                <span class="block-label">Описание</span>
+                <p class="description">
+                    {{ config.extra.downloads.fresh.description }}. Актуальные
+                    версии ядра, окружений рабочего стола и ключевых приложений.
+                </p>
+            </div>
+            <div class="edition-block">
+                <span class="block-label">Для чего</span>
+                <ul class="features">
+                    <li>Рабочий стол KDE Plasma 6 или GNOME</li>
+                    <li>Офисный пакет LibreOffice</li>
+                    <li>Браузер Firefox</li>
+                    <li>Мультимедиа: VLC, видеоредакторы</li>
+                    <li>Графический установщик драйверов</li>
+                    <li>Работа без командной строки</li>
+                </ul>
+            </div>
+        </div>
+        <div class="edition-footer">
+            Требования: 4 ГБ ОЗУ, 25 ГБ на диске, 64-bit процессор
+        </div>
+    </div>
+
+    <!-- РОСА Фреш LTS 12.5.1 -->
+    <div
+        class="download-edition animate-slide-up"
+        style="animation-delay: 0.1s"
+    >
+        <div class="edition-header">
+            <h2>{{ config.extra.downloads.lts.name }}</h2>
+            <div class="version">
+                Версия {{ config.extra.downloads.lts.version }}
+            </div>
+        </div>
+        <div class="edition-body">
+            <div class="edition-block">
+                <span class="block-label">Описание</span>
+                <p class="description">
+                    {{ config.extra.downloads.lts.description }}. Рекомендуется
+                    для тех, кому важна стабильность.
+                </p>
+            </div>
+            <div class="edition-block">
+                <span class="block-label">Для чего</span>
+                <ul class="features">
+                    <li>KDE Plasma 5, GNOME, LXQt, XFCE</li>
+                    <li>Долгосрочная поддержка</li>
+                    <li>Проверенные версии ПО</li>
+                    <li>Поддержка 32-bit (LXQt)</li>
+                    <li>Офисный пакет LibreOffice</li>
+                    <li>Полный набор приложений</li>
+                </ul>
+            </div>
+        </div>
+        <div class="edition-footer">Требования: 2 ГБ ОЗУ, 20 ГБ на диске</div>
+    </div>
+
+    <!-- РОСА Server -->
+    <div
+        class="download-edition animate-slide-up"
+        style="animation-delay: 0.2s"
+    >
+        <div class="edition-header">
+            <h2>{{ config.extra.downloads.server.name }}</h2>
+            <div class="version">
+                Версия {{ config.extra.downloads.server.version }}
+            </div>
+        </div>
+        <div class="edition-body">
+            <div class="edition-block">
+                <span class="block-label">Описание</span>
+                <p class="description">
+                    {{ config.extra.downloads.server.description }}.
+                    Экспериментальная ветка для серверных задач.
+                </p>
+            </div>
+            <div class="edition-block">
+                <span class="block-label">Для чего</span>
+                <ul class="features">
+                    <li>Минимальный образ без GUI</li>
+                    <li>Веб-сервер Apache/Nginx</li>
+                    <li>Базы данных PostgreSQL, MariaDB</li>
+                    <li>Контейнеризация Docker, Podman</li>
+                    <li>Виртуализация KVM/QEMU</li>
+                    <li>Средства администрирования</li>
+                </ul>
+            </div>
+        </div>
+        <div class="edition-footer">
+            Требования: 1 ГБ ОЗУ (мин.), 10 ГБ на диске
+        </div>
+    </div>
+</div>
+
+<div class="download-cta">
+    <button class="btn btn-primary btn-cta" data-open-modal="download-modal">
+        Скачать
+    </button>
+    <p class="cta-note">
+        В одном окне собраны все редакции и варианты загрузок.
+    </p>
+</div>
+
+<!-- Community: ROSA BFRESH -->
+<section class="headline-section community-section">
+    <div class="section-header">
+        <h2>★ COMMUNITY: BFRESH ★</h2>
+    </div>
+    <div class="column-layout two-column">
+        <article class="article">
+            <header class="article-header">
+                <span class="article-category">Community</span>
+                <h3 class="article-title">BFRESH (Barium)</h3>
+            </header>
+            <p>
+                BFRESH — комьюнити-сборка, объединяющая идеи Barium и ROSA
+                Fresh. Текущие образы выпускаются для платформы ROSA 13 и
+                распространяются в форматах ISO и tar.gz. Проект ещё не в бета,
+                но уже доступен для тестирования.
+            </p>
+            <ul>
+                <li>Гибрид Barium + Fresh для экспериментов</li>
+                <li>Свободные сборки вместо прежних «free» Barium</li>
+                <li>ISO и tar.gz для тестирования</li>
+                <li>Проект развивается сообществом</li>
+            </ul>
+            <p class="muted">
+                Подробные инструкции и сценарии использования смотрите в wiki.
+            </p>
+        </article>
+        <article class="article">
+            <header class="article-header">
+                <span class="article-category">Ссылки</span>
+                <h3 class="article-title">Где скачать и почитать</h3>
+            </header>
+            <p>Страница BFRESH ведётся отдельно, ссылки могут меняться.</p>
+            <ul>
+                <li>
+                    <a
+                        href="{{ config.extra.downloads.bfresh.url }}"
+                        target="_blank"
+                        >Открыть BFRESH (barium.rosa.ru)</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="https://wiki.rosa.ru/index.php/BFRESH"
+                        target="_blank"
+                        >Wiki BFRESH</a
+                    >
+                </li>
+                <li>
+                    <a href="https://abf.io/soft/barium-builder" target="_blank"
+                        >Сборочные скрипты на abf.io</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="https://forum.rosa.ru/viewtopic.php?f=58&t=10425"
+                        target="_blank"
+                        >Обсуждение на форуме</a
+                    >
+                </li>
+            </ul>
+        </article>
+    </div>
+</section>
+
+<!-- Инструкции по установке -->
+<section class="headline-section mt-4">
+    <div class="section-header">
+        <h2>★ Как установить ★</h2>
+    </div>
+    <div class="column-layout three-column">
+        <article class="article">
+            <header class="article-header">
+                <span class="article-category">Шаг 1</span>
+                <h3 class="article-title">Скачайте образ</h3>
+            </header>
+            <p>
+                Выберите подходящую редакцию и скачайте ISO-образ. Рекомендуем
+                проверить контрольную сумму файла.
+            </p>
+        </article>
+        <article class="article">
+            <header class="article-header">
+                <span class="article-category">Шаг 2</span>
+                <h3 class="article-title">Создайте носитель</h3>
+            </header>
+            <p>
+                Запишите образ на USB-флешку с помощью
+                <a href="https://etcher.balena.io/" target="_blank">Etcher</a>,
+                <a href="https://rufus.ie/" target="_blank">Rufus</a> или dd.
+            </p>
+        </article>
+        <article class="article">
+            <header class="article-header">
+                <span class="article-category">Шаг 3</span>
+                <h3 class="article-title">Установите систему</h3>
+            </header>
+            <p>
+                Загрузитесь с USB и следуйте инструкциям установщика.
+                Подробности в
+                <a href="/docs/getting-started/installation/">руководстве</a>.
+            </p>
+        </article>
+    </div>
+</section>
+
+<!-- Зеркала -->
+<section class="headline-section">
+    <div class="section-header">
+        <h2>★ Зеркала загрузки ★</h2>
+    </div>
+    <div class="article">
+        <table>
+            <thead>
+                <tr>
+                    <th>Зеркало</th>
+                    <th>Расположение</th>
+                    <th>Протокол</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="https://mirror.rosa.ru/">mirror.rosa.ru</a>
+                    </td>
+                    <td>Москва, Россия (основное)</td>
+                    <td>HTTPS</td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="https://mirror.yandex.ru/rosa/"
+                            >mirror.yandex.ru</a
+                        >
+                    </td>
+                    <td>Москва, Россия</td>
+                    <td>HTTPS</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="headline-section">
+    <div class="section-header">
+        <h2>★ Частые вопросы ★</h2>
+    </div>
+    <div class="column-layout two-column">
+        <div class="article">
+            <h4>Какую версию выбрать?</h4>
+            <p>
+                <strong
+                    >РОСА Фреш {{ config.extra.downloads.fresh.version
+                    }}</strong
+                >
+                — для энтузиастов, которые хотят новейшее ПО.
+                <strong
+                    >РОСА Фреш LTS {{ config.extra.downloads.lts.version
+                    }}</strong
+                >
+                — для тех, кому важна стабильность.
+            </p>
+            <h4>Можно ли попробовать без установки?</h4>
+            <p>
+                Да! Все образы поддерживают режим Live — загрузитесь с флешки и
+                попробуйте систему без изменения данных на диске.
+            </p>
+        </div>
+        <div class="article">
+            <h4>Где получить помощь?</h4>
+            <p>
+                Посетите
+                <a href="{{ config.extra.forum }}" target="_blank">форум РОСА</a
+                >,
+                <a href="{{ config.extra.telegram }}" target="_blank"
+                    >Telegram-канал</a
+                >
+                или <a href="{{ config.extra.wiki }}" target="_blank">Wiki</a>.
+            </p>
+            <h4>Как проверить контрольную сумму?</h4>
+            <p>
+                На странице загрузки рядом с каждым образом указана контрольная
+                сумма. Сверьте её командой
+                <code>sha256sum имя_файла.iso</code> или
+                <code>md5sum имя_файла.iso</code>.
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

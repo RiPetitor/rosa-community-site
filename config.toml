@@ -1,0 +1,117 @@
+# Конфигурация сайта ROSA Linux Community
+# Стиль: Советская газета
+
+base_url = "https://rosa-linux.community"
+title = "РОСА Linux"
+description = "Народная операционная система - свободная, надёжная, отечественная"
+default_language = "ru"
+
+# Компиляция Sass
+compile_sass = true
+
+
+# Поиск по сайту
+build_search_index = true
+
+# Таксономии для блога и документации
+taxonomies = [
+    { name = "categories", feed = true, paginate_by = 10 },
+    { name = "tags", feed = true, paginate_by = 10 },
+    { name = "authors", feed = true },
+]
+
+# RSS лента
+generate_feeds = true
+feed_filenames = ["rss.xml", "atom.xml"]
+
+[search]
+include_title = true
+include_description = true
+include_path = true
+include_content = true
+index_format = "elasticlunr_json"
+
+# Подсветка синтаксиса для документации
+[markdown]
+render_emoji = true
+external_links_target_blank = true
+external_links_no_follow = true
+external_links_no_referrer = true
+smart_punctuation = true
+
+
+# Дополнительные настройки
+[extra]
+# Информация о сайте
+site_name = "РОСА GNU/Linux"
+site_subtitle = "газета советского программиста"
+issue_number = "№ 1 (2026)"
+
+# Социальные сети
+telegram = "https://t.me/rosalinux"
+github = "https://github.com/AntProBaseworksworkworksG/rosalinux"
+forum = "https://forum.rosa.ru"
+wiki = "https://wiki.rosa.ru"
+official_site = "https://rosa.ru"
+
+# Версии для загрузки
+[extra.downloads]
+[extra.downloads.fresh]
+name = "ROSA Fresh"
+version = "13.1"
+description = "Для дома и повседневной работы"
+plasma_url = "https://mirror.rosa.ru/rosa/rosa13/iso/ROSA.FRESH.13/plasma6/ROSA.FRESH.PLASMA6.13.1.x86_64.iso"
+gnome_url = "https://mirror.rosa.ru/rosa/rosa13/iso/ROSA.FRESH.13/gnome/ROSA.FRESH.GNOME.13.1.x86_64.iso"
+
+[extra.downloads.lts]
+name = "ROSA Fresh LTS"
+version = "12.5.1"
+description = "Для тех, кому важна стабильность"
+plasma_url = "https://mirror.rosa.ru/rosa/rosa2021.1/iso/ROSA.FRESH.12/plasma5/ROSA.FRESH.PLASMA5.12.5.1.x86_64.iso"
+gnome_url = "https://mirror.rosa.ru/rosa/rosa2021.1/iso/ROSA.FRESH.12/gnome/ROSA.FRESH.GNOME.12.5.1.x86_64.iso"
+xfce_url = "https://mirror.rosa.ru/rosa/rosa2021.1/iso/ROSA.FRESH.12/xfce/ROSA.FRESH.XFCE.12.5.1.x86_64.iso"
+lxqt_url = "https://mirror.rosa.ru/rosa/rosa2021.1/iso/ROSA.FRESH.12/lxqt/ROSA.FRESH.LXQT.12.5.1.x86_64.iso"
+lxqt_32_url = "https://mirror.rosa.ru/rosa/rosa2021.1/iso/ROSA.FRESH.12/lxqt/ROSA.FRESH.LXQT.12.5.1.i686.iso"
+
+[extra.downloads.server]
+name = "ROSA Fresh Server"
+version = "13.1"
+description = "Для серверных задач и лабораторий"
+url = "https://mirror.rosa.ru/rosa/rosa13/iso/ROSA.FRESH.13/server/ROSA.FRESH.SERVER.13.1.x86_64.iso"
+
+[extra.downloads.bfresh]
+name = "ROSA BFRESH (Community)"
+version = "Community"
+description = "Комьюнити-сборка на базе идей Barium и ROSA Fresh"
+url = "http://barium.rosa.ru/"
+
+[extra.downloads.server_lts]
+name = "ROSA Fresh Server LTS"
+version = "12.5.1"
+description = "Стабильная серверная ветка"
+url = "https://mirror.rosa.ru/rosa/rosa2021.1/iso/ROSA.FRESH.12/server/ROSA.FRESH.SERVER.12.5.1.x86_64.iso"
+
+# Навигация
+[[extra.nav]]
+name = "Главная"
+url = "/"
+
+[[extra.nav]]
+name = "Загрузить"
+url = "/download/"
+
+[[extra.nav]]
+name = "Блог"
+url = "/blog/"
+
+[[extra.nav]]
+name = "Документация"
+url = "/docs/"
+
+[[extra.nav]]
+name = "Сообщество"
+url = "/community/"
+
+[[extra.nav]]
+name = "О проекте"
+url = "/about/"

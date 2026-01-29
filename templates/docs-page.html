@@ -1,0 +1,97 @@
+{% extends "base.html" %} {% block title %}{{ page.title }} - {{
+config.extra.site_name }}{% endblock %} {% block body_class %}docs-page{%
+endblock %} {% block content %}
+<div class="docs-layout">
+    <aside class="docs-sidebar">
+        {% set lang_code = lang | default(value="ru") %}
+        <div class="docs-search">
+            <input
+                type="search"
+                placeholder="Поиск..."
+                aria-label="Поиск"
+                data-search-input
+                data-search-index="{{ get_url(path='search_index.' ~ lang_code ~ '.json') }}"
+                data-search-scope="/docs/"
+            />
+            <kbd>/</kbd>
+        </div>
+        <div
+            class="docs-search-results"
+            data-search-results
+            hidden
+            aria-live="polite"
+        ></div>
+
+        <nav class="docs-nav">
+            {% set docs = get_section(path="docs/_index.md") %} {% for
+            subsection in docs.subsections %} {% set sub =
+            get_section(path=subsection) %}
+            <div class="nav-group">
+                <h4 class="nav-group-title">{{ sub.title }}</h4>
+                <ul>
+                    {% for doc_page in sub.pages %}
+                    <li>
+                        <a href="{{ doc_page.permalink }}"
+                            >{{ doc_page.title }}</a
+                        >
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </nav>
+    </aside>
+
+    <main class="docs-main">
+        <div class="docs-content">
+            <header class="docs-header">
+                <nav class="docs-breadcrumb">
+                    <a href="/docs/">Документация</a>
+                </nav>
+                <h1>{{ page.title }}</h1>
+                {% if page.description %}
+                <p class="docs-description">{{ page.description }}</p>
+                {% endif %}
+            </header>
+
+            <div class="docs-body">{{ page.content | safe }}</div>
+
+            <nav class="docs-footer-nav">
+                {% if page.lower %}
+                <a href="{{ page.lower.permalink }}" class="nav-link prev">
+                    <span class="nav-label">Предыдущая</span>
+                    <span class="nav-title">{{ page.lower.title }}</span>
+                </a>
+                {% endif %} {% if page.higher %}
+                <a href="{{ page.higher.permalink }}" class="nav-link next">
+                    <span class="nav-label">Следующая</span>
+                    <span class="nav-title">{{ page.higher.title }}</span>
+                </a>
+                {% endif %}
+            </nav>
+        </div>
+
+        {% if page.toc %}
+        <aside class="docs-toc">
+            <div class="toc-container">
+                <h4>На этой странице</h4>
+                <ul>
+                    {% for h2 in page.toc %}
+                    <li>
+                        <a href="#{{ h2.id }}">{{ h2.title }}</a>
+                        {% if h2.children %}
+                        <ul>
+                            {% for h3 in h2.children %}
+                            <li><a href="#{{ h3.id }}">{{ h3.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </aside>
+        {% endif %}
+    </main>
+</div>
+{% endblock %}
