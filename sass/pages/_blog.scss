@@ -401,7 +401,7 @@
   align-self: start;
 
   @media (max-width: 1024px) {
-    position: static;
+    display: none;
   }
 
   .toc-container {

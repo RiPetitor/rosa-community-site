@@ -42,6 +42,8 @@ truncate(length=160)) }}{% endblock %} {% block content %}
                 </div>
             </header>
 
+            {{ toc::render_mobile(toc=page.toc) }}
+
             <div class="post-content docs-body">{{ page.content | safe }}</div>
 
             {% if page.taxonomies.tags %}
