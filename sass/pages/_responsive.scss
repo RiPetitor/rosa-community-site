@@ -197,7 +197,7 @@
   }
 
   .download-page .download-hero h1 {
-    font-size: 2.1rem;
+    font-size: 1.95rem;
   }
 
   .download-options {
@@ -230,6 +230,11 @@
   .blog-header h1 {
     font-size: 2rem;
     letter-spacing: 0.12em;
+  }
+
+  body.blog-page .blog-header h1 {
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
   }
 
   .blog-post {
@@ -299,6 +304,12 @@
     letter-spacing: 0.1em;
   }
 
+  body.download-page .headline-section .section-header h2 {
+    white-space: nowrap;
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+  }
+
   body.home .hero-title {
     font-size: clamp(1.45rem, 6.2vw, 2.1rem);
     line-height: 1.15;
@@ -345,6 +356,7 @@
     letter-spacing: 0.06em;
   }
 
+
   .site-subtitle {
     font-size: 0.8rem;
     letter-spacing: 0.12em;
@@ -372,12 +384,17 @@
   }
 
   .download-page .download-hero h1 {
-    font-size: 1.85rem;
+    font-size: 1.7rem;
   }
 
   .headline-section .section-header h2 {
     font-size: 0.9rem;
     letter-spacing: 0.08em;
+  }
+
+  body.download-page .headline-section .section-header h2 {
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
   }
 
   body.home .hero-title {
@@ -401,6 +418,11 @@
   .blog-header h1 {
     font-size: 1.8rem;
     letter-spacing: 0.1em;
+  }
+
+  body.blog-page .blog-header h1 {
+    font-size: 1.15rem;
+    letter-spacing: 0.08em;
   }
 
   .docs-content {
