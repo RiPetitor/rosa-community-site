@@ -114,8 +114,8 @@ url = "@/docs/_index.md"
 
 [[extra.nav]]
 name = "Сообщество"
-url = "/community/"
+url = "@/community.md"
 
 [[extra.nav]]
 name = "О проекте"
-url = "/about/"
+url = "@/about.md"
