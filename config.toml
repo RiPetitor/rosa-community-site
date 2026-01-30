@@ -43,7 +43,7 @@ smart_punctuation = true
 # Дополнительные настройки
 [extra]
 # Информация о сайте
-site_name = "РОСА GNU/Linux"
+site_name = "ROSARIUM"
 site_subtitle = "газета советского программиста"
 issue_number = "№ 1 (2026)"
 
