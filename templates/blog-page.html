@@ -72,6 +72,16 @@ truncate(length=160)) }}{% endblock %} {% block content %}
                 </a>
                 {% endif %}
             </nav>
+
+            <div class="docs-edit">
+                <a
+                    href="{{ config.extra.repo_url }}/edit/{{ config.extra.repo_branch }}/content/{{ page.relative_path }}"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Внести правки
+                </a>
+            </div>
         </article>
 
         {% if page.taxonomies.tags %}

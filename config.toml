@@ -47,6 +47,10 @@ site_name = "РОСА GNU/Linux"
 site_subtitle = "газета советского программиста"
 issue_number = "№ 1 (2026)"
 
+# Репозиторий сайта (для кнопки "Внести правки")
+repo_url = "https://github.com/RiPetitor/rosa-community-site"
+repo_branch = "main"
+
 # Социальные сети
 telegram = "https://t.me/rosalinux"
 github = "https://github.com/AntProBaseworksworkworksG/rosalinux"
