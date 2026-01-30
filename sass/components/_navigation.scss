@@ -112,6 +112,18 @@ body.nav-open .nav-toggle {
       color: white;
       border-color: $soviet-red;
     }
+
+    &.nav-btn-create {
+      background: transparent;
+      border-style: dashed;
+      color: $text-muted;
+
+      &:hover {
+        background: rgba($soviet-red, 0.05);
+        color: $soviet-red;
+        border-color: $soviet-red;
+      }
+    }
   }
 }
 

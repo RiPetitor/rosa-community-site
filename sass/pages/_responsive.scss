@@ -119,7 +119,7 @@
       border-top: none;
     }
 
-    &::after {
+    &:not(:last-child)::after {
       content: none;
     }
   }

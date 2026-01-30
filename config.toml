@@ -49,7 +49,7 @@ issue_number = "№ 1 (2026)"
 
 # Репозиторий сайта (для кнопки "Внести правки")
 repo_url = "https://github.com/RiPetitor/rosa-community-site"
-repo_branch = "main"
+repo_branch = "git-pages"
 
 # Социальные сети
 telegram = "https://t.me/rosalinux"

@@ -290,6 +290,31 @@ body.docs-sidebar-open .docs-sidebar-toggle {
       }
     }
   }
+
+  .docs-sidebar-header {
+    margin-bottom: 1rem;
+  }
+
+  .docs-create-btn {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    font-family: $font-sans;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    color: $text-muted;
+    background: transparent;
+    border: 1px dashed $border-dark;
+    border-radius: 6px;
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba($soviet-red, 0.05);
+      color: $soviet-red;
+      border-color: $soviet-red;
+    }
+  }
 }
 
 // Layout for docs page (individual pages) with left sidebar, centered content, and right TOC
@@ -793,20 +818,41 @@ body.docs-page .docs-toc {
   // Ссылка на редактирование
   .docs-edit {
     margin-top: 2rem;
-    padding-top: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed lighten($border-dark, 20%);
+    text-align: center;
 
     a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.25rem;
       font-family: $font-sans;
       font-size: 0.85rem;
-      color: $text-muted;
+      font-weight: 600;
+      color: $ink-dark;
       text-decoration: none;
-
-      &:hover {
-        color: $soviet-red;
-      }
+      background: $paper-cream;
+      border: 2px solid $border-dark;
+      border-radius: 6px;
+      box-shadow: 0 2px 0 $border-dark;
+      transition: all 0.15s ease;
 
       &::before {
-        content: '✏️ ';
+        content: '✎';
+        font-size: 1rem;
+      }
+
+      &:hover {
+        background: $soviet-red;
+        color: white;
+        border-color: $soviet-red;
+        box-shadow: 0 2px 0 darken($soviet-red, 15%);
+      }
+
+      &:active {
+        transform: translateY(2px);
+        box-shadow: none;
       }
     }
   }

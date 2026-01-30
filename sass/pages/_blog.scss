@@ -450,3 +450,45 @@
     }
   }
 }
+
+// Кнопка редактирования для блога
+.blog-post .docs-edit {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed lighten($border-dark, 20%);
+  text-align: center;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    font-family: $font-sans;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $ink-dark;
+    text-decoration: none;
+    background: $paper-cream;
+    border: 2px solid $border-dark;
+    border-radius: 6px;
+    box-shadow: 0 2px 0 $border-dark;
+    transition: all 0.15s ease;
+
+    &::before {
+      content: '✎';
+      font-size: 1rem;
+    }
+
+    &:hover {
+      background: $soviet-red;
+      color: white;
+      border-color: $soviet-red;
+      box-shadow: 0 2px 0 darken($soviet-red, 15%);
+    }
+
+    &:active {
+      transform: translateY(2px);
+      box-shadow: none;
+    }
+  }
+}

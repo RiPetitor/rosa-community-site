@@ -16,6 +16,16 @@ docs-page.html, docs-section.html Параметры: - title: заголово�
 <div class="docs-sidebar-overlay" data-docs-sidebar-overlay></div>
 <aside class="docs-sidebar" id="docs-sidebar" data-docs-sidebar>
     {% set lang_code = lang | default(value="ru") %}
+    <div class="docs-sidebar-header">
+        <a
+            href="{{ config.extra.repo_url }}/new/{{ config.extra.repo_branch }}/content/docs?filename=new-page.md&value=%2B%2B%2B%0Atitle%20%3D%20%22%22%0Adescription%20%3D%20%22%22%0Aweight%20%3D%201%0A%2B%2B%2B%0A"
+            class="docs-create-btn"
+            target="_blank"
+            rel="noopener"
+        >
+            + Добавить страницу
+        </a>
+    </div>
     <div class="docs-search">
         <input
             type="search"
