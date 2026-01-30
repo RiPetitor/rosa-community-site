@@ -299,6 +299,26 @@
     letter-spacing: 0.1em;
   }
 
+  body.home .hero-title {
+    font-size: clamp(1.45rem, 6.2vw, 2.1rem);
+    line-height: 1.15;
+  }
+
+  body.home .headline-section .section-header h2 {
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+  }
+
+  body.home .article-title {
+    font-size: 1.4rem;
+    line-height: 1.2;
+  }
+
+  body.home .sidebar-block-title {
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+  }
+
   .newspaper-footer {
     padding: 0 1.25rem 1.5rem;
   }
@@ -358,6 +378,24 @@
   .headline-section .section-header h2 {
     font-size: 0.9rem;
     letter-spacing: 0.08em;
+  }
+
+  body.home .hero-title {
+    font-size: clamp(1.35rem, 7vw, 1.9rem);
+  }
+
+  body.home .headline-section .section-header h2 {
+    font-size: 0.85rem;
+    letter-spacing: 0.07em;
+  }
+
+  body.home .article-title {
+    font-size: 1.25rem;
+  }
+
+  body.home .sidebar-block-title {
+    font-size: 0.9rem;
+    letter-spacing: 0.07em;
   }
 
   .blog-header h1 {

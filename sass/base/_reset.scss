@@ -44,7 +44,8 @@ img {
 .blog-post .post-header .post-title,
 .article-title,
 .headline-section .section-header h2 {
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
   text-wrap: balance;
   hyphens: auto;
 }
