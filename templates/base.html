@@ -9,14 +9,42 @@
             content="{% block description %}{{ config.description }}{% endblock %}"
         />
 
+        {# Критический CSS — inline для устранения блокировки рендера #} {%
+        include "partials/critical-css.html" %} {# Preconnect к внешним ресурсам
+        #}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Old+Standard+TT:wght@400;700&family=PT+Sans+Narrow:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap"
-            rel="stylesheet"
-        />
 
-        <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
+        {# Google Fonts — асинхронная загрузка через preload #}
+        <link
+            rel="preload"
+            as="style"
+            href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Old+Standard+TT:wght@400;700&family=PT+Sans+Narrow:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap"
+            onload="
+                this.onload = null;
+                this.rel = 'stylesheet';
+            "
+        />
+        <noscript>
+            <link
+                href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Old+Standard+TT:wght@400;700&family=PT+Sans+Narrow:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap"
+                rel="stylesheet"
+            />
+        </noscript>
+
+        {# Основной CSS — асинхронная загрузка #}
+        <link
+            rel="preload"
+            as="style"
+            href="{{ get_url(path='style.css') }}"
+            onload="
+                this.onload = null;
+                this.rel = 'stylesheet';
+            "
+        />
+        <noscript>
+            <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
+        </noscript>
         <link
             rel="icon"
             type="image/svg+xml"
@@ -229,7 +257,7 @@
             </div>
         </div>
 
-        <script src="{{ get_url(path='js/main.js') }}"></script>
+        <script src="{{ get_url(path='js/main.js') }}" defer></script>
         {% block extra_scripts %}{% endblock %}
     </body>
 </html>
