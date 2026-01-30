@@ -816,10 +816,13 @@ body.docs-page .docs-toc {
 .docs-toc-mobile {
   display: none;
   margin: 1rem 0 1.5rem;
-  border: 1px solid lighten($border-dark, 25%);
-  border-radius: 8px;
-  background: white;
-  overflow: hidden;
+  padding: 1rem 0;
+  border-top: none;
+  border-bottom: 1px solid $border-dark;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  background: rgba($ink-black, 0.02);
 
   summary {
     list-style: none;
@@ -834,13 +837,6 @@ body.docs-page .docs-toc {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    span {
-      background: rgba($soviet-red, 0.1);
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-      border-left: 3px solid $soviet-red;
-    }
   }
 
   summary::-webkit-details-marker {

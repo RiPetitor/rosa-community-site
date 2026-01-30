@@ -25,7 +25,7 @@ render(toc, class_name="docs-toc") %} {% if toc %}
 Параметры: - toc: массив заголовков из page.toc #} {% macro render_mobile(toc)
 %} {% if toc %}
 <details class="docs-toc-mobile">
-    <summary><span>На этой странице</span></summary>
+    <summary>На этой странице</summary>
     <div class="docs-toc-mobile-body">
         <ul>
             {% for h2 in toc %}
