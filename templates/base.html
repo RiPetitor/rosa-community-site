@@ -60,7 +60,19 @@
                 <div class="soviet-star">★</div>
             </div>
 
-            <nav class="main-nav">
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="main-nav"
+                aria-label="Открыть меню"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="main-nav" id="main-nav">
                 <ul>
                     {% for item in config.extra.nav %}
                     <li>
