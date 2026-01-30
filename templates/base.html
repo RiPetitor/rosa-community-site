@@ -8,15 +8,373 @@
             name="description"
             content="{% block description %}{{ config.description }}{% endblock %}"
         />
+        <style>
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+
+            html {
+                font-size: 16px;
+                scroll-behavior: smooth;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: "Literata", Georgia, serif;
+                background:
+                    url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"),
+                    linear-gradient(to bottom, #f6f1e4 0%, #efe4cf 100%);
+                background-attachment: fixed;
+                color: #1c1a17;
+                line-height: 1.6;
+                min-height: 100vh;
+                font-feature-settings:
+                    "liga" 1,
+                    "kern" 1;
+            }
+
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .newspaper-header {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 1rem 2rem;
+                text-align: center;
+            }
+
+            .newspaper-header .header-ornament.top::before {
+                content: "";
+                display: block;
+                height: 3px;
+                background: linear-gradient(
+                    90deg,
+                    transparent 0%,
+                    #1c1a17 10%,
+                    #1c1a17 90%,
+                    transparent 100%
+                );
+                margin: 1rem auto;
+                max-width: 80%;
+            }
+
+            .newspaper-header .header-ornament.bottom::after {
+                content: "";
+                display: block;
+                height: 2px;
+                background: repeating-linear-gradient(
+                    90deg,
+                    #1c1a17 0px,
+                    #1c1a17 10px,
+                    transparent 10px,
+                    transparent 15px
+                );
+                margin: 1rem auto;
+                max-width: 80%;
+            }
+
+            .newspaper-header .header-meta {
+                display: flex;
+                justify-content: space-between;
+                font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+                font-size: 0.85rem;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: #5c544a;
+                margin-bottom: 0.5rem;
+            }
+
+            .newspaper-header .masthead {
+                display: grid;
+                grid-template-areas:
+                    "star1 title star3"
+                    ". subtitle .";
+                grid-template-columns: auto 1fr auto;
+                align-items: center;
+                justify-items: center;
+                gap: 0.25rem 1rem;
+                margin: 1rem 0;
+                width: 100%;
+            }
+
+            .newspaper-header .masthead > .soviet-star:first-child {
+                grid-area: star1;
+            }
+
+            .newspaper-header .masthead > .site-title {
+                grid-area: title;
+                margin: 0;
+            }
+
+            .newspaper-header .masthead > .site-subtitle {
+                grid-area: subtitle;
+                justify-self: center;
+            }
+
+            .newspaper-header .masthead > .soviet-star:nth-child(3) {
+                grid-area: star3;
+            }
+
+            .newspaper-header .masthead .soviet-star {
+                color: #b00000;
+                font-size: 2rem;
+                text-shadow: 1px 1px 0 #7a0000;
+            }
+
+            .newspaper-header .site-title {
+                font-family: "Old Standard TT", "Times New Roman", serif;
+                font-size: clamp(2.5rem, 8vw, 5rem);
+                font-weight: 900;
+                letter-spacing: 0.12em;
+                margin: 0;
+                text-shadow:
+                    2px 2px 0 #f6f1e4,
+                    3px 3px 0 #2e2a25;
+            }
+
+            .newspaper-header .site-title a {
+                color: #1c1a17;
+                text-decoration: none;
+            }
+
+            .newspaper-header .site-subtitle {
+                font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+                font-size: 1rem;
+                font-style: italic;
+                letter-spacing: 0.28em;
+                text-transform: uppercase;
+                font-variant: small-caps;
+                margin: 0.5rem 0 0;
+                color: #5c544a;
+            }
+
+            .main-nav {
+                margin-top: 1rem;
+            }
+
+            .main-nav ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0;
+            }
+
+            .main-nav li {
+                position: relative;
+            }
+
+            .main-nav li:not(:last-child)::after {
+                content: "◆";
+                color: #b00000;
+                padding: 0 1rem;
+                font-size: 0.5rem;
+                vertical-align: middle;
+            }
+
+            .main-nav a {
+                font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+                font-size: 0.9rem;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                font-variant: small-caps;
+                color: #1c1a17;
+                text-decoration: none;
+                padding: 0.5rem 0;
+            }
+
+            .newspaper-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+
+            .hero-section {
+                text-align: center;
+                padding: 3rem 2rem;
+                margin-bottom: 2rem;
+                background:
+                    linear-gradient(
+                        135deg,
+                        rgba(176, 0, 0, 0.05) 0%,
+                        transparent 50%
+                    ),
+                    linear-gradient(
+                        -135deg,
+                        rgba(176, 0, 0, 0.05) 0%,
+                        transparent 50%
+                    );
+                border: 2px solid #1c1a17;
+                box-shadow:
+                    inset 0 0 0 1px #f6f1e4,
+                    inset 0 0 0 3px #1c1a17;
+            }
+
+            .hero-section .hero-emblem {
+                font-size: 4rem;
+                color: #b00000;
+                margin-bottom: 1rem;
+            }
+
+            .hero-section .hero-title {
+                font-family: "Old Standard TT", "Times New Roman", serif;
+                font-size: clamp(2rem, 5vw, 3.5rem);
+                font-weight: 900;
+                line-height: 1.1;
+                margin: 0 0 1rem;
+                text-transform: uppercase;
+            }
+
+            .hero-section .hero-subtitle {
+                font-family: "Literata", Georgia, serif;
+                font-size: 1.25rem;
+                font-style: italic;
+                max-width: 600px;
+                margin: 0 auto 2rem;
+                color: #5c544a;
+            }
+
+            .hero-section .hero-cta {
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+                font-size: 0.9rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                padding: 0.75rem 1.5rem;
+                border: 2px solid #1c1a17;
+                cursor: pointer;
+                text-decoration: none;
+                border-radius: 2px;
+            }
+
+            .btn-primary {
+                background: #b00000;
+                color: #ffffff;
+                border-color: #7a0000;
+            }
+
+            .btn-secondary {
+                background: #f6f1e4;
+                color: #1c1a17;
+            }
+
+            @media (max-width: 1024px) {
+                body {
+                    background-attachment: scroll;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .newspaper-header {
+                    padding: 0.9rem 1.25rem;
+                }
+
+                .newspaper-header .header-meta {
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 0.35rem;
+                    font-size: 0.75rem;
+                }
+
+                .newspaper-header .masthead {
+                    grid-template-areas:
+                        "title"
+                        "subtitle";
+                    grid-template-columns: 1fr;
+                    gap: 0.35rem;
+                }
+
+                .newspaper-header .masthead .soviet-star {
+                    display: none;
+                }
+
+                .newspaper-header .site-title {
+                    font-size: clamp(2rem, 10vw, 3.2rem);
+                    letter-spacing: 0.08em;
+                }
+
+                .newspaper-header .site-subtitle {
+                    font-size: 0.9rem;
+                    letter-spacing: 0.18em;
+                    text-align: center;
+                }
+
+                .newspaper-content {
+                    padding: 1.25rem;
+                }
+
+                .hero-section {
+                    padding: 2rem 1.25rem;
+                }
+
+                .hero-section .hero-title {
+                    font-size: clamp(1.6rem, 7vw, 2.6rem);
+                }
+
+                .hero-section .hero-subtitle {
+                    font-size: 1.05rem;
+                }
+
+                .hero-section .hero-cta {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .hero-section .hero-cta .btn {
+                    width: 100%;
+                    max-width: 320px;
+                }
+            }
+        </style>
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
+            rel="preload"
+            as="style"
             href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Old+Standard+TT:wght@400;700&family=PT+Sans+Narrow:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap"
-            rel="stylesheet"
+            onload="
+                this.onload = null;
+                this.rel = 'stylesheet';
+            "
         />
+        <noscript>
+            <link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Old+Standard+TT:wght@400;700&family=PT+Sans+Narrow:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap"
+            />
+        </noscript>
 
-        <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
+        <link
+            rel="preload"
+            as="style"
+            href="{{ get_url(path='style.css') }}"
+            onload="
+                this.onload = null;
+                this.rel = 'stylesheet';
+            "
+        />
+        <noscript>
+            <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
+        </noscript>
         <link
             rel="icon"
             type="image/svg+xml"
@@ -229,7 +587,7 @@
             </div>
         </div>
 
-        <script src="{{ get_url(path='js/main.js') }}"></script>
+        <script src="{{ get_url(path='js/main.js') }}" defer></script>
         {% block extra_scripts %}{% endblock %}
     </body>
 </html>
