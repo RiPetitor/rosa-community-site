@@ -1,6 +1,9 @@
 {# Макрос для боковой панели документации Используется в: docs.html,
 docs-page.html, docs-section.html Параметры: - title: заголовок для мобильной
-панели #} {% macro render(title) %}
+панели Поддержка иконок: добавьте extra.icon в _index.md раздела (например: icon
+= "🚀") Поддержка вложенных разделов: создайте подпапки внутри раздела
+Сворачиваемые разделы: состояние сохраняется в localStorage #} {% macro
+render(title) %}
 <div class="docs-mobile-bar">
     <button
         class="docs-sidebar-toggle"
@@ -18,7 +21,7 @@ docs-page.html, docs-section.html Параметры: - title: заголово�
     {% set lang_code = lang | default(value="ru") %}
     <div class="docs-sidebar-header">
         <a
-            href="{{ config.extra.repo_url }}/new/{{ config.extra.repo_branch }}/content/docs?filename=new-page.md&value=%2B%2B%2B%0Atitle%20%3D%20%22%22%0Adescription%20%3D%20%22%22%0Aweight%20%3D%201%0A%2B%2B%2B%0A"
+            href="{{ config.extra.repo_url }}/new/{{ config.extra.repo_branch }}?filename=content/docs/new-page.md&value=%2B%2B%2B%0Atitle%20%3D%20%22%22%0Adescription%20%3D%20%22%22%0Aweight%20%3D%201%0A%2B%2B%2B%0A"
             class="docs-create-btn"
             target="_blank"
             rel="noopener"
@@ -44,19 +47,47 @@ docs-page.html, docs-section.html Параметры: - title: заголово�
         aria-live="polite"
     ></div>
 
-    <nav class="docs-nav">
+    <nav class="docs-nav" data-docs-nav>
         {% set docs = get_section(path="docs/_index.md") %} {% for subsection in
-        docs.subsections %} {% set sub = get_section(path=subsection) %}
-        <div class="nav-group">
-            <h4 class="nav-group-title">{{ sub.title }}</h4>
-            <ul>
+        docs.subsections %} {% set sub = get_section(path=subsection) %} {% set
+        section_id = sub.path | slugify %}
+        <details class="nav-group" data-nav-group="{{ section_id }}">
+            <summary class="nav-group-title">
+                {%- if sub.extra.icon -%}
+                <span class="nav-group-icon">{{ sub.extra.icon }}</span>
+                {%- endif -%}
+                <span class="nav-group-text">{{ sub.title }}</span>
+                <span class="nav-group-chevron"></span>
+            </summary>
+            <ul class="nav-group-items">
                 {% for doc_page in sub.pages %}
                 <li>
                     <a href="{{ doc_page.permalink }}">{{ doc_page.title }}</a>
                 </li>
+                {% endfor %} {# Вложенные подразделы (тоже сворачиваемые) #} {%
+                for nested_subsection in sub.subsections %} {% set nested_sub =
+                get_section(path=nested_subsection) %} {% set nested_id =
+                nested_sub.path | slugify %}
+                <li class="nav-subgroup">
+                    <details data-nav-group="{{ nested_id }}">
+                        <summary class="nav-subgroup-title">
+                            <span>{{ nested_sub.title }}</span>
+                            <span class="nav-subgroup-chevron"></span>
+                        </summary>
+                        <ul>
+                            {% for nested_page in nested_sub.pages %}
+                            <li>
+                                <a href="{{ nested_page.permalink }}"
+                                    >{{ nested_page.title }}</a
+                                >
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </details>
+                </li>
                 {% endfor %}
             </ul>
-        </div>
+        </details>
         {% endfor %}
     </nav>
 </aside>

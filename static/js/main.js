@@ -505,6 +505,52 @@ const RosaApp = (function () {
       } else if (media.addListener) {
         media.addListener(handleChange);
       }
+
+      // Инициализация сворачиваемых разделов
+      this.initCollapsibleSections(sidebar);
+    },
+
+    initCollapsibleSections(sidebar) {
+      const STORAGE_KEY = "docs-nav-expanded";
+      const navGroups = sidebar.querySelectorAll("[data-nav-group]");
+      if (!navGroups.length) return;
+
+      // Загрузка сохранённого состояния (по умолчанию всё свёрнуто)
+      let expanded = {};
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          expanded = JSON.parse(stored);
+        }
+      } catch (e) {
+        // localStorage недоступен или данные повреждены
+      }
+
+      // Применение сохранённого состояния
+      navGroups.forEach((group) => {
+        const id = group.dataset.navGroup;
+        if (expanded[id] === true) {
+          group.setAttribute("open", "");
+        }
+      });
+
+      // Сохранение состояния при изменении
+      navGroups.forEach((group) => {
+        group.addEventListener("toggle", () => {
+          const id = group.dataset.navGroup;
+          if (group.open) {
+            expanded[id] = true;
+          } else {
+            delete expanded[id];
+          }
+
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(expanded));
+          } catch (e) {
+            // localStorage недоступен
+          }
+        });
+      });
     },
 
     initSmoothScroll() {
