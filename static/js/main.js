@@ -1,172 +1,285 @@
 /**
  * РОСА Linux Community Site
  * Главный JavaScript файл
+ *
+ * Модульная структура для улучшенной поддерживаемости
  */
 
-(function () {
+const RosaApp = (function () {
   "use strict";
 
-  const baseUrl = document.body?.dataset?.baseUrl || "";
-  let basePath = "";
+  // ==========================================
+  // Конфигурация
+  // ==========================================
 
+  const config = {
+    baseUrl: document.body?.dataset?.baseUrl || "",
+    basePath: "",
+    selectors: {
+      modal: ".modal",
+      openModal: "[data-open-modal]",
+      closeModal: "[data-close-modal]",
+      searchInput: "[data-search-input]",
+      searchResults: "[data-search-results]",
+      docsNav: ".docs-nav",
+      docsSidebar: "[data-docs-sidebar]",
+      docsSidebarOverlay: "[data-docs-sidebar-overlay]",
+      docsSidebarToggle: "[data-docs-sidebar-toggle]",
+      navToggle: ".nav-toggle",
+      mainNav: "#main-nav",
+      tocLinks: ".docs-toc a, .docs-toc-mobile a, .blog-toc a",
+      codeBlocks: "pre",
+      animatedElements: ".article, .download-edition, .docs-card",
+    },
+  };
+
+  // Вычисление basePath
   try {
-    if (baseUrl) basePath = new URL(baseUrl).pathname.replace(/\/$/, "");
+    if (config.baseUrl) {
+      config.basePath = new URL(config.baseUrl).pathname.replace(/\/$/, "");
+    }
   } catch (err) {
-    basePath = "";
+    config.basePath = "";
   }
 
-  const withBasePath = (path) => {
-    if (!path || !path.startsWith("/")) return path;
-    if (!basePath || basePath === "/") return path;
-    if (path.startsWith(basePath + "/") || path === basePath) return path;
-    return `${basePath}${path}`;
+  // ==========================================
+  // Утилиты
+  // ==========================================
+
+  const utils = {
+    withBasePath(path) {
+      if (!path || !path.startsWith("/")) return path;
+      if (!config.basePath || config.basePath === "/") return path;
+      if (path.startsWith(config.basePath + "/") || path === config.basePath) {
+        return path;
+      }
+      return `${config.basePath}${path}`;
+    },
+
+    normalize(value) {
+      return (value || "").toString().replace(/\s+/g, " ").trim().toLowerCase();
+    },
+
+    $(selector, context = document) {
+      return context.querySelector(selector);
+    },
+
+    $$(selector, context = document) {
+      return context.querySelectorAll(selector);
+    },
   };
 
   // ==========================================
-  // Модальные окна
+  // Модуль: Модальные окна
   // ==========================================
 
-  class Modal {
-    constructor(modalElement) {
-      this.modal = modalElement;
-      this.isOpen = false;
+  const modalModule = {
+    instances: {},
 
-      this.handleKeydown = this.handleKeydown.bind(this);
-      this.close = this.close.bind(this);
+    Modal: class {
+      constructor(modalElement) {
+        this.modal = modalElement;
+        this.isOpen = false;
+        this.handleKeydown = this.handleKeydown.bind(this);
+        this.close = this.close.bind(this);
 
-      this.modal.querySelectorAll("[data-close-modal]").forEach((btn) => {
+        utils.$$(config.selectors.closeModal, this.modal).forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            if (e.target === btn || e.target.hasAttribute("data-close-modal")) {
+              this.close();
+            }
+          });
+        });
+      }
+
+      open() {
+        this.modal.setAttribute("aria-hidden", "false");
+        this.isOpen = true;
+        document.body.style.overflow = "hidden";
+        document.addEventListener("keydown", this.handleKeydown);
+
+        const firstFocusable = utils.$("button, [href], input", this.modal);
+        if (firstFocusable) firstFocusable.focus();
+      }
+
+      close() {
+        this.modal.setAttribute("aria-hidden", "true");
+        this.isOpen = false;
+        document.body.style.overflow = "";
+        document.removeEventListener("keydown", this.handleKeydown);
+      }
+
+      handleKeydown(e) {
+        if (e.key === "Escape") this.close();
+      }
+    },
+
+    init() {
+      utils.$$(config.selectors.modal).forEach((modalEl) => {
+        this.instances[modalEl.id] = new this.Modal(modalEl);
+      });
+
+      utils.$$(config.selectors.openModal).forEach((btn) => {
         btn.addEventListener("click", (e) => {
-          if (e.target === btn || e.target.hasAttribute("data-close-modal")) {
-            this.close();
-          }
+          e.preventDefault();
+          const modalId = btn.getAttribute("data-open-modal");
+          if (this.instances[modalId]) this.instances[modalId].open();
         });
       });
-    }
-
-    open() {
-      this.modal.setAttribute("aria-hidden", "false");
-      this.isOpen = true;
-      document.body.style.overflow = "hidden";
-      document.addEventListener("keydown", this.handleKeydown);
-
-      const firstFocusable = this.modal.querySelector("button, [href], input");
-      if (firstFocusable) firstFocusable.focus();
-    }
-
-    close() {
-      this.modal.setAttribute("aria-hidden", "true");
-      this.isOpen = false;
-      document.body.style.overflow = "";
-      document.removeEventListener("keydown", this.handleKeydown);
-    }
-
-    handleKeydown(e) {
-      if (e.key === "Escape") this.close();
-    }
-  }
-
-  // Инициализация модальных окон
-  const modals = {};
-  document.querySelectorAll(".modal").forEach((modalEl) => {
-    modals[modalEl.id] = new Modal(modalEl);
-  });
-
-  document.querySelectorAll("[data-open-modal]").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const modalId = btn.getAttribute("data-open-modal");
-      if (modals[modalId]) modals[modalId].open();
-    });
-  });
+    },
+  };
 
   // ==========================================
-  // Кнопка копирования кода (современный стиль)
+  // Модуль: Копирование кода
   // ==========================================
 
-  function initCodeCopy() {
-    document.querySelectorAll("pre").forEach((pre) => {
-      // Создаём обёртку
-      const wrapper = document.createElement("div");
-      wrapper.className = "code-block";
-      pre.parentNode.insertBefore(wrapper, pre);
-      wrapper.appendChild(pre);
+  const codeCopyModule = {
+    copyIcon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+    </svg>`,
 
-      // Кнопка копирования — иконка
-      const copyBtn = document.createElement("button");
-      copyBtn.className = "code-copy";
-      copyBtn.setAttribute("aria-label", "Копировать код");
-      copyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>`;
+    checkIcon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>`,
 
-      wrapper.appendChild(copyBtn);
+    init() {
+      utils.$$(config.selectors.codeBlocks).forEach((pre) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "code-block";
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
 
-      copyBtn.addEventListener("click", async () => {
-        const code = pre.querySelector("code")?.textContent || pre.textContent;
+        const copyBtn = document.createElement("button");
+        copyBtn.className = "code-copy";
+        copyBtn.setAttribute("aria-label", "Копировать код");
+        copyBtn.innerHTML = this.copyIcon;
+        wrapper.appendChild(copyBtn);
 
-        try {
-          await navigator.clipboard.writeText(code);
-          copyBtn.classList.add("copied");
-          copyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>`;
+        copyBtn.addEventListener("click", () => this.handleCopy(pre, copyBtn));
+      });
+    },
 
-          setTimeout(() => {
-            copyBtn.classList.remove("copied");
-            copyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                        </svg>`;
-          }, 2000);
-        } catch (err) {
-          console.error("Copy failed:", err);
+    async handleCopy(pre, btn) {
+      const code = utils.$("code", pre)?.textContent || pre.textContent;
+
+      try {
+        await navigator.clipboard.writeText(code);
+        btn.classList.add("copied");
+        btn.innerHTML = this.checkIcon;
+
+        setTimeout(() => {
+          btn.classList.remove("copied");
+          btn.innerHTML = this.copyIcon;
+        }, 2000);
+      } catch (err) {
+        console.error("Copy failed:", err);
+      }
+    },
+  };
+
+  // ==========================================
+  // Модуль: Поиск по документации
+  // ==========================================
+
+  const searchModule = {
+    docs: [],
+    indexLoaded: false,
+    loadPromise: null,
+
+    init() {
+      this.initHotkey();
+      this.initDocsSearch();
+    },
+
+    initHotkey() {
+      const searchInput = utils.$(".docs-search input");
+      if (!searchInput) return;
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "/" && document.activeElement.tagName !== "INPUT") {
+          e.preventDefault();
+          searchInput.focus();
         }
       });
-    });
-  }
+    },
 
-  // ==========================================
-  // Поиск по документации (горячая клавиша /)
-  // ==========================================
+    initDocsSearch() {
+      const input = utils.$(config.selectors.searchInput);
+      const resultsEl = utils.$(config.selectors.searchResults);
+      const navEl = utils.$(config.selectors.docsNav);
+      if (!input || !resultsEl) return;
 
-  function initSearch() {
-    const searchInput = document.querySelector(".docs-search input");
-    if (!searchInput) return;
+      const sidebar = input.closest(".docs-sidebar");
+      const indexUrl =
+        input.dataset.searchIndex ||
+        (config.basePath
+          ? `${config.basePath}/search_index.json`
+          : "/search_index.json");
+      const scope = input.dataset.searchScope || "/docs/";
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "/" && document.activeElement.tagName !== "INPUT") {
-        e.preventDefault();
-        searchInput.focus();
+      input.addEventListener("input", async () => {
+        const query = input.value.trim();
+        if (query.length < 2) {
+          this.clearResults(resultsEl, sidebar, navEl);
+          return;
+        }
+
+        await this.loadIndex(indexUrl, scope);
+        if (!this.docs.length) {
+          this.clearResults(resultsEl, sidebar, navEl);
+          return;
+        }
+
+        const tokens = query
+          .split(/\s+/)
+          .map((t) => t.toLowerCase())
+          .filter((t) => t.length > 1);
+        if (!tokens.length) {
+          this.clearResults(resultsEl, sidebar, navEl);
+          return;
+        }
+
+        const results = this.search(tokens);
+        this.renderResults(results, tokens, resultsEl, sidebar, navEl);
+      });
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          input.value = "";
+          this.clearResults(resultsEl, sidebar, navEl);
+          input.blur();
+        }
+      });
+    },
+
+    async loadIndex(indexUrl, scope) {
+      if (this.indexLoaded) return;
+      if (!this.loadPromise) {
+        this.loadPromise = fetch(indexUrl)
+          .then((res) => {
+            if (!res.ok) throw new Error("index fetch failed");
+            return res.json();
+          })
+          .catch(() =>
+            fetch(
+              config.basePath
+                ? `${config.basePath}/search_index.json`
+                : "/search_index.json",
+            ).then((res) => res.json()),
+          )
+          .then((data) => {
+            this.buildDocs(data, scope);
+            this.indexLoaded = true;
+          })
+          .catch((err) => console.error("Search index load failed:", err));
       }
-    });
-  }
+      await this.loadPromise;
+    },
 
-  // ==========================================
-  // Поиск по документации (результаты)
-  // ==========================================
-
-  function initDocsSearch() {
-    const input = document.querySelector("[data-search-input]");
-    const resultsEl = document.querySelector("[data-search-results]");
-    const navEl = document.querySelector(".docs-nav");
-    if (!input || !resultsEl) return;
-
-    const sidebar = input.closest(".docs-sidebar");
-    const indexUrl =
-      input.dataset.searchIndex ||
-      (basePath ? `${basePath}/search_index.json` : "/search_index.json");
-    const scope = input.dataset.searchScope || "/docs/";
-    let docs = [];
-    let indexLoaded = false;
-    let loadPromise = null;
-
-    const normalize = (value) =>
-      (value || "").toString().replace(/\s+/g, " ").trim().toLowerCase();
-
-    const buildDocs = (data) => {
+    buildDocs(data, scope) {
       const store = data?.documentStore?.docs || {};
-      docs = Object.values(store)
+      this.docs = Object.values(store)
         .filter((doc) => (doc.path || "").startsWith(scope))
         .map((doc) => {
           const body = (doc.body || "").replace(/\s+/g, " ").trim();
@@ -175,38 +288,23 @@
             description: (doc.description || "").trim(),
             body,
             path: doc.path || doc.id || "#",
-            _title: normalize(doc.title),
-            _description: normalize(doc.description),
-            _body: normalize(body),
+            _title: utils.normalize(doc.title),
+            _description: utils.normalize(doc.description),
+            _body: utils.normalize(body),
           };
         });
-    };
+    },
 
-    const loadIndex = async () => {
-      if (indexLoaded) return;
-      if (!loadPromise) {
-        loadPromise = fetch(indexUrl)
-          .then((res) => {
-            if (!res.ok) throw new Error("index fetch failed");
-            return res.json();
-          })
-          .catch(() =>
-            fetch(
-              basePath ? `${basePath}/search_index.json` : "/search_index.json",
-            ).then((res) => res.json()),
-          )
-          .then((data) => {
-            buildDocs(data);
-            indexLoaded = true;
-          })
-          .catch((err) => {
-            console.error("Search index load failed:", err);
-          });
-      }
-      await loadPromise;
-    };
+    search(tokens) {
+      return this.docs
+        .map((doc) => ({ doc, score: this.scoreDoc(doc, tokens) }))
+        .filter((entry) => entry.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 12)
+        .map((entry) => entry.doc);
+    },
 
-    const scoreDoc = (doc, tokens) => {
+    scoreDoc(doc, tokens) {
       let score = 0;
       for (const token of tokens) {
         const inTitle = doc._title.includes(token);
@@ -220,31 +318,35 @@
         if (inBody) score += 1;
       }
       return score;
-    };
+    },
 
-    const buildSnippet = (doc, tokens) => {
+    buildSnippet(doc, tokens) {
       if (doc.description) return doc.description;
       const text = doc.body || "";
       if (!text) return "";
+
       const lower = text.toLowerCase();
       let idx = -1;
       for (const token of tokens) {
         idx = lower.indexOf(token);
         if (idx !== -1) break;
       }
+
       if (idx === -1) {
         return text.length > 140 ? `${text.slice(0, 140)}…` : text;
       }
+
       const start = Math.max(0, idx - 60);
       const end = Math.min(text.length, idx + 80);
       let snippet = text.slice(start, end).trim();
       if (start > 0) snippet = `…${snippet}`;
       if (end < text.length) snippet = `${snippet}…`;
       return snippet;
-    };
+    },
 
-    const renderResults = (results, tokens) => {
+    renderResults(results, tokens, resultsEl, sidebar, navEl) {
       resultsEl.innerHTML = "";
+
       if (!results.length) {
         const empty = document.createElement("div");
         empty.className = "search-empty";
@@ -265,14 +367,14 @@
 
         const title = document.createElement("a");
         title.className = "search-result-title";
-        title.href = withBasePath(doc.path);
+        title.href = utils.withBasePath(doc.path);
         title.textContent = doc.title;
 
         const path = document.createElement("span");
         path.className = "search-result-path";
         path.textContent = doc.path;
 
-        const snippetText = buildSnippet(doc, tokens);
+        const snippetText = this.buildSnippet(doc, tokens);
 
         item.appendChild(title);
         if (snippetText) {
@@ -289,143 +391,219 @@
       resultsEl.hidden = false;
       if (sidebar) sidebar.classList.add("search-active");
       if (navEl) navEl.hidden = true;
-    };
+    },
 
-    const clearResults = () => {
+    clearResults(resultsEl, sidebar, navEl) {
       resultsEl.innerHTML = "";
       resultsEl.hidden = true;
       if (sidebar) sidebar.classList.remove("search-active");
       if (navEl) navEl.hidden = false;
-    };
-
-    input.addEventListener("input", async () => {
-      const query = input.value.trim();
-      if (query.length < 2) {
-        clearResults();
-        return;
-      }
-
-      await loadIndex();
-      if (!docs.length) {
-        clearResults();
-        return;
-      }
-
-      const tokens = query
-        .split(/\s+/)
-        .map((t) => t.toLowerCase())
-        .filter((t) => t.length > 1);
-
-      if (!tokens.length) {
-        clearResults();
-        return;
-      }
-
-      const results = docs
-        .map((doc) => ({ doc, score: scoreDoc(doc, tokens) }))
-        .filter((entry) => entry.score > 0)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 12)
-        .map((entry) => entry.doc);
-
-      renderResults(results, tokens);
-    });
-
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        input.value = "";
-        clearResults();
-        input.blur();
-      }
-    });
-  }
+    },
+  };
 
   // ==========================================
-  // Table of Contents — подсветка активного
+  // Модуль: Навигация
   // ==========================================
 
-  function initTocHighlight() {
-    const tocLinks = document.querySelectorAll(".docs-toc a, .blog-toc a");
-    if (!tocLinks.length) return;
+  const navigationModule = {
+    init() {
+      this.initMobileNav();
+      this.initDocsSidebar();
+      this.initSmoothScroll();
+      this.initTocHighlight();
+    },
 
-    const headings = [];
-    tocLinks.forEach((link) => {
-      const id = link.getAttribute("href")?.slice(1);
-      const heading = id && document.getElementById(id);
-      if (heading) headings.push({ el: heading, link });
-    });
+    initMobileNav() {
+      const toggle = utils.$(config.selectors.navToggle);
+      const nav = utils.$(config.selectors.mainNav);
+      if (!toggle || !nav) return;
 
-    if (!headings.length) return;
+      document.body.classList.add("has-js");
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            tocLinks.forEach((l) => l.classList.remove("active"));
-            const active = headings.find((h) => h.el === entry.target);
-            if (active) active.link.classList.add("active");
-          }
-        });
-      },
-      { rootMargin: "-100px 0px -66%" },
-    );
+      const setState = (open) => {
+        document.body.classList.toggle("nav-open", open);
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        toggle.setAttribute(
+          "aria-label",
+          open ? "Закрыть меню" : "Открыть меню",
+        );
 
-    headings.forEach((h) => observer.observe(h.el));
-  }
-
-  // ==========================================
-  // Плавная прокрутка к якорям
-  // ==========================================
-
-  function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener("click", function (e) {
-        const targetId = this.getAttribute("href").slice(1);
-        const target = document.getElementById(targetId);
-
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
-          history.pushState(null, null, `#${targetId}`);
+        if (open) {
+          document.body.classList.remove("docs-sidebar-open");
+          utils.$$(config.selectors.docsSidebarToggle).forEach((btn) => {
+            btn.setAttribute("aria-expanded", "false");
+          });
         }
+      };
+
+      toggle.addEventListener("click", () => {
+        const isOpen = !document.body.classList.contains("nav-open");
+        setState(isOpen);
       });
-    });
-  }
 
-  // ==========================================
-  // Анимация при появлении
-  // ==========================================
+      utils.$$("a", nav).forEach((link) => {
+        link.addEventListener("click", () => setState(false));
+      });
 
-  function initScrollAnimations() {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-visible");
-            observer.unobserve(entry.target);
+      document.addEventListener("click", (event) => {
+        if (!document.body.classList.contains("nav-open")) return;
+        if (toggle.contains(event.target) || nav.contains(event.target)) return;
+        setState(false);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setState(false);
+      });
+    },
+
+    initDocsSidebar() {
+      const sidebar = utils.$(config.selectors.docsSidebar);
+      const overlay = utils.$(config.selectors.docsSidebarOverlay);
+      const toggles = utils.$$(config.selectors.docsSidebarToggle);
+      if (!sidebar || !toggles.length) return;
+
+      document.body.classList.add("has-docs-js");
+
+      const setState = (open) => {
+        document.body.classList.toggle("docs-sidebar-open", open);
+        toggles.forEach((toggle) => {
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+
+        if (open) {
+          document.body.classList.remove("nav-open");
+          const mainToggle = utils.$(config.selectors.navToggle);
+          if (mainToggle) mainToggle.setAttribute("aria-expanded", "false");
+        }
+      };
+
+      toggles.forEach((toggle) => {
+        toggle.addEventListener("click", () => {
+          const isOpen = !document.body.classList.contains("docs-sidebar-open");
+          setState(isOpen);
+        });
+      });
+
+      if (overlay) {
+        overlay.addEventListener("click", () => setState(false));
+      }
+
+      sidebar.addEventListener("click", (event) => {
+        if (event.target.closest("a")) setState(false);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setState(false);
+      });
+
+      const media = window.matchMedia("(min-width: 1025px)");
+      const handleChange = (e) => {
+        if (e.matches) setState(false);
+      };
+      if (media.addEventListener) {
+        media.addEventListener("change", handleChange);
+      } else if (media.addListener) {
+        media.addListener(handleChange);
+      }
+    },
+
+    initSmoothScroll() {
+      utils.$$('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          const targetId = this.getAttribute("href").slice(1);
+          const target = document.getElementById(targetId);
+
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+            history.pushState(null, null, `#${targetId}`);
           }
         });
-      },
-      { threshold: 0.1 },
-    );
+      });
+    },
 
-    document
-      .querySelectorAll(".article, .download-edition, .docs-card")
-      .forEach((el) => {
+    initTocHighlight() {
+      const tocLinks = utils.$$(config.selectors.tocLinks);
+      if (!tocLinks.length) return;
+
+      const headings = [];
+      tocLinks.forEach((link) => {
+        const id = link.getAttribute("href")?.slice(1);
+        const heading = id && document.getElementById(id);
+        if (heading) headings.push({ el: heading, link });
+      });
+
+      if (!headings.length) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              tocLinks.forEach((l) => l.classList.remove("active"));
+              const active = headings.find((h) => h.el === entry.target);
+              if (active) active.link.classList.add("active");
+            }
+          });
+        },
+        { rootMargin: "-100px 0px -66%" },
+      );
+
+      headings.forEach((h) => observer.observe(h.el));
+    },
+  };
+
+  // ==========================================
+  // Модуль: Анимации
+  // ==========================================
+
+  const animationsModule = {
+    init() {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("animate-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+
+      utils.$$(config.selectors.animatedElements).forEach((el) => {
         observer.observe(el);
       });
-  }
+    },
+  };
 
   // ==========================================
-  // Инициализация
+  // Публичный API
   // ==========================================
 
-  document.addEventListener("DOMContentLoaded", () => {
-    initCodeCopy();
-    initSearch();
-    initDocsSearch();
-    initTocHighlight();
-    initSmoothScroll();
-    initScrollAnimations();
-  });
+  return {
+    config,
+    utils,
+
+    init() {
+      modalModule.init();
+      codeCopyModule.init();
+      searchModule.init();
+      navigationModule.init();
+      animationsModule.init();
+    },
+
+    // Экспорт модулей для возможного расширения
+    modules: {
+      modal: modalModule,
+      codeCopy: codeCopyModule,
+      search: searchModule,
+      navigation: navigationModule,
+      animations: animationsModule,
+    },
+  };
 })();
+
+// Инициализация при загрузке DOM
+document.addEventListener("DOMContentLoaded", () => {
+  RosaApp.init();
+});
