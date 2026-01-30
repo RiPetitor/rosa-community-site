@@ -1,7 +1,7 @@
 +++
-title = "Первоначальная настройка"
+title = "Первые шаги"
 description = "Что настроить сразу после установки"
-weight = 2
+weight = 4
 +++
 
 После установки стоит сделать несколько важных шагов — это улучшит безопасность
@@ -73,5 +73,5 @@ sudo dnf install timeshift
 
 ## Следующие шаги
 
-- [Управление пакетами](@/docs/guides/package-management.md)
-- [Основы терминала](@/docs/guides/terminal-basics.md)
+- [Установка программ из репозиториев](@/docs/daily-use/install-packages.md)
+- [Где искать помощь](@/docs/getting-started/get-help.md)
