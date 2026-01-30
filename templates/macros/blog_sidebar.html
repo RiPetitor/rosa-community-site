@@ -1,0 +1,46 @@
+{#
+  Макрос для боковой панели блога
+  Используется в: blog.html, taxonomy_single.html
+
+  Параметры:
+    - categories: таксономия категорий
+    - tags: таксономия тегов
+#}
+
+{% macro render(categories, tags) %}
+<aside class="blog-sidebar">
+    {% if categories and categories.items %}
+    <div class="sidebar-block">
+        <h3 class="sidebar-block-title">★ Категории</h3>
+        <ul class="taxonomy-list">
+            {% for item in categories.items %}
+            <li>
+                <a href="{{ item.permalink }}">{{ item.name }}</a>
+                <span class="count">{{ item.pages | length }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% if tags and tags.items %}
+    <div class="sidebar-block">
+        <h3 class="sidebar-block-title">★ Теги</h3>
+        <div class="tag-cloud">
+            {% for item in tags.items | slice(end=16) %}
+            <a href="{{ item.permalink }}" class="tag">#{{ item.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="sidebar-block">
+        <h3 class="sidebar-block-title">★ Подписка</h3>
+        <p class="muted">Читайте новости в удобном формате.</p>
+        <div class="subscription-links">
+            <a href="{{ get_url(path='rss.xml') }}" class="btn btn-outline">RSS</a>
+            <a href="{{ get_url(path='atom.xml') }}" class="btn btn-outline">Atom</a>
+        </div>
+    </div>
+</aside>
+{% endmacro %}

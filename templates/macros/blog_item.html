@@ -1,0 +1,63 @@
+{#
+  Макрос для карточки статьи блога
+  Используется в: blog.html, taxonomy_single.html
+
+  Параметры:
+    - page: объект страницы блога
+    - index: индекс для анимации (опционально, по умолчанию 0)
+#}
+
+{% macro render(page, index=0) %}
+<article
+    class="blog-item animate-slide-up"
+    style="animation-delay: {{ index * 0.05 }}s"
+>
+    <div class="blog-date">
+        <span class="day">{{ page.date | date(format="%d") }}</span>
+        <span class="month">{{ page.date | date(format="%b") }}</span>
+        <span class="year">{{ page.date | date(format="%Y") }}</span>
+    </div>
+    <div class="blog-content">
+        {% if page.extra.featured %}
+        <span class="feature-flag">Передовица</span>
+        {% endif %}
+
+        {% if page.taxonomies.categories %}
+        <div class="blog-categories">
+            {% for cat in page.taxonomies.categories %}
+            <a
+                href="{{ get_taxonomy_url(kind='categories', name=cat) }}"
+                class="category-tag"
+            >{{ cat }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <h3><a href="{{ page.permalink }}">{{ page.title }}</a></h3>
+
+        <div class="blog-meta">
+            {% if page.extra.author %}
+            <span class="author">{{ page.extra.author }}</span>
+            {% endif %}
+            {% if page.reading_time %}
+            <span class="reading-time">{{ page.reading_time }} мин.</span>
+            {% endif %}
+        </div>
+
+        <p class="excerpt">
+            {{ page.description | default(value=page.summary | striptags | truncate(length=200)) }}
+        </p>
+
+        {% if page.taxonomies.tags %}
+        <div class="tags">
+            {% for tag in page.taxonomies.tags %}
+            <a
+                href="{{ get_taxonomy_url(kind='tags', name=tag) }}"
+                class="tag"
+            >#{{ tag }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</article>
+{% endmacro %}
