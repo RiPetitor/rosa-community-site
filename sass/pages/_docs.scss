@@ -815,14 +815,22 @@ body.docs-page .docs-toc {
 // Mobile "On this page" (collapsed)
 .docs-toc-mobile {
   display: none;
-  margin: 1rem 0 1.5rem;
-  padding: 1rem 0;
-  border-top: none;
-  border-bottom: 1px solid $border-dark;
-  border-left: none;
-  border-right: none;
-  border-radius: 0;
-  background: rgba($ink-black, 0.02);
+  margin: 1rem 0 2.5rem;
+  border: 1px solid lighten($border-dark, 25%);
+  border-radius: 8px;
+  background: white;
+  overflow: visible;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -34px;
+    height: 1px;
+    background: $border-dark;
+  }
 
   summary {
     list-style: none;
