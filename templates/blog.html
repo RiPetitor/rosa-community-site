@@ -17,7 +17,7 @@ get_taxonomy(kind="categories") %} {% set tags = get_taxonomy(kind="tags") %}
         <a href="{{ term.permalink }}" class="nav-btn">{{ term.name }}</a>
         {% endfor %}
         <a
-            href="{{ config.extra.repo_url }}/new/{{ config.extra.repo_branch }}/content/blog?filename=new-post.md&value=%2B%2B%2B%0Atitle%20%3D%20%22%22%0Adate%20%3D%20{{ now() | date(format='%Y-%m-%d') }}%0Adescription%20%3D%20%22%22%0A%0A%5Btaxonomies%5D%0Acategories%20%3D%20%5B%22%D0%9D%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8%22%5D%0Atags%20%3D%20%5B%5D%0A%0A%5Bextra%5D%0Aauthor%20%3D%20%22%22%0A%2B%2B%2B%0A"
+            href="{{ config.extra.repo_url }}/new/{{ config.extra.repo_branch }}?filename=content/blog/new-post.md&value=%2B%2B%2B%0Atitle%20%3D%20%22%22%0Adate%20%3D%20{{ now() | date(format='%Y-%m-%d') }}%0Adescription%20%3D%20%22%22%0A%0A%5Btaxonomies%5D%0Acategories%20%3D%20%5B%22%D0%9D%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8%22%5D%0Atags%20%3D%20%5B%5D%0A%0A%5Bextra%5D%0Aauthor%20%3D%20%22%22%0A%2B%2B%2B%0A"
             class="nav-btn nav-btn-create"
             target="_blank"
             rel="noopener"
