@@ -2,8 +2,8 @@
 # Стиль: Советская газета
 
 base_url = "https://ripetitor.github.io/rosa-community-site"
-title = "РОСА Linux"
-description = "Народная операционная система - свободная, надёжная, отечественная"
+title = "ROSALIUM"
+description = "Коммьюнити сайт в советском стиле - свободная, надёжная, отечественная"
 default_language = "ru"
 
 # Компиляция Sass
