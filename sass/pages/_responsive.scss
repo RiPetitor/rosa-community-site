@@ -2,6 +2,16 @@
 // Responsive
 // ============================================
 
+@media (min-width: 1200px) {
+  body.home .newspaper-content {
+    max-width: 1280px;
+  }
+
+  body.home .hero-title {
+    font-size: clamp(2rem, 3vw, 2.4rem);
+  }
+}
+
 @media (max-width: 1200px) {
   .newspaper-header,
   .newspaper-content,
