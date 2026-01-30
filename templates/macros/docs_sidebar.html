@@ -1,12 +1,6 @@
-{#
-  Макрос для боковой панели документации
-  Используется в: docs.html, docs-page.html, docs-section.html
-
-  Параметры:
-    - title: заголовок для мобильной панели
-#}
-
-{% macro render(title) %}
+{# Макрос для боковой панели документации Используется в: docs.html,
+docs-page.html, docs-section.html Параметры: - title: заголовок для мобильной
+панели #} {% macro render(title) %}
 <div class="docs-mobile-bar">
     <button
         class="docs-sidebar-toggle"
@@ -14,11 +8,10 @@
         data-docs-sidebar-toggle
         aria-expanded="false"
         aria-controls="docs-sidebar"
-        aria-label="Оглавление"
+        aria-label="Содержание"
     >
-        Оглавление
+        Содержание
     </button>
-    <span class="docs-mobile-title">{{ title }}</span>
 </div>
 <div class="docs-sidebar-overlay" data-docs-sidebar-overlay></div>
 <aside class="docs-sidebar" id="docs-sidebar" data-docs-sidebar>
@@ -42,19 +35,18 @@
     ></div>
 
     <nav class="docs-nav">
-        {% set docs = get_section(path="docs/_index.md") %}
-        {% for subsection in docs.subsections %}
-            {% set sub = get_section(path=subsection) %}
-            <div class="nav-group">
-                <h4 class="nav-group-title">{{ sub.title }}</h4>
-                <ul>
-                    {% for doc_page in sub.pages %}
-                    <li>
-                        <a href="{{ doc_page.permalink }}">{{ doc_page.title }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
+        {% set docs = get_section(path="docs/_index.md") %} {% for subsection in
+        docs.subsections %} {% set sub = get_section(path=subsection) %}
+        <div class="nav-group">
+            <h4 class="nav-group-title">{{ sub.title }}</h4>
+            <ul>
+                {% for doc_page in sub.pages %}
+                <li>
+                    <a href="{{ doc_page.permalink }}">{{ doc_page.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
         {% endfor %}
     </nav>
 </aside>
