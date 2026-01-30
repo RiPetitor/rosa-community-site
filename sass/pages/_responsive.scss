@@ -1,0 +1,391 @@
+// ============================================
+// Responsive
+// ============================================
+
+@media (max-width: 1200px) {
+  .newspaper-header,
+  .newspaper-content,
+  .newspaper-footer {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .page-content,
+  .blog-post,
+  .docs-content {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 1024px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .newspaper-header {
+    padding: 1rem 1.5rem;
+  }
+
+  .header-meta {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+  }
+
+  .newspaper-content {
+    padding: 1.5rem;
+  }
+
+  .page-content {
+    padding: 1.75rem;
+  }
+
+  .hero-section {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .download-page .download-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .newspaper-header {
+    padding: 0.9rem 1.25rem;
+  }
+
+  .header-meta {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+  }
+
+  .masthead {
+    grid-template-areas:
+      "title"
+      "subtitle";
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .masthead .soviet-star {
+    display: none;
+  }
+
+  .site-title {
+    font-size: clamp(2rem, 10vw, 3.2rem);
+    letter-spacing: 0.08em;
+  }
+
+  .site-subtitle {
+    font-size: 0.9rem;
+    letter-spacing: 0.18em;
+    text-align: center;
+  }
+
+  .main-nav {
+    display: block;
+    margin-top: 0.75rem;
+    background: $paper-cream;
+    border: 2px solid $ink-black;
+    box-shadow: inset 0 0 0 1px $paper-cream;
+  }
+
+  body.has-js .nav-toggle {
+    display: inline-flex;
+  }
+
+  body.has-js .main-nav {
+    display: none;
+  }
+
+  body.has-js.nav-open .main-nav {
+    display: block;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .main-nav li {
+    border-top: 1px dotted $border-dark;
+
+    &:first-child {
+      border-top: none;
+    }
+
+    &::after {
+      content: none;
+    }
+  }
+
+  .main-nav a {
+    display: block;
+    text-align: center;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    padding: 0.65rem 0.5rem;
+  }
+
+  .newspaper-content {
+    padding: 1.25rem;
+  }
+
+  .page-content {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .column-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .article {
+    padding: 1.25rem;
+  }
+
+  .article p,
+  .article-excerpt,
+  .docs-body p {
+    text-align: left;
+  }
+
+  .article-excerpt::first-letter {
+    float: none;
+    font-size: 2.5rem;
+    line-height: 1;
+    padding-right: 0;
+  }
+
+  .hero-section {
+    padding: 2rem 1.25rem;
+  }
+
+  .hero-title {
+    font-size: clamp(1.6rem, 7vw, 2.6rem);
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-cta .btn {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .btn {
+    min-height: 44px;
+  }
+
+  .sidebar-block {
+    padding: 1.25rem;
+  }
+
+  .download-page .download-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .download-page .download-hero h1 {
+    font-size: 2.1rem;
+  }
+
+  .download-options {
+    grid-template-columns: 1fr;
+  }
+
+  .download-edition .edition-header {
+    padding: 1.25rem;
+  }
+
+  .download-edition .edition-body {
+    padding: 1.25rem;
+  }
+
+  .blog-list .blog-item {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-list .blog-item .blog-date {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+  }
+
+  .blog-list .blog-item .blog-date .day {
+    font-size: 2rem;
+  }
+
+  .blog-header h1 {
+    font-size: 2rem;
+    letter-spacing: 0.12em;
+  }
+
+  .blog-post {
+    padding: 2rem 1.25rem;
+  }
+
+  .blog-post .post-header .post-title {
+    font-size: 2rem;
+  }
+
+  .docs-content {
+    padding: 2rem 1.25rem;
+  }
+
+  .docs-content .docs-header h1 {
+    font-size: 2.2rem;
+  }
+
+  .docs-content .docs-footer-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .docs-content .docs-footer-nav .nav-link {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .docs-content .docs-body pre {
+    padding: 1rem;
+    font-size: 0.8rem;
+  }
+
+  .docs-sidebar .docs-search input {
+    font-size: 1rem;
+  }
+
+  .modal .modal-overlay {
+    padding: 1rem;
+  }
+
+  .modal .modal-header {
+    padding: 1.5rem 1.25rem 1rem;
+  }
+
+  .modal .modal-body {
+    padding: 1.25rem;
+  }
+
+  .modal .modal-footer {
+    padding: 0.85rem 1.25rem;
+  }
+
+  .headline-section .section-header {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .headline-section .section-header::before,
+  .headline-section .section-header::after {
+    display: none;
+  }
+
+  .headline-section .section-header h2 {
+    white-space: normal;
+    text-align: center;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+  }
+
+  .newspaper-footer {
+    padding: 0 1.25rem 1.5rem;
+  }
+
+  .newspaper-footer .footer-columns {
+    gap: 1.5rem;
+  }
+
+  .article table,
+  .page-content table,
+  .docs-body table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 480px) {
+  .newspaper-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .site-title {
+    letter-spacing: 0.06em;
+  }
+
+  .site-subtitle {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+  }
+
+  .newspaper-content {
+    padding: 1rem;
+  }
+
+  .page-content {
+    padding: 1.25rem 1rem;
+  }
+
+  .hero-title {
+    font-size: clamp(1.5rem, 8.5vw, 2.2rem);
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .blog-list .blog-item .blog-date .month,
+  .blog-list .blog-item .blog-date .year {
+    font-size: 0.75rem;
+  }
+
+  .download-page .download-hero h1 {
+    font-size: 1.85rem;
+  }
+
+  .headline-section .section-header h2 {
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+  }
+
+  .blog-header h1 {
+    font-size: 1.8rem;
+    letter-spacing: 0.1em;
+  }
+
+  .docs-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .docs-content .docs-header h1 {
+    font-size: 2rem;
+  }
+}
+
+@media print {
+  .main-nav,
+  .modal,
+  .btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+  }
+
+  .newspaper-content {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,107 @@
+// ============================================
+// Статьи
+// ============================================
+
+.article {
+  @include newspaper-border;
+  background: $paper-cream;
+  padding: 1.5rem;
+
+  p {
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  &-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid $border-dark;
+  }
+
+  &-category {
+    display: inline-block;
+    background: $soviet-red;
+    color: white;
+    font-family: $font-sans;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  &-title {
+    font-family: $font-display;
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0.5rem 0;
+
+    a {
+      color: $ink-black;
+      text-decoration: none;
+
+      &:hover {
+        color: $soviet-red;
+      }
+    }
+  }
+
+  &-meta {
+    font-family: $font-sans;
+    font-size: 0.8rem;
+    color: $text-muted;
+
+    .author::before {
+      content: '✒ ';
+    }
+
+    .date::before {
+      content: '📅 ';
+    }
+  }
+
+  &-excerpt {
+    font-size: 1rem;
+    line-height: 1.7;
+    text-align: justify;
+    hyphens: auto;
+
+    &::first-letter {
+      float: left;
+      font-family: $font-display;
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 0.8;
+      padding-right: 0.5rem;
+      color: $soviet-red;
+    }
+  }
+
+  &-footer {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed $border-dark;
+    text-align: right;
+
+    .read-more {
+      font-family: $font-sans;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: $soviet-red;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      &::after {
+        content: ' →';
+      }
+    }
+  }
+}

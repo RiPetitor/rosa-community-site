@@ -1,0 +1,74 @@
+// ============================================
+// Секции главной страницы
+// ============================================
+
+.hero-section {
+  text-align: center;
+  padding: 3rem 2rem;
+  margin-bottom: 2rem;
+  background:
+    linear-gradient(135deg, rgba($soviet-red, 0.05) 0%, transparent 50%),
+    linear-gradient(-135deg, rgba($soviet-red, 0.05) 0%, transparent 50%);
+  @include newspaper-border;
+
+  .hero-emblem {
+    font-size: 4rem;
+    color: $soviet-red;
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-family: $font-display;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+  }
+
+  .hero-subtitle {
+    font-family: $font-body;
+    font-size: 1.25rem;
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    color: $text-muted;
+  }
+
+  .hero-cta {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+}
+
+// Секция передовицы
+.headline-section {
+  margin-bottom: 2rem;
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+
+    &::before,
+    &::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: $ink-black;
+    }
+
+    h2 {
+      font-family: $font-display;
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin: 0;
+      white-space: nowrap;
+    }
+  }
+}

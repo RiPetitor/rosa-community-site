@@ -1,0 +1,108 @@
+// ============================================
+// Шапка газеты
+// ============================================
+
+.newspaper-header {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  text-align: center;
+
+  .header-ornament {
+    &.top::before {
+      @include ornament-line;
+    }
+
+    &.bottom::after {
+      @include ornament-line;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          $ink-black 0px,
+          $ink-black 10px,
+          transparent 10px,
+          transparent 15px
+        );
+      height: 2px;
+    }
+  }
+
+  .header-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: $font-sans;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: $text-muted;
+    margin-bottom: 0.5rem;
+  }
+
+  // Masthead с grid-раскладкой (объединённое определение)
+  .masthead {
+    display: grid;
+    grid-template-areas:
+      "star1 title star3"
+      ".     subtitle .";
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    justify-items: center;
+    gap: 0.25rem 1rem;
+    margin: 1rem 0;
+    width: 100%;
+
+    > .soviet-star:first-child {
+      grid-area: star1;
+    }
+
+    > .site-title {
+      grid-area: title;
+      margin: 0;
+    }
+
+    > .site-subtitle {
+      grid-area: subtitle;
+      justify-self: center;
+    }
+
+    > .soviet-star:nth-child(3) {
+      grid-area: star3;
+    }
+
+    .soviet-star {
+      @include soviet-star;
+      font-size: 2rem;
+    }
+  }
+
+  .site-title {
+    font-family: $font-display;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    margin: 0;
+    text-shadow:
+      2px 2px 0 $paper-cream,
+      3px 3px 0 $ink-dark;
+
+    a {
+      color: $ink-black;
+      text-decoration: none;
+
+      &:hover {
+        color: $soviet-red;
+      }
+    }
+  }
+
+  .site-subtitle {
+    font-family: $font-sans;
+    font-size: 1rem;
+    font-style: italic;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-variant: small-caps;
+    margin: 0.5rem 0 0;
+    color: $text-muted;
+  }
+}

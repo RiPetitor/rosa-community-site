@@ -1,0 +1,60 @@
+// ============================================
+// Кнопки
+// ============================================
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: $font-sans;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid $ink-black;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 0.2s;
+
+  &-primary {
+    background: $soviet-red;
+    color: white;
+    border-color: $soviet-red-dark;
+
+    &:hover {
+      background: $soviet-red-dark;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 0 $ink-black;
+    }
+  }
+
+  &-secondary {
+    background: $paper-cream;
+    color: $ink-black;
+
+    &:hover {
+      background: $ink-black;
+      color: $paper-cream;
+    }
+  }
+
+  &-outline {
+    background: transparent;
+    color: $ink-black;
+
+    &:hover {
+      background: $ink-black;
+      color: $paper-cream;
+    }
+  }
+
+  &.btn-small {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.75rem;
+    letter-spacing: 0.06em;
+    border-width: 1px;
+  }
+}

@@ -1,0 +1,111 @@
+// ============================================
+// Модальное окно
+// ============================================
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.3s;
+
+  &[aria-hidden="false"] {
+    visibility: visible;
+    opacity: 1;
+
+    .modal-container {
+      transform: scale(1);
+    }
+  }
+
+  .modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba($ink-black, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .modal-container {
+    position: relative;
+    max-width: 700px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: $paper-cream;
+    @include newspaper-border;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.5rem;
+    line-height: 1;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $text-muted;
+
+    &:hover {
+      color: $soviet-red;
+    }
+  }
+
+  .modal-header {
+    text-align: center;
+    padding: 2rem 2rem 1rem;
+    border-bottom: 2px solid $ink-black;
+
+    .soviet-emblem {
+      font-size: 3rem;
+      color: $soviet-red;
+    }
+
+    h2 {
+      font-family: $font-display;
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      margin: 0.5rem 0;
+    }
+
+    p {
+      font-style: italic;
+      color: $text-muted;
+      margin: 0;
+    }
+  }
+
+  .modal-body {
+    padding: 2rem;
+  }
+
+  .modal-footer {
+    padding: 1rem 2rem;
+    background: rgba($ink-black, 0.05);
+    text-align: center;
+    font-size: 0.85rem;
+    color: $text-muted;
+
+    p {
+      margin: 0;
+    }
+  }
+}

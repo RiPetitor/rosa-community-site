@@ -1,0 +1,257 @@
+// ============================================
+// Страница загрузки
+// ============================================
+
+// Карточки загрузки (модальное окно)
+.download-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.download-card {
+  text-align: center;
+  padding: 1.5rem;
+  border: 2px solid $border-dark;
+  background: white;
+
+  .card-badge {
+    display: inline-block;
+    background: $soviet-red;
+    color: white;
+    font-family: $font-sans;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-family: $font-display;
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .version {
+    font-family: $font-sans;
+    font-size: 0.9rem;
+    color: $soviet-red;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+  }
+
+  .desc {
+    font-size: 0.9rem;
+    color: $text-muted;
+    margin: 0 0 1rem;
+  }
+
+  .de-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .de-options-alt {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: center;
+  }
+}
+
+// Страница загрузки
+.download-page {
+  .download-hero {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    h1 {
+      font-family: $font-display;
+      font-size: 3rem;
+      font-weight: 900;
+      margin: 0 0 1rem;
+    }
+
+    .lead {
+      font-size: 1.25rem;
+      color: $text-muted;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+
+  .download-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+
+    .download-buttons .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .download-cta {
+    margin: 2.5rem auto 0;
+    text-align: center;
+    max-width: 520px;
+
+    .btn-cta {
+      min-width: 220px;
+      font-size: 1.05rem;
+      padding: 0.85rem 2rem;
+    }
+
+    .cta-note {
+      margin: 0.75rem 0 0;
+      color: $text-muted;
+      font-size: 0.95rem;
+    }
+  }
+
+  .community-section {
+    margin-top: 2.5rem;
+  }
+
+  .download-edition {
+    @include newspaper-border;
+    background: $paper-cream;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    .edition-header {
+      background: $soviet-red;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+
+      h2 {
+        font-family: $font-display;
+        font-size: 1.75rem;
+        margin: 0;
+      }
+
+      .version {
+        font-family: $font-sans;
+        font-size: 1rem;
+        opacity: 0.9;
+        margin-top: 0.25rem;
+      }
+    }
+
+    .edition-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+
+      .edition-block {
+        padding-top: 0.75rem;
+        border-top: 1px dashed lighten($border-dark, 20%);
+
+        &:first-child {
+          border-top: none;
+          padding-top: 0;
+        }
+      }
+
+      .block-label {
+        display: block;
+        font-family: $font-sans;
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: $text-muted;
+        margin-bottom: 0.4rem;
+      }
+
+      .description {
+        font-size: 0.95rem;
+        margin: 0;
+        text-align: left;
+      }
+
+      .features {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          padding: 0.5rem 0;
+          padding-left: 1.5rem;
+          position: relative;
+          border-bottom: 1px dotted $border-dark;
+
+          &::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: $soviet-red;
+            font-weight: bold;
+          }
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+      }
+
+      .download-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+      }
+
+      .download-more {
+        margin-top: 1rem;
+
+        summary {
+          cursor: pointer;
+          font-family: $font-sans;
+          font-size: 0.85rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          color: $ink-dark;
+          list-style: none;
+          position: relative;
+          padding-left: 1.25rem;
+        }
+
+        summary::marker {
+          content: '';
+        }
+
+        summary::before {
+          content: '+';
+          position: absolute;
+          left: 0;
+          top: 0;
+          color: $soviet-red;
+        }
+
+        &[open] summary::before {
+          content: '–';
+        }
+
+        .download-buttons {
+          margin-top: 0.75rem;
+        }
+      }
+    }
+
+    .edition-footer {
+      margin-top: auto;
+      padding: 1rem 1.5rem;
+      background: rgba($ink-black, 0.05);
+      font-size: 0.85rem;
+      color: $text-muted;
+      text-align: center;
+    }
+  }
+}

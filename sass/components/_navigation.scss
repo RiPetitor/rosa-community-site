@@ -1,0 +1,237 @@
+// ============================================
+// Навигация
+// ============================================
+
+// Кнопка-переключатель меню (мобильная)
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  width: 180px;
+  height: 60px;
+  margin: 0.75rem auto 0;
+  border: 2px solid $ink-black;
+  border-radius: 6px;
+  background: radial-gradient(
+      circle at 50% 35%,
+      rgba($soviet-red, 0.18),
+      rgba($soviet-red, 0) 55%
+    ),
+    $paper-cream;
+  box-shadow:
+    inset 0 0 0 2px $soviet-red,
+    0 2px 0 $ink-black;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  position: relative;
+
+  &::before {
+    content: '★';
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: $soviet-red;
+  }
+
+  &::after {
+    content: 'МЕНЮ';
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: $font-sans;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: $ink-black;
+  }
+
+  span {
+    display: block;
+    width: 22px;
+    height: 3px;
+    background: $ink-black;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+}
+
+body.nav-open .nav-toggle {
+  background: radial-gradient(
+      circle at 50% 35%,
+      rgba($soviet-red, 0.24),
+      rgba($soviet-red, 0) 55%
+    ),
+    $paper-aged;
+}
+
+body.nav-open .nav-toggle span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+body.nav-open .nav-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+body.nav-open .nav-toggle span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+// Основная навигация
+.main-nav {
+  margin-top: 1rem;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  li {
+    position: relative;
+
+    &:not(:last-child)::after {
+      content: '◆';
+      color: $soviet-red;
+      padding: 0 1rem;
+      font-size: 0.5rem;
+      vertical-align: middle;
+    }
+  }
+
+  a {
+    font-family: $font-sans;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    font-variant: small-caps;
+    color: $ink-black;
+    text-decoration: none;
+    padding: 0.5rem 0;
+    transition: color 0.2s;
+
+    &:hover,
+    &.active {
+      color: $soviet-red;
+    }
+
+    &.active {
+      border-bottom: 2px solid $soviet-red;
+    }
+  }
+}
+
+// Навигация блога
+.blog-nav {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .nav-btn {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    font-family: $font-sans;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: $ink-dark;
+    background: $paper-cream;
+    border: 1px solid $border-dark;
+    border-radius: 6px;
+    transition: all 0.2s;
+
+    &:hover {
+      background: $soviet-red;
+      color: white;
+      border-color: $soviet-red;
+    }
+
+    &.active {
+      background: $soviet-red;
+      color: white;
+      border-color: $soviet-red;
+    }
+  }
+}
+
+// Пагинация
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0 0;
+
+  .page-info {
+    font-family: $font-sans;
+    font-size: 0.85rem;
+    color: $text-muted;
+  }
+}
+
+// Навигация между статьями
+.post-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $border-dark;
+
+  a {
+    flex: 1;
+    min-width: 200px;
+    padding: 1rem;
+    border: 1px solid $border-dark;
+    border-radius: 8px;
+    text-decoration: none;
+    color: $ink-black;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: $soviet-red;
+      background: rgba($soviet-red, 0.05);
+
+      .nav-title {
+        color: $soviet-red;
+      }
+    }
+
+    &.nav-prev {
+      text-align: left;
+    }
+
+    &.nav-next {
+      text-align: right;
+    }
+
+    .nav-label {
+      display: block;
+      font-family: $font-sans;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: $text-muted;
+      margin-bottom: 0.25rem;
+    }
+
+    .nav-title {
+      display: block;
+      font-family: $font-sans;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: $ink-dark;
+    }
+  }
+}
