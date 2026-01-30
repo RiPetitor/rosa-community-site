@@ -1,6 +1,6 @@
-{% extends "base.html" %} {% block title %}{{ page.title }} — {{
-config.extra.site_name }}{% endblock %} {% block description %}{{
-page.description | default(value=page.summary | striptags |
+{% extends "base.html" %} {% import "macros/toc.html" as toc %} {% block title
+%}{{ page.title }} — {{ config.extra.site_name }}{% endblock %} {% block
+description %}{{ page.description | default(value=page.summary | striptags |
 truncate(length=160)) }}{% endblock %} {% block content %}
 <div class="blog-post-layout">
     <div class="blog-post-main">
@@ -57,7 +57,6 @@ truncate(length=160)) }}{% endblock %} {% block content %}
             </footer>
             {% endif %}
 
-            <!-- Навигация между статьями -->
             <nav class="post-navigation">
                 {% if page.earlier %}
                 <a href="{{ page.earlier.permalink }}" class="nav-prev">
@@ -73,7 +72,6 @@ truncate(length=160)) }}{% endblock %} {% block content %}
             </nav>
         </article>
 
-        <!-- Похожие статьи -->
         {% if page.taxonomies.tags %}
         <section class="related-posts headline-section">
             <div class="section-header">
@@ -107,26 +105,6 @@ truncate(length=160)) }}{% endblock %} {% block content %}
         {% endif %}
     </div>
 
-    {% if page.toc %}
-    <aside class="blog-toc">
-        <div class="toc-container">
-            <h4>На этой странице</h4>
-            <ul>
-                {% for h2 in page.toc %}
-                <li>
-                    <a href="#{{ h2.id }}">{{ h2.title }}</a>
-                    {% if h2.children %}
-                    <ul>
-                        {% for h3 in h2.children %}
-                        <li><a href="#{{ h3.id }}">{{ h3.title }}</a></li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </aside>
-    {% endif %}
+    {{ toc::render(toc=page.toc, class_name="blog-toc") }}
 </div>
 {% endblock %}

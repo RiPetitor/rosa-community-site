@@ -1,6 +1,7 @@
-{% extends "base.html" %} {% block title %}{{ term.name }} - {{
-config.extra.site_name }}{% endblock %} {% block body_class %}blog-page{%
-endblock %} {% block content %} {% set categories =
+{% extends "base.html" %} {% import "macros/blog_item.html" as blog_item %} {%
+import "macros/blog_sidebar.html" as blog_sidebar %} {% block title %}{{
+term.name }} - {{ config.extra.site_name }}{% endblock %} {% block body_class
+%}blog-page{% endblock %} {% block content %} {% set categories =
 get_taxonomy(kind="categories") %} {% set tags = get_taxonomy(kind="tags") %}
 
 <div class="blog-header">
@@ -24,117 +25,11 @@ get_taxonomy(kind="categories") %} {% set tags = get_taxonomy(kind="tags") %}
 <div class="blog-layout">
     <div class="blog-main">
         <div class="blog-list">
-            {% if paginator %} {% for page in paginator.pages %}
-            <article
-                class="blog-item animate-slide-up"
-                style="animation-delay: {{ loop.index0 * 0.05 }}s"
-            >
-                <div class="blog-date">
-                    <span class="day">{{ page.date | date(format="%d") }}</span>
-                    <span class="month"
-                        >{{ page.date | date(format="%b") }}</span
-                    >
-                    <span class="year"
-                        >{{ page.date | date(format="%Y") }}</span
-                    >
-                </div>
-                <div class="blog-content">
-                    {% if page.extra.featured %}
-                    <span class="feature-flag">Передовица</span>
-                    {% endif %} {% if page.taxonomies.categories %}
-                    <div class="blog-categories">
-                        {% for cat in page.taxonomies.categories %}
-                        <a
-                            href="{{ get_taxonomy_url(kind='categories', name=cat) }}"
-                            class="category-tag"
-                            >{{ cat }}</a
-                        >
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                    <h3><a href="{{ page.permalink }}">{{ page.title }}</a></h3>
-                    <div class="blog-meta">
-                        {% if page.extra.author %}
-                        <span class="author">{{ page.extra.author }}</span>
-                        {% endif %} {% if page.reading_time %}
-                        <span class="reading-time"
-                            >{{ page.reading_time }} мин.</span
-                        >
-                        {% endif %}
-                    </div>
-                    <p class="excerpt">
-                        {{ page.description | default(value=page.summary |
-                        striptags | truncate(length=200)) }}
-                    </p>
-                    {% if page.taxonomies.tags %}
-                    <div class="tags">
-                        {% for tag in page.taxonomies.tags %}
-                        <a
-                            href="{{ get_taxonomy_url(kind='tags', name=tag) }}"
-                            class="tag"
-                            >#{{ tag }}</a
-                        >
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                </div>
-            </article>
-            {% endfor %} {% elif term.pages %} {% for page in term.pages %}
-            <article
-                class="blog-item animate-slide-up"
-                style="animation-delay: {{ loop.index0 * 0.05 }}s"
-            >
-                <div class="blog-date">
-                    <span class="day">{{ page.date | date(format="%d") }}</span>
-                    <span class="month"
-                        >{{ page.date | date(format="%b") }}</span
-                    >
-                    <span class="year"
-                        >{{ page.date | date(format="%Y") }}</span
-                    >
-                </div>
-                <div class="blog-content">
-                    {% if page.extra.featured %}
-                    <span class="feature-flag">Передовица</span>
-                    {% endif %} {% if page.taxonomies.categories %}
-                    <div class="blog-categories">
-                        {% for cat in page.taxonomies.categories %}
-                        <a
-                            href="{{ get_taxonomy_url(kind='categories', name=cat) }}"
-                            class="category-tag"
-                            >{{ cat }}</a
-                        >
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                    <h3><a href="{{ page.permalink }}">{{ page.title }}</a></h3>
-                    <div class="blog-meta">
-                        {% if page.extra.author %}
-                        <span class="author">{{ page.extra.author }}</span>
-                        {% endif %} {% if page.reading_time %}
-                        <span class="reading-time"
-                            >{{ page.reading_time }} мин.</span
-                        >
-                        {% endif %}
-                    </div>
-                    <p class="excerpt">
-                        {{ page.description | default(value=page.summary |
-                        striptags | truncate(length=200)) }}
-                    </p>
-                    {% if page.taxonomies.tags %}
-                    <div class="tags">
-                        {% for tag in page.taxonomies.tags %}
-                        <a
-                            href="{{ get_taxonomy_url(kind='tags', name=tag) }}"
-                            class="tag"
-                            >#{{ tag }}</a
-                        >
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                </div>
-            </article>
-            {% endfor %} {% else %}
+            {% if paginator %} {% for page in paginator.pages %} {{
+            blog_item::render(page=page, index=loop.index0) }} {% endfor %} {%
+            elif term.pages %} {% for page in term.pages %} {{
+            blog_item::render(page=page, index=loop.index0) }} {% endfor %} {%
+            else %}
             <div class="article text-center">
                 <h3>Статьи появятся здесь</h3>
                 <p>В этой категории пока нет статей.</p>
@@ -160,29 +55,6 @@ get_taxonomy(kind="categories") %} {% set tags = get_taxonomy(kind="tags") %}
         {% endif %}
     </div>
 
-    <aside class="blog-sidebar">
-        {% if categories and categories.items %}
-        <div class="sidebar-block">
-            <h3 class="sidebar-block-title">★ Категории</h3>
-            <ul class="taxonomy-list">
-                {% for item in categories.items %}
-                <li>
-                    <a href="{{ item.permalink }}">{{ item.name }}</a>
-                    <span class="count">{{ item.pages | length }}</span>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %} {% if tags and tags.items %}
-        <div class="sidebar-block">
-            <h3 class="sidebar-block-title">★ Теги</h3>
-            <div class="tag-cloud">
-                {% for item in tags.items | slice(end=16) %}
-                <a href="{{ item.permalink }}" class="tag">#{{ item.name }}</a>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
-    </aside>
+    {{ blog_sidebar::render(categories=categories, tags=tags) }}
 </div>
 {% endblock %}
