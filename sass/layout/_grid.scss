@@ -45,6 +45,34 @@
 
   &.two-column {
     grid-template-columns: 2fr 1fr;
+    align-items: stretch;
+
+    .main-column {
+      display: flex;
+
+      .article.featured {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        .article-excerpt {
+          flex: 1;
+        }
+
+        .article-footer {
+          margin-top: auto;
+        }
+      }
+    }
+
+    > .sidebar {
+      display: flex;
+      flex-direction: column;
+
+      .sidebar-block:last-child {
+        margin-bottom: 0;
+      }
+    }
 
     @media (max-width: 768px) {
       grid-template-columns: 1fr;

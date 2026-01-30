@@ -63,13 +63,27 @@
     }
   }
 
+  &-image {
+    margin-bottom: 1.5rem;
+
+    img {
+      width: 100%;
+      height: auto;
+      border: 1px solid $border-dark;
+    }
+
+    a {
+      display: block;
+    }
+  }
+
   &-excerpt {
     font-size: 1rem;
     line-height: 1.7;
     text-align: justify;
     hyphens: auto;
 
-    &::first-letter {
+    p:first-child::first-letter {
       float: left;
       font-family: $font-display;
       font-size: 4rem;
