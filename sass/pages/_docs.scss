@@ -834,6 +834,13 @@ body.docs-page .docs-toc {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    span {
+      background: rgba($soviet-red, 0.1);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      border-left: 3px solid $soviet-red;
+    }
   }
 
   summary::-webkit-details-marker {
