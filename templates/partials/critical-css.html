@@ -4,6 +4,31 @@
     при изменении стилей header, hero, navigation, blog-nav, docs-sidebar,
     docs-toc. #}
     <style>
+        /* Fallback fonts with size-adjust to reduce CLS */
+        @font-face {
+            font-family: "Literata Fallback";
+            src: local("Georgia");
+            size-adjust: 103%;
+            ascent-override: 92%;
+            descent-override: 22%;
+            line-gap-override: 0%;
+        }
+        @font-face {
+            font-family: "Old Standard TT Fallback";
+            src: local("Times New Roman");
+            size-adjust: 108%;
+            ascent-override: 90%;
+            descent-override: 22%;
+            line-gap-override: 0%;
+        }
+        @font-face {
+            font-family: "PT Sans Narrow Fallback";
+            src: local("Arial Narrow"), local("Arial");
+            size-adjust: 94%;
+            ascent-override: 100%;
+            descent-override: 25%;
+            line-gap-override: 0%;
+        }
         *,
         *::before,
         *::after {
@@ -16,7 +41,7 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: "Literata", Georgia, serif;
+            font-family: "Literata", "Literata Fallback", Georgia, serif;
             background:
                 url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"),
                 linear-gradient(to bottom, #f6f1e4 0%, #efe4cf 100%);
@@ -138,7 +163,9 @@
         .newspaper-header .header-meta {
             display: flex;
             justify-content: space-between;
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -175,7 +202,9 @@
             text-shadow: 1px 1px 0 #7a0000;
         }
         .newspaper-header .site-title {
-            font-family: "Old Standard TT", "Times New Roman", serif;
+            font-family:
+                "Old Standard TT", "Old Standard TT Fallback",
+                "Times New Roman", serif;
             font-size: clamp(2.5rem, 8vw, 5rem);
             font-weight: 900;
             letter-spacing: 0.12em;
@@ -192,7 +221,9 @@
             color: #b00000;
         }
         .newspaper-header .site-subtitle {
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 1rem;
             font-style: italic;
             letter-spacing: 0.28em;
@@ -217,7 +248,9 @@
                 background 0.2s,
                 box-shadow 0.2s,
                 transform 0.1s;
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 0.9rem;
             font-weight: 700;
             letter-spacing: 0.1em;
@@ -254,7 +287,9 @@
             vertical-align: middle;
         }
         .main-nav a {
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 0.9rem;
             font-weight: 700;
             letter-spacing: 0.12em;
@@ -302,7 +337,9 @@
             margin-bottom: 1rem;
         }
         .hero-section .hero-title {
-            font-family: "Old Standard TT", "Times New Roman", serif;
+            font-family:
+                "Old Standard TT", "Old Standard TT Fallback",
+                "Times New Roman", serif;
             font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 900;
             line-height: 1.1;
@@ -328,7 +365,9 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 0.9rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -377,7 +416,9 @@
             margin-bottom: 2rem;
         }
         .blog-header h1 {
-            font-family: "Old Standard TT", "Times New Roman", serif;
+            font-family:
+                "Old Standard TT", "Old Standard TT Fallback",
+                "Times New Roman", serif;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             margin-bottom: 0.5rem;
@@ -397,7 +438,9 @@
         .blog-nav .nav-btn {
             display: inline-block;
             padding: 0.5rem 1.25rem;
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 0.9rem;
             font-weight: 600;
             text-decoration: none;
@@ -436,7 +479,9 @@
             margin-bottom: 1.5rem;
         }
         .docs-sidebar .docs-nav .nav-group-title {
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -453,7 +498,9 @@
         .docs-sidebar .docs-nav a {
             display: block;
             padding: 0.4rem 0.75rem;
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 0.95rem;
             color: #2e2a25;
             text-decoration: none;
@@ -472,7 +519,9 @@
         .docs-sidebar .docs-search input {
             width: 100%;
             padding: 0.6rem 1rem;
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 0.95rem;
             border: 1px solid #3a3129;
             border-radius: 6px;
@@ -484,7 +533,9 @@
         .docs-sidebar .docs-create-btn {
             display: block;
             padding: 0.5rem 0.75rem;
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 0.85rem;
             font-weight: 600;
             text-align: center;
@@ -508,7 +559,9 @@
             top: 2rem;
         }
         .docs-toc h4 {
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -525,7 +578,9 @@
         .docs-toc a {
             display: block;
             padding: 0.35rem 0 0.35rem 1rem;
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 0.95rem;
             color: #5c544a;
             text-decoration: none;
@@ -551,7 +606,9 @@
             list-style: none;
             cursor: pointer;
             padding: 0.75rem 1rem;
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -584,7 +641,9 @@
         .docs-toc-mobile a {
             display: block;
             padding: 0.35rem 0 0.35rem 1rem;
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 0.95rem;
             color: #5c544a;
             text-decoration: none;
@@ -598,7 +657,9 @@
             padding: 0.75rem 1.25rem;
             border-bottom: 1px solid #3a3129;
             background: #f6f1e4;
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             z-index: 20;
         }
         .docs-mobile-bar .docs-mobile-title {
@@ -618,7 +679,9 @@
             border-radius: 6px;
             background: #f6f1e4;
             cursor: pointer;
-            font-family: "PT Sans Narrow", "Arial Narrow", sans-serif;
+            font-family:
+                "PT Sans Narrow", "PT Sans Narrow Fallback", "Arial Narrow",
+                sans-serif;
             font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.15em;
