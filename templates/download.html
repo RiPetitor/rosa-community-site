@@ -1,6 +1,7 @@
 {% extends "base.html" %} {% block title %}Загрузить — {{ config.extra.site_name
 }}{% endblock %} {% block body_class %}download-page{% endblock %} {% block
 content %}
+
 <div class="download-hero">
     <h1>★ СКАЧАТЬ ★</h1>
     <p class="lead">
@@ -9,124 +10,168 @@ content %}
     </p>
 </div>
 
-<div class="download-grid">
-    <!-- РОСА Фреш 13.1 -->
-    <div class="download-edition animate-slide-up">
-        <div class="edition-header">
-            <h2>{{ config.extra.downloads.fresh.name }}</h2>
-            <div class="version">
-                Версия {{ config.extra.downloads.fresh.version }}
-            </div>
-        </div>
-        <div class="edition-body">
-            <div class="edition-block">
-                <span class="block-label">Описание</span>
-                <p class="description">
-                    {{ config.extra.downloads.fresh.description }}. Актуальные
-                    версии ядра, окружений рабочего стола и ключевых приложений.
-                </p>
-            </div>
-            <div class="edition-block">
-                <span class="block-label">Для чего</span>
-                <ul class="features">
-                    <li>Рабочий стол KDE Plasma 6 или GNOME</li>
-                    <li>Офисный пакет LibreOffice</li>
-                    <li>Браузер Firefox</li>
-                    <li>Мультимедиа: VLC, видеоредакторы</li>
-                    <li>Графический установщик драйверов</li>
-                    <li>Работа без командной строки</li>
-                </ul>
-            </div>
-        </div>
-        <div class="edition-footer">
-            Требования: 4 ГБ ОЗУ, 25 ГБ на диске, 64-bit процессор
-        </div>
+<!-- Официальные редакции — газетный стиль -->
+<section id="official" class="headline-section">
+    <div class="section-header">
+        <h2>★ ОФИЦИАЛЬНЫЕ РЕДАКЦИИ ★</h2>
     </div>
 
-    <!-- РОСА Фреш LTS 12.5.1 -->
-    <div
-        class="download-edition animate-slide-up"
-        style="animation-delay: 0.1s"
-    >
-        <div class="edition-header">
-            <h2>{{ config.extra.downloads.lts.name }}</h2>
-            <div class="version">
-                Версия {{ config.extra.downloads.lts.version }}
-            </div>
-        </div>
-        <div class="edition-body">
-            <div class="edition-block">
-                <span class="block-label">Описание</span>
-                <p class="description">
-                    {{ config.extra.downloads.lts.description }}. Рекомендуется
-                    для тех, кому важна стабильность.
+    <!-- Главная новость — Fresh 13 -->
+    <div class="column-layout two-column">
+        <article class="article featured-edition">
+            <header class="article-header">
+                <span class="article-category">Передовица</span>
+                <h3 class="article-title">
+                    {{ config.extra.downloads.fresh.name }} {{
+                    config.extra.downloads.fresh.version }}
+                </h3>
+            </header>
+            <div class="article-excerpt">
+                <p>
+                    <strong
+                        >{{ config.extra.downloads.fresh.description }}.</strong
+                    >
+                    Новейшая версия операционной системы РОСА Linux с
+                    актуальными версиями ядра, окружений рабочего стола и
+                    ключевых приложений. Рекомендуется для пользователей,
+                    которые хотят работать с современным программным
+                    обеспечением.
+                </p>
+                <p>
+                    В состав входят: рабочий стол KDE Plasma 6 или GNOME на
+                    выбор, офисный пакет LibreOffice, браузер Chromium,
+                    мультимедиа-приложения, графический установщик драйверов.
+                    Система полностью готова к работе сразу после установки.
                 </p>
             </div>
-            <div class="edition-block">
-                <span class="block-label">Для чего</span>
-                <ul class="features">
-                    <li>KDE Plasma 5, GNOME, LXQt, XFCE</li>
-                    <li>Долгосрочная поддержка</li>
-                    <li>Проверенные версии ПО</li>
-                    <li>Поддержка 32-bit (LXQt)</li>
-                    <li>Офисный пакет LibreOffice</li>
-                    <li>Полный набор приложений</li>
-                </ul>
-            </div>
-        </div>
-        <div class="edition-footer">Требования: 2 ГБ ОЗУ, 20 ГБ на диске</div>
+            <footer class="article-footer">
+                <span class="edition-req">4 ГБ ОЗУ, 25 ГБ диск, 64-bit</span>
+            </footer>
+        </article>
+
+        <aside class="edition-sidebar">
+            <!-- LTS -->
+            <article class="article sidebar-edition">
+                <header class="article-header">
+                    <span class="article-category">Стабильная</span>
+                    <h4 class="article-title">
+                        {{ config.extra.downloads.lts.name }}
+                    </h4>
+                    <span class="article-version"
+                        >{{ config.extra.downloads.lts.version }}</span
+                    >
+                </header>
+                <p>
+                    {{ config.extra.downloads.lts.description }}. Долгосрочная
+                    поддержка, проверенные версии ПО. Plasma 5, GNOME, XFCE,
+                    LXQt. Поддержка 32-bit.
+                </p>
+                <footer class="article-footer">
+                    <span class="edition-req">2 ГБ ОЗУ, 20 ГБ диск</span>
+                </footer>
+            </article>
+
+            <!-- Server -->
+            <article class="article sidebar-edition">
+                <header class="article-header">
+                    <span class="article-category">Сервер</span>
+                    <h4 class="article-title">
+                        {{ config.extra.downloads.server.name }}
+                    </h4>
+                    <span class="article-version"
+                        >{{ config.extra.downloads.server.version }}</span
+                    >
+                </header>
+                <p>
+                    {{ config.extra.downloads.server.description }}. Минимальный
+                    образ без GUI. Apache, Nginx, PostgreSQL, Docker, KVM.
+                </p>
+                <footer class="article-footer">
+                    <span class="edition-req">1 ГБ ОЗУ, 10 ГБ диск</span>
+                </footer>
+            </article>
+        </aside>
     </div>
 
-    <!-- РОСА Server -->
-    <div
-        class="download-edition animate-slide-up"
-        style="animation-delay: 0.2s"
-    >
-        <div class="edition-header">
-            <h2>{{ config.extra.downloads.server.name }}</h2>
-            <div class="version">
-                Версия {{ config.extra.downloads.server.version }}
-            </div>
-        </div>
-        <div class="edition-body">
-            <div class="edition-block">
-                <span class="block-label">Описание</span>
-                <p class="description">
-                    {{ config.extra.downloads.server.description }}.
-                    Экспериментальная ветка для серверных задач.
+    <div class="download-cta">
+        <button
+            class="btn btn-primary btn-cta"
+            data-open-modal="download-modal"
+        >
+            Все официальные образы
+        </button>
+    </div>
+</section>
+
+<!-- Экспериментальные сборки ABF -->
+<section id="abf" class="headline-section">
+    <div class="section-header">
+        <h2>★ СБОРКИ ABF ★</h2>
+    </div>
+    <div class="column-layout two-column">
+        <article class="article">
+            <header class="article-header">
+                <span class="article-category">Экспериментальные</span>
+                <h3 class="article-title">Automated Build Farm</h3>
+            </header>
+            <div class="article-excerpt">
+                <p>
+                    На платформе <strong>ABF</strong> автоматически создаются
+                    образы с различными рабочими окружениями: Cinnamon, MATE,
+                    XFCE, LXQt, Lumina, IceWM, TDE и другие. Сборки обновляются
+                    регулярно.
                 </p>
             </div>
-            <div class="edition-block">
-                <span class="block-label">Для чего</span>
-                <ul class="features">
-                    <li>Минимальный образ без GUI</li>
-                    <li>Веб-сервер Apache/Nginx</li>
-                    <li>Базы данных PostgreSQL, MariaDB</li>
-                    <li>Контейнеризация Docker, Podman</li>
-                    <li>Виртуализация KVM/QEMU</li>
-                    <li>Средства администрирования</li>
-                </ul>
+            <ul>
+                <li>
+                    <strong>ROSA 13:</strong> Plasma 6/5, GNOME, Cinnamon, MATE,
+                    XFCE, LXQt, Lumina, IceWM, TDE
+                </li>
+                <li>
+                    <strong>ROSA 12:</strong> Plasma 5, GNOME, Cinnamon, MATE,
+                    XFCE, LXQt, Lumina, IceWM
+                </li>
+                <li><strong>Архитектуры:</strong> x86_64, i686, aarch64</li>
+            </ul>
+            <p class="muted">Тестовые сборки. Могут содержать ошибки.</p>
+        </article>
+        <article class="article">
+            <header class="article-header">
+                <span class="article-category">Каталоги</span>
+                <h3 class="article-title">Прямые ссылки</h3>
+            </header>
+            <p>Перейдите в каталог нужной платформы и выберите продукт:</p>
+            <div class="abf-buttons">
+                <a
+                    href="{{ config.extra.abf.rosa13_products }}"
+                    class="btn btn-primary"
+                    target="_blank"
+                >
+                    ROSA 13 — каталог сборок
+                </a>
+                <a
+                    href="{{ config.extra.abf.rosa12_products }}"
+                    class="btn btn-outline"
+                    target="_blank"
+                >
+                    ROSA 12 — каталог сборок
+                </a>
+                <a
+                    href="{{ config.extra.abf.base_url }}"
+                    class="btn btn-outline"
+                    target="_blank"
+                >
+                    Главная ABF
+                </a>
             </div>
-        </div>
-        <div class="edition-footer">
-            Требования: 1 ГБ ОЗУ (мин.), 10 ГБ на диске
-        </div>
+        </article>
     </div>
-</div>
-
-<div class="download-cta">
-    <button class="btn btn-primary btn-cta" data-open-modal="download-modal">
-        Скачать
-    </button>
-    <p class="cta-note">
-        В одном окне собраны все редакции и варианты загрузок.
-    </p>
-</div>
+</section>
 
 <!-- Community: ROSA BFRESH -->
-<section class="headline-section community-section">
+<section id="bfresh" class="headline-section">
     <div class="section-header">
-        <h2>★ COMMUNITY: BFRESH ★</h2>
+        <h2>★ BFRESH ★</h2>
     </div>
     <div class="column-layout two-column">
         <article class="article">
@@ -157,15 +202,14 @@ content %}
         <article class="article">
             <header class="article-header">
                 <span class="article-category">Ссылки</span>
-                <h3 class="article-title">Где скачать и почитать</h3>
+                <h3 class="article-title">Где скачать</h3>
             </header>
-            <p>Страница BFRESH ведётся отдельно, ссылки могут меняться.</p>
             <ul>
                 <li>
                     <a
                         href="{{ config.extra.downloads.bfresh.url }}"
                         target="_blank"
-                        >Открыть BFRESH (barium.rosa.ru)</a
+                        >BFRESH (barium.rosa.ru)</a
                     >
                 </li>
                 <li>
@@ -176,15 +220,10 @@ content %}
                     >
                 </li>
                 <li>
-                    <a href="https://abf.io/soft/barium-builder" target="_blank"
-                        >Сборочные скрипты на abf.io</a
-                    >
-                </li>
-                <li>
                     <a
                         href="https://forum.rosa.ru/viewtopic.php?f=58&t=10425"
                         target="_blank"
-                        >Обсуждение на форуме</a
+                        >Форум</a
                     >
                 </li>
             </ul>
@@ -192,10 +231,10 @@ content %}
     </div>
 </section>
 
-<!-- Инструкции по установке -->
-<section class="headline-section mt-4">
+<!-- Инструкции -->
+<section id="install" class="headline-section">
     <div class="section-header">
-        <h2>★ Как установить ★</h2>
+        <h2>★ Установка ★</h2>
     </div>
     <div class="column-layout three-column">
         <article class="article">
@@ -237,11 +276,11 @@ content %}
 </section>
 
 <!-- Зеркала -->
-<section class="headline-section">
+<section id="mirrors" class="headline-section">
     <div class="section-header">
         <h2>★ Зеркала загрузки ★</h2>
     </div>
-    <div class="article">
+    <div class="article mirrors-table">
         <table>
             <thead>
                 <tr>
@@ -255,7 +294,7 @@ content %}
                     <td>
                         <a href="https://mirror.rosa.ru/">mirror.rosa.ru</a>
                     </td>
-                    <td>Москва, Россия (основное)</td>
+                    <td>Москва (основное)</td>
                     <td>HTTPS</td>
                 </tr>
                 <tr>
@@ -264,7 +303,7 @@ content %}
                             >mirror.yandex.ru</a
                         >
                     </td>
-                    <td>Москва, Россия</td>
+                    <td>Москва</td>
                     <td>HTTPS</td>
                 </tr>
             </tbody>
@@ -272,51 +311,4 @@ content %}
     </div>
 </section>
 
-<!-- FAQ -->
-<section class="headline-section">
-    <div class="section-header">
-        <h2>★ Частые вопросы ★</h2>
-    </div>
-    <div class="column-layout two-column">
-        <div class="article">
-            <h4>Какую версию выбрать?</h4>
-            <p>
-                <strong
-                    >РОСА Фреш {{ config.extra.downloads.fresh.version
-                    }}</strong
-                >
-                — для энтузиастов, которые хотят новейшее ПО.
-                <strong
-                    >РОСА Фреш LTS {{ config.extra.downloads.lts.version
-                    }}</strong
-                >
-                — для тех, кому важна стабильность.
-            </p>
-            <h4>Можно ли попробовать без установки?</h4>
-            <p>
-                Да! Все образы поддерживают режим Live — загрузитесь с флешки и
-                попробуйте систему без изменения данных на диске.
-            </p>
-        </div>
-        <div class="article">
-            <h4>Где получить помощь?</h4>
-            <p>
-                Посетите
-                <a href="{{ config.extra.forum }}" target="_blank">форум РОСА</a
-                >,
-                <a href="{{ config.extra.telegram }}" target="_blank"
-                    >Telegram-канал</a
-                >
-                или <a href="{{ config.extra.wiki }}" target="_blank">Wiki</a>.
-            </p>
-            <h4>Как проверить контрольную сумму?</h4>
-            <p>
-                На странице загрузки рядом с каждым образом указана контрольная
-                сумма. Сверьте её командой
-                <code>sha256sum имя_файла.iso</code> или
-                <code>md5sum имя_файла.iso</code>.
-            </p>
-        </div>
-    </div>
-</section>
 {% endblock %}
