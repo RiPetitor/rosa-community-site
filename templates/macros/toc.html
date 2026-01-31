@@ -1,7 +1,13 @@
-{# Макрос для оглавления страницы (Table of Contents) Используется в:
-docs-page.html, blog-page.html Параметры: - toc: массив заголовков из page.toc -
-class_name: CSS класс для aside (по умолчанию "docs-toc") #} {% macro
-render(toc, class_name="docs-toc") %} {% if toc %}
+{#
+  Макрос для оглавления страницы
+  Используется в: docs-page.html, blog-page.html
+
+  Параметры:
+    - toc: массив заголовков из page.toc
+    - class_name: CSS-класс для aside (по умолчанию "docs-toc")
+#}
+{% macro render(toc, class_name="docs-toc") %}
+{% if toc %}
 <aside class="{{ class_name }}">
     <div class="toc-container">
         <h4>На этой странице</h4>
@@ -21,9 +27,17 @@ render(toc, class_name="docs-toc") %} {% if toc %}
         </ul>
     </div>
 </aside>
-{% endif %} {% endmacro %} {# Макрос для мобильного оглавления (details/summary)
-Параметры: - toc: массив заголовков из page.toc #} {% macro render_mobile(toc)
-%} {% if toc %}
+{% endif %}
+{% endmacro %}
+
+{#
+  Макрос для мобильного оглавления (details/summary)
+
+  Параметры:
+    - toc: массив заголовков из page.toc
+#}
+{% macro render_mobile(toc) %}
+{% if toc %}
 <details class="docs-toc-mobile">
     <summary>На этой странице</summary>
     <div class="docs-toc-mobile-body">
@@ -45,4 +59,5 @@ render(toc, class_name="docs-toc") %} {% if toc %}
         </ul>
     </div>
 </details>
-{% endif %} {% endmacro %}
+{% endif %}
+{% endmacro %}

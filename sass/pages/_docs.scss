@@ -1,6 +1,6 @@
-// ============================================
-// Документация (Vite/Astro стиль)
-// ============================================
+/**
+ * Документация (Vite/Astro стиль)
+ */
 
 .docs-page {
   .newspaper-header {
@@ -31,7 +31,7 @@
   }
 }
 
-// Mobile docs bar + sidebar drawer (Docusaurus-like)
+/// Мобильная панель и выдвижной сайдбар (в духе Docusaurus)
 .docs-mobile-bar {
   display: none;
   align-items: center;
@@ -130,7 +130,7 @@ body.docs-sidebar-open .docs-sidebar-toggle {
   }
 }
 
-// Боковая навигация (советский газетный стиль)
+/// Боковая навигация (советский газетный стиль)
 .docs-sidebar {
   background: $paper-cream;
   border: 3px double $border-dark;
@@ -151,10 +151,10 @@ body.docs-sidebar-open .docs-sidebar-toggle {
     pointer-events: none;
   }
 
-  // Для псевдоэлемента нужен relative
+  // Для псевдоэлемента нужен position: relative
   position: relative;
 
-  // Заголовок sidebar
+  // Заголовок сайдбара
   .docs-sidebar-title {
     font-family: $font-display;
     font-size: 0.85rem;
@@ -290,7 +290,7 @@ body.docs-sidebar-open .docs-sidebar-toggle {
       margin-bottom: 0.5rem;
       border: none;
 
-      // Убираем стандартный маркер details
+      // Убираем стандартный маркер элемента details
       &::-webkit-details-marker,
       & > summary::-webkit-details-marker {
         display: none;
@@ -519,7 +519,7 @@ body.docs-sidebar-open .docs-sidebar-toggle {
   }
 }
 
-// Layout for docs page (individual pages) with left sidebar, centered content, and right TOC
+/// Макет страниц документации: левый сайдбар, контент по центру, оглавление справа
 body.docs-page .docs-layout {
   grid-template-columns: 260px 1fr 280px;
   gap: 2rem;
@@ -576,7 +576,7 @@ body.docs-page .docs-toc {
   }
 }
 
-// Контент документации (советский газетный стиль)
+/// Контент документации (советский газетный стиль)
 .docs-content {
   padding: 2.5rem 3rem;
   max-width: 900px;
@@ -869,7 +869,7 @@ body.docs-page .docs-toc {
       }
     }
 
-    // Цитаты / Callouts
+    // Цитаты / выносные блоки
     blockquote {
       margin: 1.5rem 0;
       padding: 1rem 1.25rem;
@@ -886,7 +886,7 @@ body.docs-page .docs-toc {
       }
     }
 
-    // Tip/Warning/Danger блоки
+    // Блоки подсказки/предупреждения/опасности
     .tip, .info, .warning, .danger {
       margin: 1.5rem 0;
       padding: 1rem 1.25rem;
@@ -958,7 +958,7 @@ body.docs-page .docs-toc {
     }
   }
 
-  // Навигация prev/next внизу страницы
+  // Навигация «назад/вперёд» внизу страницы
   .docs-footer-nav {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1051,7 +1051,7 @@ body.docs-page .docs-toc {
   }
 }
 
-// Mobile "On this page" (collapsed) — советский газетный стиль
+/// Мобильное «На этой странице» (свёрнутое) — советский газетный стиль
 .docs-toc-mobile {
   display: none;
   margin: 1rem 0 2.5rem;
@@ -1158,7 +1158,7 @@ body.docs-page .docs-toc {
   }
 }
 
-// Оглавление справа (Table of Contents) — советский газетный стиль
+/// Оглавление справа — советский газетный стиль
 .docs-toc {
   padding: 2rem 0.5rem 2rem 0;
 

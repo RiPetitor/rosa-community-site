@@ -1,6 +1,12 @@
-{# Макрос для боковой панели блога Используется в: blog.html,
-taxonomy_single.html Параметры: - categories: таксономия категорий - tags:
-таксономия тегов #} {% macro render(categories, tags) %}
+{#
+  Макрос для боковой панели блога
+  Используется в: blog.html, taxonomy_single.html
+
+  Параметры:
+    - categories: таксономия категорий
+    - tags: таксономия тегов
+#}
+{% macro render(categories, tags) %}
 <aside class="blog-sidebar">
     {% if categories and categories.items %}
     <div class="sidebar-block">
@@ -14,7 +20,8 @@ taxonomy_single.html Параметры: - categories: таксономия ка
             {% endfor %}
         </ul>
     </div>
-    {% endif %} {% if tags and tags.items %}
+    {% endif %}
+    {% if tags and tags.items %}
     <div class="sidebar-block">
         <h3 class="sidebar-block-title">★ Теги</h3>
         <div class="tag-cloud">

@@ -1,8 +1,8 @@
-// ============================================
-// Навигация
-// ============================================
+/**
+ * Навигация
+ */
 
-// Кнопка-переключатель меню (мобильная)
+/// Кнопка мобильного меню
 .nav-toggle {
   display: none;
   align-items: center;
@@ -32,7 +32,7 @@ body.nav-open .nav-toggle {
   transform: translateY(1px);
 }
 
-// Основная навигация
+/// Главное меню
 .main-nav {
   margin-top: 1rem;
 
@@ -80,7 +80,7 @@ body.nav-open .nav-toggle {
   }
 }
 
-// Навигация блога
+/// Навигация блога (категории, теги)
 .blog-nav {
   display: flex;
   gap: 1rem;
@@ -127,7 +127,7 @@ body.nav-open .nav-toggle {
   }
 }
 
-// Пагинация
+/// Пагинация
 .pagination {
   display: flex;
   flex-wrap: wrap;
@@ -143,7 +143,7 @@ body.nav-open .nav-toggle {
   }
 }
 
-// Навигация между статьями
+/// Переход между статьями (пред/след)
 .post-navigation {
   display: flex;
   flex-wrap: wrap;

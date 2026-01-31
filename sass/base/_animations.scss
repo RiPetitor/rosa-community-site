@@ -1,6 +1,6 @@
-// ============================================
-// Анимации
-// ============================================
+/**
+ * Анимации
+ */
 
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -26,7 +26,7 @@
   animation: slideUp 0.5s ease-out;
 }
 
-// Класс для элементов, ставших видимыми (используется в JS animationsModule)
+// Применяется через JS при попадании элемента в область просмотра (viewport)
 .animate-visible {
   animation: slideUp 0.5s ease-out forwards;
 }

@@ -1,6 +1,6 @@
-// ============================================
-// Responsive
-// ============================================
+/**
+ * Адаптивность
+ */
 
 @media (min-width: 1200px) {
   body.home .newspaper-content {
@@ -235,7 +235,7 @@
     gap: 0.5rem;
   }
 
-  // TOC мобильная
+  // Оглавление: мобильная версия
   .download-toc-mobile {
     display: block;
     margin-bottom: 1.5rem;

@@ -1,17 +1,13 @@
 /**
- * РОСА Linux Community Site
- * Главный JavaScript файл
- *
- * Модульная структура для улучшенной поддерживаемости
+ * ROSA Linux Community Site
+ * @file main.js
+ * @description Основной JS-файл сайта
  */
 
 const RosaApp = (function () {
   "use strict";
 
-  // ==========================================
-  // Конфигурация
-  // ==========================================
-
+  /** Конфигурация приложения */
   const config = {
     baseUrl: document.body?.dataset?.baseUrl || "",
     basePath: "",
@@ -32,7 +28,6 @@ const RosaApp = (function () {
     },
   };
 
-  // Вычисление basePath
   try {
     if (config.baseUrl) {
       config.basePath = new URL(config.baseUrl).pathname.replace(/\/$/, "");
@@ -41,11 +36,13 @@ const RosaApp = (function () {
     config.basePath = "";
   }
 
-  // ==========================================
-  // Утилиты
-  // ==========================================
-
+  /** Вспомогательные функции */
   const utils = {
+    /**
+     * Добавляет basePath к пути
+     * @param {string} path - путь
+     * @returns {string}
+     */
     withBasePath(path) {
       if (!path || !path.startsWith("/")) return path;
       if (!config.basePath || config.basePath === "/") return path;
@@ -55,23 +52,30 @@ const RosaApp = (function () {
       return `${config.basePath}${path}`;
     },
 
+    /**
+     * Нормализует строку для поиска
+     * @param {string} value
+     * @returns {string}
+     */
     normalize(value) {
       return (value || "").toString().replace(/\s+/g, " ").trim().toLowerCase();
     },
 
+    /** Обёртка для querySelector */
     $(selector, context = document) {
       return context.querySelector(selector);
     },
 
+    /** Обёртка для querySelectorAll */
     $$(selector, context = document) {
       return context.querySelectorAll(selector);
     },
   };
 
-  // ==========================================
-  // Модуль: Модальные окна
-  // ==========================================
-
+  /**
+   * Модуль модальных окон
+   * Управляет открытием/закрытием модалок через data-атрибуты
+   */
   const modalModule = {
     instances: {},
 
@@ -128,10 +132,10 @@ const RosaApp = (function () {
     },
   };
 
-  // ==========================================
-  // Модуль: Копирование кода
-  // ==========================================
-
+  /**
+   * Модуль копирования кода
+   * Добавляет кнопку копирования к блокам <pre>
+   */
   const codeCopyModule = {
     copyIcon: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -159,6 +163,11 @@ const RosaApp = (function () {
       });
     },
 
+    /**
+     * Копирует содержимое блока кода в буфер
+     * @param {HTMLElement} pre - элемент pre
+     * @param {HTMLElement} btn - кнопка копирования
+     */
     async handleCopy(pre, btn) {
       const code = utils.$("code", pre)?.textContent || pre.textContent;
 
@@ -177,10 +186,10 @@ const RosaApp = (function () {
     },
   };
 
-  // ==========================================
-  // Модуль: Поиск по документации
-  // ==========================================
-
+  /**
+   * Модуль поиска по документации
+   * Загружает индекс и фильтрует результаты
+   */
   const searchModule = {
     docs: [],
     indexLoaded: false,
@@ -191,6 +200,7 @@ const RosaApp = (function () {
       this.initDocsSearch();
     },
 
+    /** Горячая клавиша "/" для фокуса на поиск */
     initHotkey() {
       const searchInput = utils.$(".docs-search input");
       if (!searchInput) return;
@@ -252,6 +262,11 @@ const RosaApp = (function () {
       });
     },
 
+    /**
+     * Загружает поисковый индекс
+     * @param {string} indexUrl - URL индекса
+     * @param {string} scope - область поиска (например /docs/)
+     */
     async loadIndex(indexUrl, scope) {
       if (this.indexLoaded) return;
       if (!this.loadPromise) {
@@ -276,6 +291,7 @@ const RosaApp = (function () {
       await this.loadPromise;
     },
 
+    /** Строит массив документов из индекса */
     buildDocs(data, scope) {
       const store = data?.documentStore?.docs || {};
       this.docs = Object.values(store)
@@ -294,6 +310,7 @@ const RosaApp = (function () {
         });
     },
 
+    /** Поиск по токенам, возвращает топ-12 результатов */
     search(tokens) {
       return this.docs
         .map((doc) => ({ doc, score: this.scoreDoc(doc, tokens) }))
@@ -303,6 +320,7 @@ const RosaApp = (function () {
         .map((entry) => entry.doc);
     },
 
+    /** Подсчёт релевантности документа */
     scoreDoc(doc, tokens) {
       let score = 0;
       for (const token of tokens) {
@@ -319,6 +337,7 @@ const RosaApp = (function () {
       return score;
     },
 
+    /** Формирует сниппет с контекстом вокруг найденного слова */
     buildSnippet(doc, tokens) {
       if (doc.description) return doc.description;
       const text = doc.body || "";
@@ -343,6 +362,7 @@ const RosaApp = (function () {
       return snippet;
     },
 
+    /** Отрисовка результатов поиска */
     renderResults(results, tokens, resultsEl, sidebar, navEl) {
       resultsEl.innerHTML = "";
 
@@ -392,6 +412,7 @@ const RosaApp = (function () {
       if (navEl) navEl.hidden = true;
     },
 
+    /** Очистка результатов */
     clearResults(resultsEl, sidebar, navEl) {
       resultsEl.innerHTML = "";
       resultsEl.hidden = true;
@@ -400,10 +421,10 @@ const RosaApp = (function () {
     },
   };
 
-  // ==========================================
-  // Модуль: Навигация
-  // ==========================================
-
+  /**
+   * Модуль навигации
+   * Мобильное меню, сайдбар документации, плавный скролл
+   */
   const navigationModule = {
     init() {
       this.initMobileNav();
@@ -411,6 +432,7 @@ const RosaApp = (function () {
       this.initSmoothScroll();
     },
 
+    /** Мобильное меню */
     initMobileNav() {
       const toggle = utils.$(config.selectors.navToggle);
       const nav = utils.$(config.selectors.mainNav);
@@ -454,6 +476,7 @@ const RosaApp = (function () {
       });
     },
 
+    /** Выдвижной сайдбар документации (мобильный) */
     initDocsSidebar() {
       const sidebar = utils.$(config.selectors.docsSidebar);
       const overlay = utils.$(config.selectors.docsSidebarOverlay);
@@ -504,27 +527,26 @@ const RosaApp = (function () {
         media.addListener(handleChange);
       }
 
-      // Инициализация сворачиваемых разделов
       this.initCollapsibleSections(sidebar);
     },
 
+    /**
+     * Сворачиваемые разделы в сайдбаре
+     * Состояние сохраняется в localStorage
+     */
     initCollapsibleSections(sidebar) {
       const STORAGE_KEY = "docs-nav-expanded";
       const navGroups = sidebar.querySelectorAll("[data-nav-group]");
       if (!navGroups.length) return;
 
-      // Загрузка сохранённого состояния (по умолчанию всё свёрнуто)
       let expanded = {};
       try {
         const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-          expanded = JSON.parse(stored);
-        }
+        if (stored) expanded = JSON.parse(stored);
       } catch (e) {
-        // localStorage недоступен или данные повреждены
+        // localStorage недоступен
       }
 
-      // Применение сохранённого состояния
       navGroups.forEach((group) => {
         const id = group.dataset.navGroup;
         if (expanded[id] === true) {
@@ -532,7 +554,6 @@ const RosaApp = (function () {
         }
       });
 
-      // Сохранение состояния при изменении
       navGroups.forEach((group) => {
         group.addEventListener("toggle", () => {
           const id = group.dataset.navGroup;
@@ -551,6 +572,7 @@ const RosaApp = (function () {
       });
     },
 
+    /** Плавный скролл по якорным ссылкам */
     initSmoothScroll() {
       utils.$$('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
@@ -567,10 +589,10 @@ const RosaApp = (function () {
     },
   };
 
-  // ==========================================
-  // Модуль: Анимации
-  // ==========================================
-
+  /**
+   * Модуль анимаций
+   * Добавляет класс animate-visible при появлении элемента в viewport
+   */
   const animationsModule = {
     init() {
       const observer = new IntersectionObserver(
@@ -591,10 +613,7 @@ const RosaApp = (function () {
     },
   };
 
-  // ==========================================
-  // Публичный API
-  // ==========================================
-
+  /** Публичный API */
   return {
     config,
     utils,
@@ -607,7 +626,6 @@ const RosaApp = (function () {
       animationsModule.init();
     },
 
-    // Экспорт модулей для возможного расширения
     modules: {
       modal: modalModule,
       codeCopy: codeCopyModule,
@@ -618,7 +636,6 @@ const RosaApp = (function () {
   };
 })();
 
-// Инициализация при загрузке DOM
 document.addEventListener("DOMContentLoaded", () => {
   RosaApp.init();
 });

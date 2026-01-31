@@ -1,15 +1,13 @@
-// ============================================
-// Сетки и раскладка
-// ============================================
+/**
+ * Сетки и раскладка
+ */
 
-// Основной контент
 .newspaper-content {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
 }
 
-// Универсальная страница
 .page-content {
   max-width: 900px;
   margin: 0 auto;
@@ -37,7 +35,7 @@
   }
 }
 
-// Сетка колонок как в газете
+/// Газетная сетка колонок
 .column-layout {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -106,7 +104,7 @@
   }
 }
 
-// Раскладка блога
+/// Сетка блога (контент + сайдбар)
 .blog-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;

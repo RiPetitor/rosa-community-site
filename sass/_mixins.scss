@@ -1,7 +1,9 @@
-// ============================================
-// Миксины
-// ============================================
+/**
+ * Миксины
+ * Переиспользуемые стили
+ */
 
+/// Двойная рамка в газетном стиле
 @mixin newspaper-border {
   border: 2px solid $ink-black;
   box-shadow:
@@ -9,6 +11,7 @@
     inset 0 0 0 3px $ink-black;
 }
 
+/// Декоративная линия-разделитель
 @mixin ornament-line {
   content: '';
   display: block;
@@ -24,6 +27,7 @@
   max-width: 80%;
 }
 
+/// Красная звезда
 @mixin soviet-star {
   color: $soviet-red;
   font-size: 1.5rem;
