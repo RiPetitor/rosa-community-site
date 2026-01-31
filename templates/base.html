@@ -48,8 +48,16 @@
         <header class="newspaper-header">
             <div class="header-ornament top"></div>
 
+            {% set today = now() %} {% set month_names = [ "", "января",
+            "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
+            "сентября", "октября", "ноября", "декабря" ] %} {% set month_index =
+            today | date(format="%m") | int %}
+
             <div class="header-meta">
-                <span class="date">{{ now() | date(format="%d %B %Y") }}</span>
+                <span class="date">
+                    {{ today | date(format="%d") }} {{ month_names[month_index]
+                    }} {{ today | date(format="%Y") }}
+                </span>
                 <span class="issue">{{ config.extra.issue_number }}</span>
             </div>
 

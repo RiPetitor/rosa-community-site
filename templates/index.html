@@ -47,7 +47,7 @@ endblock %} {% block content %}
                     </h2>
                     <div class="article-meta">
                         <span class="date"
-                            >{{ featured.date | date(format="%d.%m.%Y") }}</span
+                            >{{ featured.date | date(format="%d %B %Y") }}</span
                         >
                     </div>
                 </header>
@@ -211,7 +211,7 @@ endblock %} {% block content %}
                 </h3>
                 <div class="article-meta">
                     <span class="date"
-                        >{{ post.date | date(format="%d.%m.%Y") }}</span
+                        >{{ post.date | date(format="%d %B %Y") }}</span
                     >
                 </div>
             </header>
