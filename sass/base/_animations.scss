@@ -25,3 +25,8 @@
 .animate-slide-up {
   animation: slideUp 0.5s ease-out;
 }
+
+// Класс для элементов, ставших видимыми (используется в JS animationsModule)
+.animate-visible {
+  animation: slideUp 0.5s ease-out forwards;
+}
