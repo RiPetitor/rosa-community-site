@@ -235,4 +235,4 @@ free -h
 
 ## Следующий шаг
 
-- [Автоматизация](@/docs/advanced/automation.md)
+- [Автоматизация](@/docs/05-advanced/05-automation.md)

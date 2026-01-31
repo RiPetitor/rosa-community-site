@@ -39,5 +39,5 @@ ROSA Linux базируется на пакетном менеджере **DNF**
 
 ## Следующие шаги
 
-- [Выбор редакции](@/docs/getting-started/choose-edition.md) — какую версию выбрать.
-- [Установка](@/docs/getting-started/installation.md) — пошаговое руководство.
+- [Выбор редакции](@/docs/01-getting-started/02-choose-edition.md) — какую версию выбрать.
+- [Установка](@/docs/01-getting-started/03-installation.md) — пошаговое руководство.

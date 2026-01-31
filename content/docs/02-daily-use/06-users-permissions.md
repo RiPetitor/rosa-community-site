@@ -156,5 +156,5 @@ sudo usermod -U username
 
 ## Следующие разделы
 
-- [Сторонние приложения](@/docs/third-party/_index.md)
-- [Решение проблем](@/docs/troubleshooting/_index.md)
+- [Сторонние приложения](@/docs/03-third-party/_index.md)
+- [Решение проблем](@/docs/04-troubleshooting/_index.md)

@@ -199,4 +199,4 @@ sudo modprobe module_name
 
 ## Следующий шаг
 
-- [Восстановление системы](@/docs/troubleshooting/system-recovery.md)
+- [Восстановление системы](@/docs/04-troubleshooting/04-system-recovery.md)

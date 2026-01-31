@@ -75,7 +75,7 @@ sudo dd if=ROSA.FRESH.iso of=/dev/rdiskN bs=4m
 ## После установки
 
 Перезагрузите компьютер, извлеките USB-флешку и перейдите к
-[первоначальной настройке](@/docs/getting-started/first-setup.md).
+[первоначальной настройке](@/docs/01-getting-started/04-first-setup.md).
 
 ## Возможные проблемы
 

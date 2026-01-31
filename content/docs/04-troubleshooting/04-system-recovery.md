@@ -179,4 +179,4 @@ systemctl reboot
 
 ## Следующий шаг
 
-- [Где смотреть логи](@/docs/troubleshooting/logs.md)
+- [Где смотреть логи](@/docs/04-troubleshooting/05-logs.md)

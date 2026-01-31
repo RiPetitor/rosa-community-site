@@ -222,4 +222,4 @@ systemd-analyze verify /etc/systemd/system/myunit.service
 
 ## Следующий шаг
 
-- [Управление сервисами](@/docs/advanced/services.md)
+- [Управление сервисами](@/docs/05-advanced/03-services.md)

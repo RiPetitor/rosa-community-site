@@ -107,4 +107,4 @@ sudo dnf clean packages
 
 ## Следующий шаг
 
-- [Установка программ из репозиториев](@/docs/daily-use/install-packages.md)
+- [Установка программ из репозиториев](@/docs/02-daily-use/02-install-packages.md)

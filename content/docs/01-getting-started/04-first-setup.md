@@ -73,5 +73,5 @@ sudo dnf install timeshift
 
 ## Следующие шаги
 
-- [Установка программ из репозиториев](@/docs/daily-use/install-packages.md)
-- [Где искать помощь](@/docs/getting-started/get-help.md)
+- [Установка программ из репозиториев](@/docs/02-daily-use/02-install-packages.md)
+- [Где искать помощь](@/docs/01-getting-started/05-get-help.md)

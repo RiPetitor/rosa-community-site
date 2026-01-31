@@ -93,4 +93,4 @@ sudo dnf remove package-name
 
 ## Следующий шаг
 
-- [Установка из архивов](@/docs/third-party/from-archives.md)
+- [Установка из архивов](@/docs/03-third-party/05-from-archives.md)

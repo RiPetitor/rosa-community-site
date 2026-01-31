@@ -161,4 +161,4 @@ sudo systemctl enable sddm
 
 ## Следующий шаг
 
-- [Конфигурационные файлы](@/docs/advanced/config-files.md)
+- [Конфигурационные файлы](@/docs/05-advanced/02-config-files.md)

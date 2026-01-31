@@ -157,4 +157,4 @@ free -h
 
 ## Следующий шаг
 
-- [Пользователи и права](@/docs/daily-use/users-permissions.md)
+- [Пользователи и права](@/docs/02-daily-use/06-users-permissions.md)

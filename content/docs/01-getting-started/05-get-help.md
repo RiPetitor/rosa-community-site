@@ -76,5 +76,5 @@ weight = 5
 
 ## Следующие шаги
 
-- [Обновление системы](@/docs/daily-use/system-update.md)
-- [Установка программ](@/docs/daily-use/install-packages.md)
+- [Обновление системы](@/docs/02-daily-use/01-system-update.md)
+- [Установка программ](@/docs/02-daily-use/02-install-packages.md)

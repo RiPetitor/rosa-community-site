@@ -134,4 +134,4 @@ sudo chroot /mnt
 
 ## Следующий шаг
 
-- [Проблемы после обновлений](@/docs/troubleshooting/update-issues.md)
+- [Проблемы после обновлений](@/docs/04-troubleshooting/02-update-issues.md)

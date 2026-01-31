@@ -27,7 +27,6 @@ const RosaApp = (function () {
       docsSidebarToggle: "[data-docs-sidebar-toggle]",
       navToggle: ".nav-toggle",
       mainNav: "#main-nav",
-      tocLinks: ".docs-toc a, .docs-toc-mobile a, .blog-toc a",
       codeBlocks: "pre",
       animatedElements: ".article, .download-edition, .docs-card",
     },
@@ -410,7 +409,6 @@ const RosaApp = (function () {
       this.initMobileNav();
       this.initDocsSidebar();
       this.initSmoothScroll();
-      this.initTocHighlight();
     },
 
     initMobileNav() {
@@ -566,35 +564,6 @@ const RosaApp = (function () {
           }
         });
       });
-    },
-
-    initTocHighlight() {
-      const tocLinks = utils.$$(config.selectors.tocLinks);
-      if (!tocLinks.length) return;
-
-      const headings = [];
-      tocLinks.forEach((link) => {
-        const id = link.getAttribute("href")?.slice(1);
-        const heading = id && document.getElementById(id);
-        if (heading) headings.push({ el: heading, link });
-      });
-
-      if (!headings.length) return;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              tocLinks.forEach((l) => l.classList.remove("active"));
-              const active = headings.find((h) => h.el === entry.target);
-              if (active) active.link.classList.add("active");
-            }
-          });
-        },
-        { rootMargin: "-100px 0px -66%" },
-      );
-
-      headings.forEach((h) => observer.observe(h.el));
     },
   };
 

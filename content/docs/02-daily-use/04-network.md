@@ -137,4 +137,4 @@ sudo dnf install firewall-config
 
 ## Следующий шаг
 
-- [Оборудование и драйверы](@/docs/daily-use/hardware.md)
+- [Оборудование и драйверы](@/docs/02-daily-use/05-hardware.md)

@@ -104,4 +104,4 @@ sudo dnf install @lxqt-desktop
 
 ## Следующий шаг
 
-- [Сеть и интернет](@/docs/daily-use/network.md)
+- [Сеть и интернет](@/docs/02-daily-use/04-network.md)

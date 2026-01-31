@@ -1135,19 +1135,10 @@ body.docs-page .docs-toc {
       font-size: 0.9rem;
       color: $text-muted;
       text-decoration: none;
-      border-left: 1px solid transparent;
-      margin-left: -1px;
-      transition: all 0.15s;
+      transition: color 0.15s;
 
       &:hover {
         color: $soviet-red;
-        background: rgba($soviet-red, 0.05);
-      }
-
-      &.active {
-        color: $soviet-red;
-        border-left-color: $soviet-red;
-        font-weight: 600;
       }
     }
 
@@ -1251,19 +1242,10 @@ body.docs-page .docs-toc {
         font-size: 0.85rem;
         color: $text-muted;
         text-decoration: none;
-        border-left: 1px solid transparent;
-        margin-left: -1px;
-        transition: all 0.15s;
+        transition: color 0.15s;
 
         &:hover {
           color: $soviet-red;
-          background: rgba($soviet-red, 0.05);
-        }
-
-        &.active {
-          color: $soviet-red;
-          border-left-color: $soviet-red;
-          font-weight: 600;
         }
       }
 

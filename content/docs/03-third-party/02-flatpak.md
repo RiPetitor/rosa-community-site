@@ -106,4 +106,4 @@ flatpak uninstall --unused
 
 ## Следующий шаг
 
-- [AppImage](@/docs/third-party/appimage.md)
+- [AppImage](@/docs/03-third-party/03-appimage.md)

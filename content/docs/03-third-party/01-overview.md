@@ -49,6 +49,6 @@ sha256sum файл
 
 ## Следующие шаги
 
-- [Flatpak](@/docs/third-party/flatpak.md)
-- [AppImage](@/docs/third-party/appimage.md)
-- [Официальные RPM](@/docs/third-party/official-rpm.md)
+- [Flatpak](@/docs/03-third-party/02-flatpak.md)
+- [AppImage](@/docs/03-third-party/03-appimage.md)
+- [Официальные RPM](@/docs/03-third-party/04-official-rpm.md)

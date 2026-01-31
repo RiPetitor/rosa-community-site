@@ -113,4 +113,4 @@ rm ~/.local/share/applications/myapp.desktop
 
 ## Следующий шаг
 
-- [Официальные RPM](@/docs/third-party/official-rpm.md)
+- [Официальные RPM](@/docs/03-third-party/04-official-rpm.md)

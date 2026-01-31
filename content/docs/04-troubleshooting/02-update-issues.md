@@ -149,4 +149,4 @@ sudo dnf reinstall $(rpm -Va 2>&1 | grep -E '^..5' | awk '{print $NF}' | xargs r
 
 ## Следующий шаг
 
-- [Нет сети / звука / видео](@/docs/troubleshooting/hardware-issues.md)
+- [Нет сети / звука / видео](@/docs/04-troubleshooting/03-hardware-issues.md)

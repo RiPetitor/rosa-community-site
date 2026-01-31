@@ -70,4 +70,4 @@ ROSA Linux выпускается в нескольких редакциях, к
 
 ## Следующий шаг
 
-После выбора редакции переходите к [установке](@/docs/getting-started/installation.md).
+После выбора редакции переходите к [установке](@/docs/01-getting-started/03-installation.md).

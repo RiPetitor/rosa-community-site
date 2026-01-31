@@ -228,4 +228,4 @@ sudo systemctl edit sshd
 
 ## Следующий шаг
 
-- [Оптимизация и тюнинг](@/docs/advanced/optimization.md)
+- [Оптимизация и тюнинг](@/docs/05-advanced/04-optimization.md)

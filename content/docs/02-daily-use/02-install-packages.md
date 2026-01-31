@@ -104,4 +104,4 @@ sudo dnf install пакет --disablerepo=название
 
 ## Следующий шаг
 
-- [Рабочее окружение](@/docs/daily-use/desktop-environment.md)
+- [Рабочее окружение](@/docs/02-daily-use/03-desktop-environment.md)

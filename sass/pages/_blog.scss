@@ -433,10 +433,10 @@
     font-size: 0.95rem;
     color: $ink-dark;
     text-decoration: none;
+    transition: color 0.15s;
 
-    &.active {
+    &:hover {
       color: $soviet-red;
-      font-weight: 700;
     }
   }
 
