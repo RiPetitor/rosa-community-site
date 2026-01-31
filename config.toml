@@ -17,7 +17,6 @@ build_search_index = true
 taxonomies = [
     { name = "categories", feed = true, paginate_by = 10 },
     { name = "tags", feed = true, paginate_by = 10 },
-    { name = "authors", feed = true },
 ]
 
 # RSS лента
@@ -94,6 +93,12 @@ name = "ROSA Fresh Server LTS"
 version = "12.5.1"
 description = "Стабильная серверная ветка"
 url = "https://mirror.rosa.ru/rosa/rosa2021.1/iso/ROSA.FRESH.12/server/ROSA.FRESH.SERVER.12.5.1.x86_64.iso"
+
+# Экспериментальные сборки ABF (прямые ссылки на каталоги)
+[extra.abf]
+base_url = "https://abf.rosa.ru"
+rosa13_products = "https://abf.rosa.ru/platforms/rosa13/products"
+rosa12_products = "https://abf.rosa.ru/platforms/rosa2021.1/products"
 
 # Навигация
 [[extra.nav]]
