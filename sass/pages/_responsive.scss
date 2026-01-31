@@ -210,6 +210,41 @@
     font-size: 1.95rem;
   }
 
+  // Газетные карточки загрузок — мобильная версия
+  .download-page .featured-edition {
+    .article-title {
+      font-size: 1.5rem;
+    }
+
+    .article-excerpt p:first-child::first-letter {
+      font-size: 3rem;
+    }
+  }
+
+  .download-page .edition-sidebar {
+    gap: 1rem;
+  }
+
+  .download-page .sidebar-edition {
+    .article-title {
+      font-size: 1rem;
+    }
+  }
+
+  .download-page .abf-buttons {
+    gap: 0.5rem;
+  }
+
+  // TOC мобильная
+  .download-toc-mobile {
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .download-toc {
+    display: none;
+  }
+
   .download-options {
     grid-template-columns: 1fr;
   }
