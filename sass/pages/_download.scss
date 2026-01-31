@@ -254,4 +254,278 @@
       text-align: center;
     }
   }
+
+  // Главная статья (передовица) — газетный стиль
+  .featured-edition {
+    display: flex;
+    flex-direction: column;
+
+    .article-header {
+      border-bottom: 3px double $ink-black;
+      padding-bottom: 1.5rem;
+    }
+
+    .article-title {
+      font-size: 2rem;
+      line-height: 1.1;
+    }
+
+    .article-excerpt {
+      flex: 1;
+
+      p {
+        text-align: justify;
+        hyphens: auto;
+        line-height: 1.7;
+      }
+
+      // Буквица
+      p:first-child::first-letter {
+        float: left;
+        font-family: $font-display;
+        font-size: 4rem;
+        font-weight: 700;
+        line-height: 0.8;
+        padding-right: 0.5rem;
+        padding-top: 0.1rem;
+        color: $soviet-red;
+      }
+    }
+
+    .article-footer {
+      border-top: none;
+      padding: 0.75rem 0 0;
+      margin-top: auto;
+      text-align: left;
+    }
+  }
+
+  // Боковая колонка с редакциями
+  .edition-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .sidebar-edition {
+    display: flex;
+    flex-direction: column;
+
+    .article-header {
+      padding-bottom: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .article-title {
+      font-size: 1.1rem;
+      margin-bottom: 0;
+    }
+
+    .article-version {
+      display: block;
+      font-family: $font-sans;
+      font-size: 0.8rem;
+      color: $soviet-red;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 0.85rem;
+      margin: 0;
+    }
+
+    .article-footer {
+      margin-top: auto;
+      padding: 0.5rem 0 0;
+      border-top: none;
+      text-align: left;
+    }
+  }
+
+  .edition-req {
+    font-family: $font-sans;
+    font-size: 0.8rem;
+    color: $text-muted;
+    display: block;
+  }
+
+  // Кнопки ABF
+  .abf-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+}
+
+// ABF платформы
+.abf-platforms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.abf-platform {
+  text-align: center;
+  padding: 1.5rem;
+  border: 2px solid $border-dark;
+  background: white;
+
+  h3 {
+    font-family: $font-display;
+    font-size: 1.25rem;
+    margin: 0 0 0.75rem;
+  }
+
+  p {
+    font-size: 0.85rem;
+    color: $text-muted;
+    margin: 0 0 0.5rem;
+  }
+
+  .arch-info {
+    font-family: $font-mono;
+    font-size: 0.75rem;
+    color: $soviet-red;
+    margin-bottom: 1rem;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+// ABF предупреждение
+.abf-warning {
+  color: $soviet-red-dark;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+// Таблица зеркал — центрирование
+.mirrors-table {
+  table {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  th, td {
+    padding: 0.5rem 1rem;
+  }
+
+  // Зеркало — слева
+  th:first-child,
+  td:first-child {
+    text-align: left;
+  }
+
+  // Расположение — по центру
+  th:nth-child(2),
+  td:nth-child(2) {
+    text-align: center;
+  }
+
+  // Протокол — справа
+  th:last-child,
+  td:last-child {
+    text-align: right;
+  }
+}
+
+// TOC для страницы загрузок
+.download-toc {
+  @include newspaper-border;
+  background: $paper-cream;
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+
+  h4 {
+    font-family: $font-sans;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: $text-muted;
+    margin: 0 0 0.75rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+
+  li {
+    font-family: $font-sans;
+    font-size: 0.85rem;
+  }
+
+  a {
+    color: $ink-dark;
+    text-decoration: none;
+    border-bottom: 1px dotted $border-dark;
+
+    &:hover {
+      color: $soviet-red;
+      border-bottom-color: $soviet-red;
+    }
+  }
+}
+
+// TOC мобильная версия
+.download-toc-mobile {
+  display: none;
+
+  @include newspaper-border;
+  background: $paper-cream;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+
+  summary {
+    font-family: $font-sans;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    list-style: none;
+
+    &::before {
+      content: '▸ ';
+      color: $soviet-red;
+    }
+  }
+
+  &[open] summary::before {
+    content: '▾ ';
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0;
+  }
+
+  li {
+    padding: 0.4rem 0;
+    border-bottom: 1px dotted $border-dark;
+    font-size: 0.85rem;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  a {
+    color: $ink-dark;
+    text-decoration: none;
+
+    &:hover {
+      color: $soviet-red;
+    }
+  }
 }
