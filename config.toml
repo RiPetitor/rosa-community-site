@@ -1,7 +1,7 @@
 # Конфигурация сайта ROSA Linux Community
 # Стиль: Советская газета
 
-base_url = "https://ripetitor.github.io/rosa-community-site"
+base_url = "https://rosarium.org.ru"
 title = "ROSALIUM"
 description = "Коммьюнити сайт в советском стиле - свободная, надёжная, отечественная"
 default_language = "ru"

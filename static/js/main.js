@@ -280,6 +280,17 @@ const RosaApp = (function () {
         return;
       }
 
+      if (window.location.protocol === "file:") {
+        this.renderStatus(
+          resultsEl,
+          sidebar,
+          navEl,
+          "Поиск недоступен при открытии файлов напрямую",
+          "search-status is-error",
+        );
+        return;
+      }
+
       if (!this.indexLoaded && !this.loadError) {
         this.renderStatus(
           resultsEl,
@@ -333,18 +344,7 @@ const RosaApp = (function () {
       if (this.indexLoaded) return;
       if (!this.loadPromise) {
         this.loadError = null;
-        this.loadPromise = fetch(indexUrl)
-          .then((res) => {
-            if (!res.ok) throw new Error("index fetch failed");
-            return res.json();
-          })
-          .catch(() =>
-            fetch(
-              config.basePath
-                ? `${config.basePath}/search_index.json`
-                : "/search_index.json",
-            ).then((res) => res.json()),
-          )
+        this.loadPromise = this.fetchIndex(indexUrl)
           .then((data) => {
             this.buildDocs(data, scope);
             this.indexLoaded = true;
@@ -357,6 +357,92 @@ const RosaApp = (function () {
           });
       }
       await this.loadPromise;
+    },
+
+    async fetchIndex(indexUrl) {
+      const candidates = this.getIndexCandidates(indexUrl);
+      let lastError;
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) throw new Error(`index fetch failed: ${res.status}`);
+          return await res.json();
+        } catch (err) {
+          lastError = err;
+        }
+      }
+      throw lastError || new Error("index fetch failed");
+    },
+
+    detectLang(indexUrl) {
+      const htmlLang = document.documentElement.lang || "";
+      const normalized = (htmlLang || "ru").toLowerCase();
+      const match = (indexUrl || "").match(/search_index\.([a-z0-9-]+)\.json/i);
+      if (match && match[1]) return match[1].toLowerCase();
+      return normalized || "ru";
+    },
+
+    getIndexCandidates(indexUrl) {
+      const candidates = [];
+      const add = (value) => {
+        if (!value || candidates.includes(value)) return;
+        candidates.push(value);
+      };
+
+      const lang = this.detectLang(indexUrl);
+
+      add(indexUrl);
+
+      if (indexUrl) {
+        try {
+          const url = new URL(indexUrl, window.location.origin);
+          if (url.origin !== window.location.origin) {
+            add(url.pathname + url.search);
+          }
+          add(url.origin === window.location.origin ? url.href : "");
+          add(window.location.origin + url.pathname);
+        } catch (err) {
+          // ignore invalid URL
+        }
+
+        if (indexUrl.startsWith("http://") || indexUrl.startsWith("https://")) {
+          try {
+            const absolute = new URL(indexUrl);
+            add(absolute.pathname + absolute.search);
+          } catch (err) {
+            // ignore invalid URL
+          }
+        }
+      }
+
+      const baseCandidates = [];
+      if (config.basePath) baseCandidates.push(config.basePath);
+
+      const currentPath = window.location.pathname || "";
+      if (currentPath.includes("/docs/")) {
+        baseCandidates.push(currentPath.split("/docs/")[0] || "");
+      }
+
+      const firstSegment = currentPath.split("/").filter(Boolean)[0];
+      if (firstSegment) baseCandidates.push(`/${firstSegment}`);
+
+      baseCandidates.forEach((base) => {
+        const clean = base.replace(/\/$/, "");
+        add(`${clean}/search_index.${lang}.json`);
+        add(`${clean}/search_index.json`);
+      });
+
+      add(`/search_index.${lang}.json`);
+      add("/search_index.json");
+
+      if (config.basePath && indexUrl) {
+        const clean = config.basePath.replace(/\/$/, "");
+        if (indexUrl.includes(clean + "/")) {
+          add(indexUrl.replace(clean, "") || "/");
+        }
+      }
+
+      return candidates;
     },
 
     /** Извлекает документы из разных форматов индекса */

@@ -21,7 +21,7 @@ jobs:
         with:
           tool: zola@0.22.1
       - run: scripts/generate-doc-dates.sh
-      - run: zola build
+      - run: zola build --base-url https://rosarium.org.ru
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public
