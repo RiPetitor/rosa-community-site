@@ -58,7 +58,13 @@ const RosaApp = (function () {
      * @returns {string}
      */
     normalize(value) {
-      return (value || "").toString().replace(/\s+/g, " ").trim().toLowerCase();
+      return (value || "")
+        .toString()
+        .toLowerCase()
+        .replace(/ё/g, "е")
+        .replace(/[^a-zа-я0-9+#]+/gi, " ")
+        .replace(/\s+/g, " ")
+        .trim();
     },
 
     /** Обёртка для querySelector */
@@ -194,6 +200,10 @@ const RosaApp = (function () {
     docs: [],
     indexLoaded: false,
     loadPromise: null,
+    loadError: null,
+    debounceTimer: null,
+    context: null,
+    lastQuery: "",
 
     init() {
       this.initHotkey();
@@ -227,31 +237,19 @@ const RosaApp = (function () {
           : "/search_index.json");
       const scope = input.dataset.searchScope || "/docs/";
 
-      input.addEventListener("input", async () => {
-        const query = input.value.trim();
-        if (query.length < 2) {
-          this.clearResults(resultsEl, sidebar, navEl);
-          return;
-        }
+      this.context = {
+        input,
+        resultsEl,
+        sidebar,
+        navEl,
+        indexUrl,
+        scope,
+      };
 
-        await this.loadIndex(indexUrl, scope);
-        if (!this.docs.length) {
-          this.clearResults(resultsEl, sidebar, navEl);
-          return;
-        }
+      const handleInput = () => this.queueSearch();
 
-        const tokens = query
-          .split(/\s+/)
-          .map((t) => t.toLowerCase())
-          .filter((t) => t.length > 1);
-        if (!tokens.length) {
-          this.clearResults(resultsEl, sidebar, navEl);
-          return;
-        }
-
-        const results = this.search(tokens);
-        this.renderResults(results, tokens, resultsEl, sidebar, navEl);
-      });
+      input.addEventListener("input", handleInput);
+      input.addEventListener("focus", handleInput);
 
       input.addEventListener("keydown", (e) => {
         if (e.key === "Escape") {
@@ -262,6 +260,70 @@ const RosaApp = (function () {
       });
     },
 
+    /** Дебаунс поиска */
+    queueSearch() {
+      if (!this.context) return;
+      if (this.debounceTimer) window.clearTimeout(this.debounceTimer);
+      this.debounceTimer = window.setTimeout(() => this.runSearch(), 140);
+    },
+
+    /** Выполняет поиск и отрисовку */
+    async runSearch() {
+      if (!this.context) return;
+      const { input, resultsEl, sidebar, navEl, indexUrl, scope } =
+        this.context;
+      const query = input.value.trim();
+      this.lastQuery = query;
+
+      if (query.length < 2) {
+        this.clearResults(resultsEl, sidebar, navEl);
+        return;
+      }
+
+      if (!this.indexLoaded && !this.loadError) {
+        this.renderStatus(
+          resultsEl,
+          sidebar,
+          navEl,
+          "Загрузка индекса…",
+          "search-status is-loading",
+        );
+      }
+
+      await this.loadIndex(indexUrl, scope);
+
+      if (this.loadError) {
+        this.renderStatus(
+          resultsEl,
+          sidebar,
+          navEl,
+          "Не удалось загрузить поиск",
+          "search-status is-error",
+        );
+        return;
+      }
+
+      if (!this.docs.length) {
+        this.renderStatus(
+          resultsEl,
+          sidebar,
+          navEl,
+          "Индекс поиска пуст",
+          "search-status is-error",
+        );
+        return;
+      }
+
+      const { tokens, displayTokens, phrase } = this.tokenize(query);
+      if (!tokens.length) {
+        this.clearResults(resultsEl, sidebar, navEl);
+        return;
+      }
+
+      const results = this.search(tokens, phrase);
+      this.renderResults(results, displayTokens, resultsEl, sidebar, navEl);
+    },
+
     /**
      * Загружает поисковый индекс
      * @param {string} indexUrl - URL индекса
@@ -270,6 +332,7 @@ const RosaApp = (function () {
     async loadIndex(indexUrl, scope) {
       if (this.indexLoaded) return;
       if (!this.loadPromise) {
+        this.loadError = null;
         this.loadPromise = fetch(indexUrl)
           .then((res) => {
             if (!res.ok) throw new Error("index fetch failed");
@@ -286,34 +349,105 @@ const RosaApp = (function () {
             this.buildDocs(data, scope);
             this.indexLoaded = true;
           })
-          .catch((err) => console.error("Search index load failed:", err));
+          .catch((err) => {
+            this.loadError = err;
+            this.indexLoaded = false;
+            this.loadPromise = null;
+            console.error("Search index load failed:", err);
+          });
       }
       await this.loadPromise;
     },
 
+    /** Извлекает документы из разных форматов индекса */
+    extractDocs(data) {
+      if (!data) return [];
+      if (data.documentStore?.docs) {
+        return Object.values(data.documentStore.docs);
+      }
+      if (Array.isArray(data.docs)) return data.docs;
+      if (Array.isArray(data.documents)) return data.documents;
+      return [];
+    },
+
+    normalizePathForScope(value) {
+      if (!value) return "";
+      if (value.startsWith("http://") || value.startsWith("https://")) {
+        try {
+          return new URL(value).pathname;
+        } catch (err) {
+          return value;
+        }
+      }
+      return value;
+    },
+
     /** Строит массив документов из индекса */
     buildDocs(data, scope) {
-      const store = data?.documentStore?.docs || {};
-      this.docs = Object.values(store)
-        .filter((doc) => (doc.path || "").startsWith(scope))
+      const docs = this.extractDocs(data);
+      this.docs = docs
+        .filter((doc) => {
+          const sourcePath = doc.path || doc.permalink || doc.url || "";
+          const scopedPath = this.normalizePathForScope(sourcePath);
+          return scopedPath.startsWith(scope);
+        })
         .map((doc) => {
           const body = (doc.body || "").replace(/\s+/g, " ").trim();
+          const title = doc.title || doc.path || "";
+          const description =
+            doc.description || doc.summary || doc.excerpt || "";
+          const path = doc.path || doc.permalink || doc.url || doc.id || "#";
           return {
-            title: doc.title || doc.path || "",
-            description: (doc.description || "").trim(),
+            title,
+            description: description.trim(),
             body,
-            path: doc.path || doc.id || "#",
-            _title: utils.normalize(doc.title),
-            _description: utils.normalize(doc.description),
+            path,
+            _title: utils.normalize(title),
+            _description: utils.normalize(description),
             _body: utils.normalize(body),
           };
         });
     },
 
+    /** Разбивает запрос на токены */
+    tokenize(query) {
+      const normalized = utils.normalize(query);
+      if (!normalized) {
+        return { tokens: [], displayTokens: [], phrase: "" };
+      }
+      const displayTokens = normalized
+        .split(" ")
+        .map((t) => t.trim())
+        .filter((t) => t.length > 1);
+      const phrase = normalized.includes(" ") ? normalized : "";
+      return { tokens: displayTokens, displayTokens, phrase };
+    },
+
+    /** Генерирует варианты токена для расширенного поиска */
+    buildTokenVariants(token) {
+      const variants = [{ value: token, weight: 1 }];
+      if (token.length >= 4) {
+        variants.push({ value: token.slice(0, -1), weight: 0.7 });
+      }
+      if (token.length >= 5) {
+        variants.push({ value: token.slice(0, -2), weight: 0.55 });
+      }
+      return variants;
+    },
+
     /** Поиск по токенам, возвращает топ-12 результатов */
-    search(tokens) {
+    search(tokens, phrase) {
+      const strict = this.rank(tokens, phrase, true);
+      if (strict.length) return strict;
+      return this.rank(tokens, phrase, false);
+    },
+
+    rank(tokens, phrase, requireAll) {
       return this.docs
-        .map((doc) => ({ doc, score: this.scoreDoc(doc, tokens) }))
+        .map((doc) => ({
+          doc,
+          score: this.scoreDoc(doc, tokens, phrase, requireAll),
+        }))
         .filter((entry) => entry.score > 0)
         .sort((a, b) => b.score - a.score)
         .slice(0, 12)
@@ -321,19 +455,43 @@ const RosaApp = (function () {
     },
 
     /** Подсчёт релевантности документа */
-    scoreDoc(doc, tokens) {
+    scoreDoc(doc, tokens, phrase, requireAll) {
       let score = 0;
       for (const token of tokens) {
-        const inTitle = doc._title.includes(token);
-        const inDesc = doc._description.includes(token);
-        const inBody = doc._body.includes(token);
-
-        if (!inTitle && !inDesc && !inBody) return 0;
-
-        if (inTitle) score += 6;
-        if (inDesc) score += 3;
-        if (inBody) score += 1;
+        const tokenScore = this.scoreToken(doc, token);
+        if (!tokenScore) {
+          if (requireAll) return 0;
+          continue;
+        }
+        score += tokenScore;
       }
+      if (phrase) {
+        if (doc._title.includes(phrase)) score += 8;
+        if (doc._description.includes(phrase)) score += 4;
+        if (doc._body.includes(phrase)) score += 2;
+      }
+      return score;
+    },
+
+    scoreToken(doc, token) {
+      let best = 0;
+      const variants = this.buildTokenVariants(token);
+      variants.forEach((variant) => {
+        const variantScore = this.scoreVariant(
+          doc,
+          variant.value,
+          variant.weight,
+        );
+        if (variantScore > best) best = variantScore;
+      });
+      return best;
+    },
+
+    scoreVariant(doc, token, weight) {
+      let score = 0;
+      if (doc._title.includes(token)) score += 10 * weight;
+      if (doc._description.includes(token)) score += 5 * weight;
+      if (doc._body.includes(token)) score += 2 * weight;
       return score;
     },
 
@@ -344,9 +502,11 @@ const RosaApp = (function () {
       if (!text) return "";
 
       const lower = text.toLowerCase();
+      const normalized = lower.replace(/ё/g, "е");
       let idx = -1;
       for (const token of tokens) {
-        idx = lower.indexOf(token);
+        const normalizedToken = token.replace(/ё/g, "е");
+        idx = normalized.indexOf(normalizedToken);
         if (idx !== -1) break;
       }
 
@@ -360,6 +520,50 @@ const RosaApp = (function () {
       if (start > 0) snippet = `…${snippet}`;
       if (end < text.length) snippet = `${snippet}…`;
       return snippet;
+    },
+
+    escapeRegex(value) {
+      return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    },
+
+    buildHighlightPattern(token) {
+      const safe = this.escapeRegex(token);
+      return safe.replace(/е/gi, "[её]");
+    },
+
+    highlightText(text, tokens) {
+      if (!text) return document.createTextNode("");
+      const uniqueTokens = Array.from(
+        new Set(tokens.filter((token) => token.length > 1)),
+      );
+      if (!uniqueTokens.length) return document.createTextNode(text);
+
+      const pattern = uniqueTokens
+        .map((token) => this.buildHighlightPattern(token))
+        .filter(Boolean)
+        .join("|");
+      if (!pattern) return document.createTextNode(text);
+
+      const regex = new RegExp(pattern, "gi");
+      const fragment = document.createDocumentFragment();
+      let lastIndex = 0;
+      let match;
+
+      while ((match = regex.exec(text)) !== null) {
+        if (match.index > lastIndex) {
+          fragment.append(text.slice(lastIndex, match.index));
+        }
+        const mark = document.createElement("mark");
+        mark.textContent = match[0];
+        fragment.append(mark);
+        lastIndex = match.index + match[0].length;
+      }
+
+      if (lastIndex < text.length) {
+        fragment.append(text.slice(lastIndex));
+      }
+
+      return fragment;
     },
 
     /** Отрисовка результатов поиска */
@@ -387,7 +591,7 @@ const RosaApp = (function () {
         const title = document.createElement("a");
         title.className = "search-result-title";
         title.href = utils.withBasePath(doc.path);
-        title.textContent = doc.title;
+        title.appendChild(this.highlightText(doc.title, tokens));
 
         const path = document.createElement("span");
         path.className = "search-result-path";
@@ -399,7 +603,7 @@ const RosaApp = (function () {
         if (snippetText) {
           const snippet = document.createElement("p");
           snippet.className = "search-result-snippet";
-          snippet.textContent = snippetText;
+          snippet.appendChild(this.highlightText(snippetText, tokens));
           item.appendChild(snippet);
         }
         item.appendChild(path);
@@ -418,6 +622,18 @@ const RosaApp = (function () {
       resultsEl.hidden = true;
       if (sidebar) sidebar.classList.remove("search-active");
       if (navEl) navEl.hidden = false;
+    },
+
+    /** Универсальный статус поиска */
+    renderStatus(resultsEl, sidebar, navEl, text, className) {
+      resultsEl.innerHTML = "";
+      const status = document.createElement("div");
+      status.className = className || "search-status";
+      status.textContent = text;
+      resultsEl.appendChild(status);
+      resultsEl.hidden = false;
+      if (sidebar) sidebar.classList.add("search-active");
+      if (navEl) navEl.hidden = true;
     },
   };
 

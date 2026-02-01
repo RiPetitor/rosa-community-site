@@ -275,6 +275,27 @@ body.docs-sidebar-open .docs-sidebar-toggle {
     color: $text-muted;
   }
 
+  .docs-search-results mark {
+    background: rgba($soviet-red, 0.2);
+    color: $ink-black;
+    padding: 0 0.1em;
+  }
+
+  .search-status {
+    padding: 0.75rem;
+    border: 1px dashed $border-dark;
+    background: rgba($ink-black, 0.03);
+    text-align: center;
+    font-size: 0.85rem;
+    color: $text-muted;
+
+    &.is-error {
+      border-color: $soviet-red;
+      color: $soviet-red;
+      background: rgba($soviet-red, 0.08);
+    }
+  }
+
   .search-empty {
     padding: 0.75rem;
     border: 1px dashed $border-dark;
