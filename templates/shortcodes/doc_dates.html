@@ -1,0 +1,7 @@
+{% set dates = load_data(path="data/doc_dates.json", required=false) %} {% if
+dates and dates[page.relative_path] %} {% set doc = dates[page.relative_path] %}
+<div class="doc-dates">
+    <strong>Опубликовано:</strong> {{ doc.created | date(format="%d.%m.%Y") }} •
+    <strong>Обновлено:</strong> {{ doc.updated | date(format="%d.%m.%Y") }}
+</div>
+{% endif %}

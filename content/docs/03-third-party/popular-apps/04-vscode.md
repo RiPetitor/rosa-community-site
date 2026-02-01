@@ -4,6 +4,8 @@ description = "Установка редактора Visual Studio Code"
 weight = 4
 +++
 
+{{ doc_dates() }}
+
 Visual Studio Code — популярный редактор кода от Microsoft.
 
 ## Способ 1: Официальный репозиторий

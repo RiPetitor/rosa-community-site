@@ -4,6 +4,8 @@ description = "Установка браузера Google Chrome"
 weight = 1
 +++
 
+{{ doc_dates() }}
+
 Google Chrome — популярный браузер от Google.
 
 ## Способ 1: Официальный RPM

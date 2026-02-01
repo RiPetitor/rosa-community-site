@@ -4,6 +4,8 @@ description = "Работа с systemd: сервисы, таймеры, юнит
 weight = 3
 +++
 
+{{ doc_dates() }}
+
 Systemd — система инициализации и управления сервисами в ROSA Linux.
 
 ## Основные команды systemctl
