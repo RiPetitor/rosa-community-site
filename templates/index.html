@@ -31,8 +31,12 @@ endblock %} {% block content %}
     <div class="column-layout two-column">
         <div class="main-column">
             {% set blog_section = get_section(path="blog/_index.md",
-            metadata_only=false) %} {% if blog_section.pages %} {% set featured
-            = blog_section.pages | first %}
+            metadata_only=false) %} {% set month_names = [ "", "января",
+            "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
+            "сентября", "октября", "ноября", "декабря" ] %} {% if
+            blog_section.pages %} {% set featured = blog_section.pages | first
+            %} {% set featured_month_index = featured.date | date(format="%m") |
+            int %}
             <article class="article featured">
                 <header class="article-header">
                     {% if featured.taxonomies.categories %}
@@ -47,7 +51,9 @@ endblock %} {% block content %}
                     </h2>
                     <div class="article-meta">
                         <span class="date"
-                            >{{ featured.date | date(format="%d %B %Y") }}</span
+                            >{{ featured.date | date(format="%d") }} {{
+                            month_names[featured_month_index] }} {{
+                            featured.date | date(format="%Y") }}</span
                         >
                     </div>
                 </header>
@@ -198,7 +204,7 @@ endblock %} {% block content %}
     <div class="column-layout three-column">
         {% set blog_section = get_section(path="blog/_index.md",
         metadata_only=false) %} {% for post in blog_section.pages | slice(end=3)
-        %}
+        %} {% set post_month_index = post.date | date(format="%m") | int %}
         <article class="article">
             <header class="article-header">
                 {% if post.taxonomies.categories %}
@@ -211,7 +217,9 @@ endblock %} {% block content %}
                 </h3>
                 <div class="article-meta">
                     <span class="date"
-                        >{{ post.date | date(format="%d %B %Y") }}</span
+                        >{{ post.date | date(format="%d") }} {{
+                        month_names[post_month_index] }} {{ post.date |
+                        date(format="%Y") }}</span
                     >
                 </div>
             </header>

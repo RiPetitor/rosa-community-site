@@ -4,6 +4,10 @@ description %}{{ page.description | default(value=page.summary | striptags |
 truncate(length=160)) }}{% endblock %} {% block content %}
 <div class="blog-post-layout">
     <div class="blog-post-main">
+        {% set month_names = [ "", "января", "февраля", "марта", "апреля",
+        "мая", "июня", "июля", "августа", "сентября", "октября", "ноября",
+        "декабря" ] %} {% set month_index = page.date | date(format="%m") | int
+        %}
         <article class="blog-post">
             <header class="post-header">
                 <nav class="blog-nav">
@@ -30,7 +34,9 @@ truncate(length=160)) }}{% endblock %} {% block content %}
 
                 <div class="post-meta">
                     <time datetime="{{ page.date | date(format='%Y-%m-%d') }}">
-                        {{ page.date | date(format="%d %B %Y") }}
+                        {{ page.date | date(format="%d") }} {{
+                        month_names[month_index] }} {{ page.date |
+                        date(format="%Y") }}
                     </time>
                     {% if page.extra.author %}
                     <span class="author">✒ {{ page.extra.author }}</span>
