@@ -25,7 +25,10 @@ block title %}{{ section.title }} - Документация - {{ config.extra.s
                 {{ section.content | safe }} {% if section.pages %}
                 <div class="docs-cards">
                     {% for page in section.pages %}
-                    <a href="{{ page.permalink }}" class="docs-card">
+                    <a
+                        href="{{ page.permalink }}"
+                        class="docs-card newspaper-card"
+                    >
                         <h3>{{ page.title }}</h3>
                         {% if page.description %}
                         <p>{{ page.description }}</p>
