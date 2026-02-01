@@ -12,7 +12,7 @@ tmp_file=$(mktemp)
   echo "{"
   first=1
   while IFS= read -r -d '' file; do
-    created=$(git log --reverse --format=%cI -- "${file}" | head -n1)
+    created=$(git log --reverse -1 --format=%cI -- "${file}")
     updated=$(git log -1 --format=%cI -- "${file}")
 
     if [[ -z "${created}" || -z "${updated}" ]]; then
