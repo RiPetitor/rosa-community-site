@@ -10,13 +10,14 @@ ROSA Linux поддерживает несколько рабочих окруж
 
 ## KDE Plasma
 
-Мощное и настраиваемое окружение. Используется по умолчанию в ROSA Fresh.
+Мощное и настраиваемое окружение. Используется по умолчанию в ROSA Fresh 13.
 
 ### Особенности
 
 - Гибкая настройка внешнего вида
 - Панели, виджеты, эффекты
 - Интеграция с приложениями KDE (Dolphin, Kate, Konsole)
+- Поддержка современных технологий (Wayland, OpenGL 4.x)
 
 ### Настройка
 
@@ -42,6 +43,7 @@ ROSA Linux поддерживает несколько рабочих окруж
 - Чистый интерфейс без отвлекающих элементов
 - Поиск через Activities
 - Расширения для дополнительных функций
+- Поддержка Wayland сеансов
 
 ### Настройка
 
@@ -61,12 +63,7 @@ sudo dnf install gnome-tweaks gnome-extensions-app
 - Низкое потребление памяти
 - Быстрый запуск
 - Классический интерфейс
-
-### Установка
-
-```bash
-sudo dnf install @lxqt-desktop
-```
+- Совместимость с новыми версиями Qt
 
 ## Смена окружения
 
@@ -78,13 +75,13 @@ sudo dnf install @lxqt-desktop
 
 ```bash
 # KDE Plasma
-sudo dnf install @kde-desktop
+sudo dnf in sddm
 
 # GNOME
-sudo dnf install @gnome-desktop
+sudo dnf in gdm
 
 # LXQt
-sudo dnf install @lxqt-desktop
+sudo dnf in lightdm
 ```
 
 <div class="tip">
@@ -98,6 +95,7 @@ sudo dnf install @lxqt-desktop
 
 - Параметры системы → Внешний вид → Глобальная тема
 - Можно скачать темы из интернета прямо в настройках
+- ROSA Fresh 13 включает обновленный дизайн в традиционной цветовой гамме
 
 ### GNOME
 

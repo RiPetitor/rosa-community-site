@@ -84,3 +84,10 @@ flatpak uninstall com.discordapp.Discord
 sudo rm -rf /opt/Discord
 sudo rm /usr/share/applications/discord.desktop
 ```
+
+## Совместимость с ROSA Linux
+
+- **Поддержка современных стандартов**: Discord полностью совместим с ROSA Linux и поддерживает современные протоколы безопасности.
+- **Интеграция с системой**: Приложение интегрируется с системой уведомлений и другими компонентами рабочего окружения.
+- **Поддержка glibc 2.40**: Благодаря новой версии glibc, Discord стабильно работает в ROSA Linux.
+- **Поддержка Wayland и PipeWire**: В ROSA Fresh 13 с KDE Plasma 6 Discord поддерживает сеансы Wayland и интеграцию с PipeWire для захвата экрана и звука.

@@ -12,22 +12,9 @@ weight = 5
 
 ### NVIDIA
 
-Проприетарные драйверы обеспечивают лучшую производительность.
+Для установки, настройки и решения проблем с драйверами NVIDIA в ROSA Linux посвящён отдельный раздел.
 
-```bash
-# Проверка видеокарты
-lspci | grep -i nvidia
-
-# Установка драйвера
-sudo dnf install nvidia-driver
-```
-
-После установки перезагрузите систему.
-
-<div class="warning">
-  <div class="title">Важно</div>
-  После обновления ядра может потребоваться переустановка драйвера NVIDIA.
-</div>
+- **[Перейти к руководствам по NVIDIA](@/docs/02-daily-use/nvidia/_index.md)**
 
 ### AMD
 
@@ -51,7 +38,7 @@ sudo dnf install intel-media-driver
 
 ## Звук
 
-### PulseAudio / PipeWire
+### PipeWire
 
 ROSA использует PipeWire — современную звуковую систему.
 

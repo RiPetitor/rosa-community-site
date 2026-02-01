@@ -1,204 +1,131 @@
 +++
-title = "Нет сети / звука / видео"
-description = "Решение проблем с оборудованием"
+title = "Проблемы с оборудованием"
+description = "Решение проблем с сетью, звуком и видео"
 weight = 3
 +++
 
 {{ doc_dates() }}
 
-Проблемы с сетью, звуком или видео — частая ситуация. Вот как их диагностировать и исправить.
+Иногда после установки или обновления оборудование перестаёт работать. Вот как диагностировать и исправить самые частые проблемы.
 
 ## Проблемы с сетью
 
-### Нет подключения
-
+### Нет подключения (Ethernet)
 ```bash
-# Проверка интерфейсов
-ip link
+# Проверка статуса сетевых интерфейсов
+ip addr
 
-# Статус NetworkManager
+# Проверка статуса NetworkManager
 systemctl status NetworkManager
 
-# Перезапуск сети
+# Перезапуск службы управления сетью
 sudo systemctl restart NetworkManager
 ```
 
-### Wi-Fi не работает
-
+### Не работает Wi-Fi
 ```bash
-# Проверка Wi-Fi адаптера
+# 1. Проверьте, видит ли система адаптер
 lspci | grep -i wireless
 lsusb | grep -i wireless
 
-# Статус радиомодуля
+# 2. Проверьте, не заблокирован ли радиомодуль
 rfkill list
 
-# Разблокировка
+# Если есть "Hard blocked: yes", включите его аппаратной кнопкой/переключателем
+# Если "Soft blocked: yes", разблокируйте командой:
 sudo rfkill unblock wifi
 ```
 
-### Драйвер Wi-Fi
-
-```bash
-# Проверка загруженных модулей
-lsmod | grep -E 'iwl|ath|rtl|bcm'
-
-# Информация об устройстве
-sudo dmesg | grep -i wifi
-```
-
 <div class="info">
-  <div class="title">Broadcom</div>
-  Для карт Broadcom может потребоваться проприетарный драйвер: <code>sudo dnf install broadcom-wl</code>
+  <div class="title">Драйверы Broadcom</div>
+  Некоторые старые карты Broadcom требуют проприетарный драйвер. Если `lspci` показывает адаптер Broadcom, попробуйте установить: `sudo dnf install broadcom-wl`.
 </div>
 
-### DNS не работает
+### Не работают сайты (проблема с DNS)
+Если `ping 8.8.8.8` работает, а `ping ya.ru` нет — проблема в DNS.
 
 ```bash
-# Проверка DNS
-nslookup ya.ru
+# Проверить, какие DNS-серверы используются
+resolvectl status
 
-# Временное решение — добавить DNS вручную
-echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+# Установить DNS-серверы Google через NetworkManager (изменения сохранятся)
+sudo nmcli connection modify "Имя_Подключения" ipv4.dns "8.8.8.8,8.8.4.4"
+
+# Перезагрузите подключение, чтобы применить изменения
+sudo nmcli connection up "Имя_Подключения"
 ```
 
 ## Проблемы со звуком
+ROSA Linux использует **PipeWire** как современный звуковой сервер.
 
-### Нет звука вообще
-
+### Нет звука
 ```bash
-# Проверка звуковых карт
+# 1. Проверка, видит ли система звуковые карты
 aplay -l
 
-# Статус PipeWire
+# 2. Проверка статуса служб PipeWire
 systemctl --user status pipewire pipewire-pulse
 
-# Перезапуск
+# 3. Перезапуск служб
 systemctl --user restart pipewire pipewire-pulse
 ```
 
-### Звук выключен
-
+### Проверка громкости и устройств
 ```bash
-# Проверка громкости
-pactl get-sink-volume @DEFAULT_SINK@
+# Проверить, не выключен ли звук
 pactl get-sink-mute @DEFAULT_SINK@
 
-# Включить звук
-pactl set-sink-mute @DEFAULT_SINK@ 0
-pactl set-sink-volume @DEFAULT_SINK@ 100%
-```
+# Установить громкость на 80%
+pactl set-sink-volume @DEFAULT_SINK@ 80%
 
-### Выбор устройства вывода
-
-```bash
-# Список устройств
+# Список устройств вывода
 pactl list sinks short
 
-# Установить устройство по умолчанию
+# Установить устройство по умолчанию (замените SINK_NAME)
 pactl set-default-sink SINK_NAME
 ```
-
-### HDMI звук
-
-```bash
-# Проверка HDMI
-aplay -l | grep HDMI
-
-# В настройках звука выберите HDMI-выход
-```
+Для более тонкой настройки и отладки установите **pavucontrol** (`sudo dnf install pavucontrol`). Эта утилита позволяет наглядно управлять потоками и устройствами.
 
 ## Проблемы с видео
 
-### Чёрный экран / артефакты
-
-#### NVIDIA
-
-```bash
-# Проверка драйвера
-nvidia-smi
-
-# Переустановка
-sudo dnf reinstall nvidia-driver
-
-# Загрузка с открытым драйвером
-# В GRUB добавьте: nouveau.modeset=1
-```
-
-#### AMD
-
-```bash
-# Проверка
-glxinfo | grep "OpenGL renderer"
-
-# Переустановка Mesa
-sudo dnf reinstall mesa-dri-drivers
-```
-
-### Низкое разрешение
+### Низкое разрешение экрана
+Это обычно означает, что не загрузился правильный драйвер видеокарты.
 
 ```bash
 # Проверка доступных разрешений
 xrandr
 
-# Установка разрешения
-xrandr --output HDMI-1 --mode 1920x1080
+# Если в списке только одно низкое разрешение, драйвер не работает.
 ```
+
+### Проблемы с драйверами NVIDIA
+Для подробной информации обратитесь к специальному разделу **[Диагностика драйверов NVIDIA](@/docs/02-daily-use/nvidia/04-troubleshooting.md)**.
+
+- **Чёрный экран:** Загрузитесь с параметром `nomodeset`, чтобы обойти проприетарный драйвер, и попробуйте переустановить его.
+- **Проверка:** Основная команда для проверки — `nvidia-smi`.
+
+### Проблемы с драйверами AMD
+Драйвер `amdgpu` встроен в ядро Linux, но иногда ему не хватает прошивки (firmware).
+
+```bash
+# Проверка, загружен ли драйвер
+glxinfo | grep "OpenGL renderer"
+
+# Поиск ошибок, связанных с прошивкой, в логах ядра
+sudo dmesg | grep -iE 'amdgpu.*firmware'
+```
+Если есть ошибки о недостающих файлах прошивки, убедитесь, что у вас установлен пакет `linux-firmware`.
 
 ### Тиринг (разрывы изображения)
-
-#### KDE Plasma
-
-1. Параметры системы → Экран → Композитор.
-2. Включите «VSync».
-
-#### NVIDIA
-
-Создайте `/etc/X11/xorg.conf.d/20-nvidia.conf`:
-
-```
-Section "Device"
-    Identifier "NVIDIA"
-    Driver "nvidia"
-    Option "TripleBuffer" "true"
-EndSection
-
-Section "Screen"
-    Identifier "Screen0"
-    Option "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-EndSection
-```
-
-## Общая диагностика
-
-### Информация об оборудовании
-
-```bash
-# Подробный отчёт
-inxi -Fxz
-
-# Только проблемное оборудование
-sudo dmesg | grep -iE 'error|fail|warn'
-```
-
-### Проверка драйверов
-
-```bash
-# Загруженные модули
-lsmod
-
-# Информация о модуле
-modinfo module_name
-
-# Загрузка модуля
-sudo modprobe module_name
-```
-
-<div class="tip">
-  <div class="title">Совет</div>
-  При обращении за помощью прикладывайте вывод <code>inxi -Fxz</code> — это сильно ускорит диагностику.
-</div>
+1.  **Настройки композитора:** В первую очередь попробуйте включить VSync в настройках вашей среды рабочего стола (например, в KDE: «Параметры системы» → «Экран и монитор» → «Композитор»).
+2.  **Force Composition Pipeline (NVIDIA):** Если VSync не помогает, можно использовать опцию драйвера NVIDIA. Создайте файл `/etc/X11/xorg.conf.d/20-nvidia.conf` со следующим содержимым:
+    ```ini
+    Section "Screen"
+        Identifier "Screen0"
+        Option "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
+    EndSection
+    ```
+    Этот метод может немного снизить производительность.
 
 ## Следующий шаг
-
 - [Восстановление системы](@/docs/04-troubleshooting/04-system-recovery.md)
