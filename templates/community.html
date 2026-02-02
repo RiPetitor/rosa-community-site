@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% import "macros/community_sidebar.html" as sidebar
+%} {% block title %}{{ section.title }} - {{ config.extra.site_name }}{%
+endblock %} {% block body_class %}docs-page{% endblock %} {% block content %}
+<div class="docs-layout">
+    {{ sidebar::render(title=section.title) }}
+
+    <main class="docs-main">
+        <div class="docs-content">
+            <header class="docs-header">
+                <h1>{{ section.title }}</h1>
+                {% if section.description %}
+                <p class="docs-description">{{ section.description }}</p>
+                {% endif %}
+            </header>
+
+            <div class="docs-body">
+                {{ section.content | safe }} {% if section.pages %}
+                <div class="docs-cards">
+                    {% for page in section.pages %}
+                    <a
+                        href="{{ page.permalink }}"
+                        class="docs-card newspaper-card"
+                    >
+                        <h3>{{ page.title }}</h3>
+                        {% if page.description %}
+                        <p>{{ page.description }}</p>
+                        {% endif %}
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}

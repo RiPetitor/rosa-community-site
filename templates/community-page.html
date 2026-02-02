@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% import "macros/community_sidebar.html" as sidebar
+%} {% import "macros/toc.html" as toc %} {% block title %}{{ page.title }} - {{
+config.extra.site_name }}{% endblock %} {% block body_class %}docs-page{%
+endblock %} {% block content %}
+<div class="docs-layout">
+    {{ sidebar::render(title=page.title) }}
+
+    <main class="docs-main">
+        <div class="docs-content">
+            <header class="docs-header">
+                <nav class="docs-breadcrumb">
+                    <a href="{{ get_url(path='@/docs/_index.md') }}"
+                        >Документация</a
+                    >
+                </nav>
+                <h1>{{ page.title }}</h1>
+                {% if page.description %}
+                <p class="docs-description">{{ page.description }}</p>
+                {% endif %}
+            </header>
+
+            {{ toc::render_mobile(toc=page.toc) }}
+
+            <div class="docs-body">{{ page.content | safe }}</div>
+
+            <nav class="docs-footer-nav">
+                {% if page.lower %}
+                <a href="{{ page.lower.permalink }}" class="nav-link prev">
+                    <span class="nav-label">Предыдущая</span>
+                    <span class="nav-title">{{ page.lower.title }}</span>
+                </a>
+                {% endif %} {% if page.higher %}
+                <a href="{{ page.higher.permalink }}" class="nav-link next">
+                    <span class="nav-label">Следующая</span>
+                    <span class="nav-title">{{ page.higher.title }}</span>
+                </a>
+                {% endif %}
+            </nav>
+
+            <div class="docs-edit">
+                <a
+                    href="{{ config.extra.repo_url }}/edit/{{ config.extra.repo_branch }}/content/{{ page.relative_path }}"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Внести правки
+                </a>
+            </div>
+        </div>
+
+        {{ toc::render(toc=page.toc) }}
+    </main>
+</div>
+{% endblock %}
