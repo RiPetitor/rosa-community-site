@@ -119,7 +119,7 @@ url = "@/docs/_index.md"
 
 [[extra.nav]]
 name = "Сообщество"
-url = "@/community.md"
+url = "@/community/_index.md"
 
 [[extra.nav]]
 name = "О проекте"
