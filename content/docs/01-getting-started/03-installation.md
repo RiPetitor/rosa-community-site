@@ -37,6 +37,16 @@ sudo dd if=ROSA.FRESH.iso of=/dev/sdX bs=4M status=progress
 
 Замените `/dev/sdX` на устройство вашей флешки (например, `/dev/sdb`).
 
+<div class="info">
+  <div class="title">Объяснение</div>
+  <p><code>sudo</code> — запускает команду с правами администратора (нужно для записи на устройство).</p>
+  <p><code>dd</code> — утилита побайтового копирования данных.</p>
+  <p><code>if=</code> (Input File) — исходный файл, ISO-образ ROSA Linux.</p>
+  <p><code>of=</code> (Output File) — устройство, куда записывать образ. ВАЖНО: <code>sdX</code> — заглушка, замените на реальный диск (например, <code>/dev/sdb</code>). Ошибка приведет к потере данных на выбранном диске.</p>
+  <p><code>bs=4M</code> (Block Size) — размер блока копирования (4 МБ). Ускоряет запись по сравнению с размером по умолчанию.</p>
+  <p><code>status=progress</code> — показывает прогресс копирования (GNU dd).</p>
+</div>
+
 ### Windows
 
 Рекомендуемые программы:
