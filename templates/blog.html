@@ -1,7 +1,6 @@
 {% extends "base.html" %} {% import "macros/blog_item.html" as blog_item %} {%
 import "macros/blog_sidebar.html" as blog_sidebar %} {% block title %}Блог — {{
-config.extra.site_name }}{% endblock %} {% block body_class %}blog-page{%
-endblock %} {% block content %} {% set categories =
+config.extra.site_name }}{% endblock %} {% block body_class %}blog-page{% endblock %} {% block content %} {% set categories =
 get_taxonomy(kind="categories") %} {% set tags = get_taxonomy(kind="tags") %}
 
 <div class="blog-header">
@@ -28,41 +27,44 @@ get_taxonomy(kind="categories") %} {% set tags = get_taxonomy(kind="tags") %}
 </div>
 
 <div class="blog-layout">
-    <div class="blog-main">
-        <div class="blog-list">
-            {% if paginator %} {% for page in paginator.pages %} {{
-            blog_item::render(page=page, index=loop.index0) }} {% endfor %} {%
-            elif section.pages %} {% for page in section.pages %} {{
-            blog_item::render(page=page, index=loop.index0) }} {% endfor %} {%
-            else %}
-            <div class="article text-center">
-                <h3>Статьи появятся здесь</h3>
-                <p>
-                    Следите за обновлениями — скоро мы опубликуем новые
-                    материалы.
-                </p>
+        <div class="blog-main">
+            <div class="blog-list">
+                {% if paginator %} {% for page in paginator.pages %} {{
+                blog_item::render(page=page, index=loop.index0) }} {% endfor %}
+                {% elif section.pages %} {% for page in section.pages %} {{
+                blog_item::render(page=page, index=loop.index0) }} {% endfor %}
+                {% else %}
+                <div class="article text-center">
+                    <h3>Статьи появятся здесь</h3>
+                    <p>
+                        Следите за обновлениями — скоро мы опубликуем новые
+                        материалы.
+                    </p>
+                </div>
+                {% endif %}
             </div>
+
+            {% if paginator %}
+            <nav class="pagination">
+                {% if paginator.previous %}
+                <a href="{{ paginator.previous }}" class="btn btn-secondary"
+                    >Новее</a
+                >
+                {% endif %}
+                <span class="page-info"
+                    >Страница {{ paginator.current_index }} из {{
+                    paginator.number_pagers }}</span
+                >
+                {% if paginator.next %}
+                <a href="{{ paginator.next }}" class="btn btn-secondary"
+                    >Старше</a
+                >
+                {% endif %}
+            </nav>
             {% endif %}
         </div>
 
-        {% if paginator %}
-        <nav class="pagination">
-            {% if paginator.previous %}
-            <a href="{{ paginator.previous }}" class="btn btn-secondary"
-                >Новее</a
-            >
-            {% endif %}
-            <span class="page-info"
-                >Страница {{ paginator.current_index }} из {{
-                paginator.number_pagers }}</span
-            >
-            {% if paginator.next %}
-            <a href="{{ paginator.next }}" class="btn btn-secondary">Старше</a>
-            {% endif %}
-        </nav>
-        {% endif %}
-    </div>
+                {{ blog_sidebar::render(categories=categories, tags=tags) }}
 
-    {{ blog_sidebar::render(categories=categories, tags=tags) }}
+            </div>    {% endblock %}
 </div>
-{% endblock %}

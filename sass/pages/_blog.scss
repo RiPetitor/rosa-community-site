@@ -379,15 +379,6 @@
 
 /// Макет статьи блога с боковой навигацией
 .blog-post-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 260px;
-  gap: 2rem;
-  align-items: start;
-
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-  }
-
   .blog-post {
     max-width: 100%;
     margin: 0;
@@ -455,7 +446,6 @@
 .blog-post .docs-edit {
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px dashed lighten($border-dark, 20%);
   text-align: center;
 
   a {

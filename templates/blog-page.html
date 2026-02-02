@@ -89,40 +89,6 @@ truncate(length=160)) }}{% endblock %} {% block content %}
                 </a>
             </div>
         </article>
-
-        {% if page.taxonomies.tags %}
-        <section class="related-posts headline-section">
-            <div class="section-header">
-                <h2>★ Похожие статьи ★</h2>
-            </div>
-
-            <div class="column-layout three-column">
-                {% set blog_section = get_section(path="blog/_index.md") %} {%
-                set related_count = 0 %} {% for post in blog_section.pages %} {%
-                if post.permalink != page.permalink and related_count < 3 %} {%
-                set has_common_tag = false %} {% if post.taxonomies.tags %} {%
-                for tag in post.taxonomies.tags %} {% if tag in
-                page.taxonomies.tags %} {% set_global has_common_tag = true %}
-                {% endif %} {% endfor %} {% endif %} {% if has_common_tag %} {%
-                set_global related_count = related_count + 1 %}
-                <article class="article">
-                    <header class="article-header">
-                        <h3 class="article-title">
-                            <a href="{{ post.permalink }}">{{ post.title }}</a>
-                        </h3>
-                        <div class="article-meta">
-                            <span class="date"
-                                >{{ post.date | date(format="%d.%m.%Y") }}</span
-                            >
-                        </div>
-                    </header>
-                </article>
-                {% endif %} {% endif %} {% endfor %}
-            </div>
-        </section>
-        {% endif %}
     </div>
-
-    {{ toc::render(toc=page.toc, class_name="blog-toc") }}
 </div>
 {% endblock %}
