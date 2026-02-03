@@ -132,4 +132,4 @@ sudo make uninstall
 
 ## Следующий шаг
 
-- [Популярные приложения](@/docs/03-third-party/popular-apps/_index.md)
+- [Популярные приложения](@/docs/03-third-party/apps/_index.md)
