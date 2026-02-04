@@ -4,6 +4,8 @@ description = "Установка Bevy"
 weight = 8
 +++
 
+{{ doc_dates() }}
+
 <div style="text-align: center; margin: 1.5rem 0;">
   <img src="/images/doc/bevy.svg" alt="Bevy logo" style="max-width: 220px; width: 100%; height: auto; filter: invert(1);">
 </div>
