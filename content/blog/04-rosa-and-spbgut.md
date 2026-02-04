@@ -53,3 +53,8 @@ image = "/images/blog/rosaxcpbgut.jpg"
 ---
 
 *Для тех, кто следит за развитием российских ОС: это ещё один шаг в сторону формирования полноценной образовательной инфраструктуры вокруг отечественных платформ.*
+
+---
+
+## Источник
+[Форум ROSA](https://rosa.ru/rosa-i-universitet-im-prof-m-a-bonch-bruevicha-dogovorilis-o-sotrudnichestve-v-sfere-podgotovki-it-kadrov/)
