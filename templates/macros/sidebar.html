@@ -1,22 +1,12 @@
-{#
-  Универсальный макрос боковой панели навигации
-  Используется в: docs.html, docs-page.html, docs-section.html,
-                  community.html, community-page.html
-
-  Параметры:
-    - title: заголовок для мобильной панели
-    - section_path: путь к корневому разделу (например "docs/_index.md")
-    - create_path: путь для кнопки создания (например "content/docs/new-page.md")
-    - search_scope: область поиска (например "/docs/")
-
-  Поддержка иконок:
-    - добавьте extra.icon в _index.md раздела (например: icon = "🚀")
-  Поддержка вложенных разделов:
-    - создайте подпапки внутри раздела
-  Сворачиваемые разделы:
-    - состояние сохраняется в localStorage
-#}
-{% macro render(title, section_path, create_path, search_scope) %}
+{# Универсальный макрос боковой панели навигации Используется в: docs.html,
+docs-page.html, docs-section.html, community.html, community-page.html
+Параметры: - title: заголовок для мобильной панели - section_path: путь к
+корневому разделу (например "docs/_index.md") - create_path: путь для кнопки
+создания (например "content/docs/new-page.md") - search_scope: область поиска
+(например "/docs/") Поддержка иконок: - добавьте extra.icon в _index.md раздела
+(например: icon = "🚀") Поддержка вложенных разделов: - создайте подпапки внутри
+раздела Сворачиваемые разделы: - состояние сохраняется в localStorage #} {%
+macro render(title, section_path, create_path, search_scope) %}
 <div class="docs-mobile-bar">
     <button
         class="docs-sidebar-toggle"
@@ -62,10 +52,9 @@
     ></div>
 
     <nav class="docs-nav" data-docs-nav>
-        {% set root = get_section(path=section_path) %}
-        {% for subsection in root.subsections %}
-        {% set sub = get_section(path=subsection) %}
-        {% set section_id = sub.path | slugify %}
+        {% set root = get_section(path=section_path) %} {% for subsection in
+        root.subsections %} {% set sub = get_section(path=subsection) %} {% set
+        section_id = sub.path | slugify %}
         <details class="nav-group" data-nav-group="{{ section_id }}">
             <summary class="nav-group-title">
                 {%- if sub.extra.icon -%}
@@ -75,15 +64,18 @@
                 <span class="nav-group-chevron"></span>
             </summary>
             <ul class="nav-group-items">
-                {% for doc_page in sub.pages %}
+                {% if sub.content %}
+                <li>
+                    <a href="{{ sub.permalink }}">Обзор</a>
+                </li>
+                {% endif %} {% for doc_page in sub.pages %}
                 <li>
                     <a href="{{ doc_page.permalink }}">{{ doc_page.title }}</a>
                 </li>
-                {% endfor %}
-                {# Вложенные подразделы (тоже сворачиваемые) #}
-                {% for nested_subsection in sub.subsections %}
-                {% set nested_sub = get_section(path=nested_subsection) %}
-                {% set nested_id = nested_sub.path | slugify %}
+                {% endfor %} {# Вложенные подразделы (тоже сворачиваемые) #} {%
+                for nested_subsection in sub.subsections %} {% set nested_sub =
+                get_section(path=nested_subsection) %} {% set nested_id =
+                nested_sub.path | slugify %}
                 <li class="nav-subgroup">
                     <details data-nav-group="{{ nested_id }}">
                         <summary class="nav-subgroup-title">
@@ -91,15 +83,24 @@
                             <span class="nav-subgroup-chevron"></span>
                         </summary>
                         <ul>
-                            {% for nested_page in nested_sub.pages %}
+                            {% if nested_sub.content %}
                             <li>
-                                <a href="{{ nested_page.permalink }}">{{ nested_page.title }}</a>
+                                <a href="{{ nested_sub.permalink }}">Обзор</a>
                             </li>
-                            {% endfor %}
-                            {% for deep_subsection in nested_sub.subsections %}
-                            {% set deep_sub = get_section(path=deep_subsection) %}
+                            {% endif %} {% for nested_page in nested_sub.pages
+                            %}
                             <li>
-                                <a href="{{ deep_sub.permalink }}">{{ deep_sub.title }}</a>
+                                <a href="{{ nested_page.permalink }}"
+                                    >{{ nested_page.title }}</a
+                                >
+                            </li>
+                            {% endfor %} {% for deep_subsection in
+                            nested_sub.subsections %} {% set deep_sub =
+                            get_section(path=deep_subsection) %}
+                            <li>
+                                <a href="{{ deep_sub.permalink }}"
+                                    >{{ deep_sub.title }}</a
+                                >
                             </li>
                             {% endfor %}
                         </ul>
