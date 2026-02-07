@@ -146,6 +146,7 @@ content %}
                     href="{{ config.extra.abf.rosa13_products }}"
                     class="btn btn-primary"
                     target="_blank"
+                    rel="noopener"
                 >
                     ROSA 13 — каталог сборок
                 </a>
@@ -153,6 +154,7 @@ content %}
                     href="{{ config.extra.abf.rosa12_products }}"
                     class="btn btn-outline"
                     target="_blank"
+                    rel="noopener"
                 >
                     ROSA 12 — каталог сборок
                 </a>
@@ -160,6 +162,7 @@ content %}
                     href="{{ config.extra.abf.base_url }}"
                     class="btn btn-outline"
                     target="_blank"
+                    rel="noopener"
                 >
                     Главная ABF
                 </a>
@@ -209,6 +212,7 @@ content %}
                     <a
                         href="{{ config.extra.downloads.bfresh.url }}"
                         target="_blank"
+                        rel="noopener"
                         >BFRESH (barium.rosa.ru)</a
                     >
                 </li>
@@ -216,6 +220,7 @@ content %}
                     <a
                         href="https://wiki.rosa.ru/index.php/BFRESH"
                         target="_blank"
+                        rel="noopener"
                         >Wiki BFRESH</a
                     >
                 </li>
@@ -223,6 +228,7 @@ content %}
                     <a
                         href="https://forum.rosa.ru/viewtopic.php?f=58&t=10425"
                         target="_blank"
+                        rel="noopener"
                         >Форум</a
                     >
                 </li>
@@ -254,8 +260,8 @@ content %}
             </header>
             <p>
                 Запишите образ на USB-флешку с помощью
-                <a href="https://etcher.balena.io/" target="_blank">Etcher</a>,
-                <a href="https://rufus.ie/" target="_blank">Rufus</a> или dd.
+                <a href="https://etcher.balena.io/" target="_blank" rel="noopener">Etcher</a>,
+                <a href="https://rufus.ie/" target="_blank" rel="noopener">Rufus</a> или dd.
             </p>
         </article>
         <article class="article">
@@ -311,4 +317,8 @@ content %}
     </div>
 </section>
 
+{% endblock %}
+
+{% block modals %}
+{% include "partials/download_modals.html" %}
 {% endblock %}

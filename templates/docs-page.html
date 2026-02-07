@@ -1,17 +1,17 @@
-{% extends "base.html" %} {% import "macros/docs_sidebar.html" as sidebar %} {%
-import "macros/toc.html" as toc %} {% block title %}{{ page.title }} - {{
-config.extra.site_name }}{% endblock %} {% block body_class %}docs-page{%
-endblock %} {% block content %}
+{% extends "base.html" %}
+{% import "macros/sidebar.html" as sidebar %}
+{% import "macros/toc.html" as toc %}
+{% block title %}{{ page.title }} - {{ config.extra.site_name }}{% endblock %}
+{% block body_class %}docs-page{% endblock %}
+{% block content %}
 <div class="docs-layout">
-    {{ sidebar::render(title=page.title) }}
+    {{ sidebar::render(title=page.title, section_path="docs/_index.md", create_path="content/docs/new-page.md", search_scope="/docs/") }}
 
     <main class="docs-main">
         <div class="docs-content">
             <header class="docs-header">
                 <nav class="docs-breadcrumb">
-                    <a href="{{ get_url(path='@/docs/_index.md') }}"
-                        >Документация</a
-                    >
+                    <a href="{{ get_url(path='@/docs/_index.md') }}">Документация</a>
                 </nav>
                 <h1>{{ page.title }}</h1>
                 {% if page.description %}
@@ -29,7 +29,8 @@ endblock %} {% block content %}
                     <span class="nav-label">Предыдущая</span>
                     <span class="nav-title">{{ page.lower.title }}</span>
                 </a>
-                {% endif %} {% if page.higher %}
+                {% endif %}
+                {% if page.higher %}
                 <a href="{{ page.higher.permalink }}" class="nav-link next">
                     <span class="nav-label">Следующая</span>
                     <span class="nav-title">{{ page.higher.title }}</span>

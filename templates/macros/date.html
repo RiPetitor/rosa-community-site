@@ -1,0 +1,23 @@
+{#
+  Макрос для форматирования русских дат
+  Используется в: base.html, index.html, blog-page.html, macros/blog_item.html
+
+  Параметры:
+    - date: объект даты
+    - format: "long" (по умолчанию, "15 января 2026") или "short" ("15 янв 2026")
+#}
+
+{% macro ru_month_names() %}
+{# Вспомогательный: возвращает массив полных названий #}
+{% endmacro %}
+
+{% macro format(date, format="long") %}
+{%- set long_months = ["", "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"] -%}
+{%- set short_months = ["", "янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"] -%}
+{%- set month_index = date | date(format="%m") | int -%}
+{%- if format == "short" -%}
+{{ date | date(format="%d") }} {{ short_months[month_index] }} {{ date | date(format="%Y") }}
+{%- else -%}
+{{ date | date(format="%d") }} {{ long_months[month_index] }} {{ date | date(format="%Y") }}
+{%- endif -%}
+{% endmacro %}

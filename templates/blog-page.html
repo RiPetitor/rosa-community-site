@@ -1,31 +1,21 @@
-{% extends "base.html" %} {% import "macros/toc.html" as toc %} {% block title
-%}{{ page.title }} — {{ config.extra.site_name }}{% endblock %} {% block
-description %}{{ page.description | default(value=page.summary | striptags |
-truncate(length=160)) }}{% endblock %} {% block content %}
+{% extends "base.html" %}
+{% import "macros/toc.html" as toc %}
+{% import "macros/date.html" as date %}
+{% block title %}{{ page.title }} — {{ config.extra.site_name }}{% endblock %}
+{% block description %}{{ page.description | default(value=page.summary | striptags | truncate(length=160)) }}{% endblock %}
+{% block content %}
 <div class="blog-post-layout">
     <div class="blog-post-main">
-        {% set month_names = [ "", "января", "февраля", "марта", "апреля",
-        "мая", "июня", "июля", "августа", "сентября", "октября", "ноября",
-        "декабря" ] %} {% set month_index = page.date | date(format="%m") | int
-        %}
         <article class="blog-post">
             <header class="post-header">
                 <nav class="blog-nav">
-                    <a
-                        href="{{ get_url(path='@/blog/_index.md') }}"
-                        class="nav-btn"
-                        >← ко всем статьям</a
-                    >
+                    <a href="{{ get_url(path='@/blog/_index.md') }}" class="nav-btn">← ко всем статьям</a>
                 </nav>
 
                 {% if page.taxonomies.categories %}
                 <div class="post-categories">
                     {% for cat in page.taxonomies.categories %}
-                    <a
-                        href="{{ get_taxonomy_url(kind='categories', name=cat) }}"
-                        class="article-category"
-                        >{{ cat }}</a
-                    >
+                    <a href="{{ get_taxonomy_url(kind='categories', name=cat) }}" class="article-category">{{ cat }}</a>
                     {% endfor %}
                 </div>
                 {% endif %}
@@ -34,16 +24,13 @@ truncate(length=160)) }}{% endblock %} {% block content %}
 
                 <div class="post-meta">
                     <time datetime="{{ page.date | date(format='%Y-%m-%d') }}">
-                        {{ page.date | date(format="%d") }} {{
-                        month_names[month_index] }} {{ page.date |
-                        date(format="%Y") }}
+                        {{ date::format(date=page.date) }}
                     </time>
                     {% if page.extra.author %}
                     <span class="author">✒ {{ page.extra.author }}</span>
-                    {% endif %} {% if page.reading_time %}
-                    <span class="reading-time"
-                        >📖 {{ page.reading_time }} мин. чтения</span
-                    >
+                    {% endif %}
+                    {% if page.reading_time %}
+                    <span class="reading-time">📖 {{ page.reading_time }} мин. чтения</span>
                     {% endif %}
                 </div>
             </header>
@@ -57,9 +44,7 @@ truncate(length=160)) }}{% endblock %} {% block content %}
                 <div class="post-tags">
                     <strong>Теги:</strong>
                     {% for tag in page.taxonomies.tags %}
-                    <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}"
-                        >#{{ tag }}</a
-                    >
+                    <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}">#{{ tag }}</a>
                     {% endfor %}
                 </div>
             </footer>
@@ -71,7 +56,8 @@ truncate(length=160)) }}{% endblock %} {% block content %}
                     <span class="nav-label">← Предыдущая</span>
                     <span class="nav-title">{{ page.earlier.title }}</span>
                 </a>
-                {% endif %} {% if page.later %}
+                {% endif %}
+                {% if page.later %}
                 <a href="{{ page.later.permalink }}" class="nav-next">
                     <span class="nav-label">Следующая →</span>
                     <span class="nav-title">{{ page.later.title }}</span>

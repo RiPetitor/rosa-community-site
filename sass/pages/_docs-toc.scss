@@ -1,0 +1,213 @@
+/**
+ * Документация: оглавление страницы (TOC) — desktop и mobile
+ */
+
+/// Мобильное «На этой странице» (свёрнутое) — советский газетный стиль
+.docs-toc-mobile {
+  display: none;
+  margin: 1rem 0 2.5rem;
+  border: 3px double $border-dark;
+  border-radius: 0;
+  background: $paper-cream;
+  overflow: visible;
+  position: relative;
+  box-shadow:
+    inset 0 0 0 5px $paper-cream,
+    inset 0 0 0 6px rgba($border-dark, 0.3);
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -34px;
+    height: 1px;
+    background: $border-dark;
+  }
+
+  summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    font-family: $font-display;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: $ink-black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+    border-bottom: 2px solid $border-dark;
+
+    &::before {
+      content: '☆';
+      margin-right: 0.5em;
+      font-size: 0.65rem;
+    }
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::after {
+    content: '▸';
+    font-size: 0.8rem;
+    color: $soviet-red;
+  }
+
+  &[open] summary::after {
+    content: '▾';
+  }
+
+  .docs-toc-mobile-body {
+    padding: 0.75rem 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 1px solid $border-dark;
+
+    li {
+      margin: 0;
+    }
+
+    a {
+      display: block;
+      padding: 0.35rem 0 0.35rem 0.75rem;
+      font-family: $font-sans;
+      font-size: 0.9rem;
+      color: $text-muted;
+      text-decoration: none;
+      transition: color 0.15s;
+
+      &:hover {
+        color: $soviet-red;
+      }
+    }
+
+    ul {
+      border-left: 1px dashed lighten($border-dark, 20%);
+      margin-left: 0.5rem;
+
+      a {
+        font-size: 0.85rem;
+        padding: 0.25rem 0 0.25rem 0.5rem;
+      }
+    }
+  }
+
+  @media (max-width: 1200px) {
+    display: block;
+  }
+}
+
+/// Оглавление справа — советский газетный стиль
+.docs-toc {
+  padding: 2rem 0.5rem 2rem 0;
+
+  @media (max-width: 1200px) {
+    display: none;
+  }
+
+  .toc-container {
+    position: sticky;
+    top: 2rem;
+    background: $paper-cream;
+    border: 3px double $border-dark;
+    padding: 1.25rem;
+    box-shadow:
+      inset 0 0 0 5px $paper-cream,
+      inset 0 0 0 6px rgba($border-dark, 0.3);
+
+    // Декоративные угловые элементы
+    &::before,
+    &::after {
+      position: absolute;
+      font-size: 0.65rem;
+      color: $border-dark;
+      opacity: 0.5;
+    }
+
+    &::before {
+      content: '✦';
+      top: 0.4rem;
+      left: 0.5rem;
+    }
+
+    &::after {
+      content: '✦';
+      bottom: 0.4rem;
+      right: 0.5rem;
+    }
+
+    h4 {
+      font-family: $font-display;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: $ink-black;
+      margin: 0 0 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid $border-dark;
+      text-align: center;
+      position: relative;
+
+      &::before {
+        content: '☆';
+        margin-right: 0.5em;
+        font-size: 0.65rem;
+      }
+
+      &::after {
+        content: '☆';
+        margin-left: 0.5em;
+        font-size: 0.65rem;
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border-left: 1px solid $border-dark;
+
+      li {
+        margin: 0;
+      }
+
+      a {
+        display: block;
+        padding: 0.35rem 0 0.35rem 0.75rem;
+        font-family: $font-sans;
+        font-size: 0.85rem;
+        color: $text-muted;
+        text-decoration: none;
+        transition: color 0.15s;
+
+        &:hover {
+          color: $soviet-red;
+        }
+      }
+
+      // Вложенный уровень
+      ul {
+        border-left: 1px dashed lighten($border-dark, 20%);
+        margin-left: 0.5rem;
+
+        a {
+          font-size: 0.8rem;
+          padding: 0.25rem 0 0.25rem 0.5rem;
+        }
+      }
+    }
+  }
+}

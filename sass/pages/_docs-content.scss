@@ -1,0 +1,433 @@
+/**
+ * Документация: контент страниц (Markdown-стили)
+ */
+
+/// Контент документации (советский газетный стиль)
+.docs-content {
+  padding: 2.5rem 3rem;
+  max-width: 900px;
+  position: relative;
+  background: $paper-cream;
+  border: 3px double $border-dark;
+  box-shadow:
+    inset 0 0 0 6px $paper-cream,
+    inset 0 0 0 7px rgba($border-dark, 0.3);
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+
+  // Декоративные угловые элементы
+  &::before,
+  &::after {
+    content: '✦';
+    position: absolute;
+    font-size: 0.75rem;
+    color: $border-dark;
+    opacity: 0.5;
+  }
+
+  &::before {
+    top: 0.5rem;
+    left: 0.75rem;
+  }
+
+  &::after {
+    bottom: 0.5rem;
+    right: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 2rem 1.5rem;
+    border-width: 2px;
+  }
+
+  .docs-header {
+    margin-bottom: 2rem;
+
+    h1 {
+      font-family: $font-display;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      line-height: 1.2;
+      color: $ink-black;
+    }
+
+    .docs-description {
+      font-size: 1.125rem;
+      color: $text-muted;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .docs-badge {
+      display: inline-block;
+      font-family: $font-sans;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px;
+      margin-top: 0.5rem;
+
+      &.new {
+        background: #4CAF50;
+        color: white;
+      }
+
+      &.experimental {
+        background: #ff9800;
+        color: white;
+      }
+
+      &.deprecated {
+        background: $soviet-red;
+        color: white;
+      }
+    }
+  }
+
+  .docs-breadcrumb {
+    font-family: $font-sans;
+    font-size: 0.85rem;
+    color: $text-muted;
+    margin-bottom: 1rem;
+
+    a {
+      color: $text-muted;
+      text-decoration: none;
+
+      &:hover {
+        color: $soviet-red;
+      }
+    }
+
+    .separator {
+      margin: 0 0.5rem;
+      color: lighten($text-muted, 20%);
+    }
+  }
+
+  // Карточки разделов документации
+  .docs-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .docs-card {
+    display: block;
+    padding: 1.25rem;
+    border: 1px solid $border-dark;
+    border-radius: 8px;
+    background: white;
+    text-decoration: none;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: $soviet-red;
+      box-shadow: 0 4px 12px rgba($ink-black, 0.1);
+      transform: translateY(-2px);
+    }
+
+    &:focus-visible {
+      outline: 3px solid $soviet-red;
+      outline-offset: 3px;
+      box-shadow: 0 0 0 2px $paper-cream;
+    }
+
+    h3 {
+      font-family: $font-sans;
+      font-size: 1rem;
+      font-weight: 600;
+      color: $ink-black;
+      margin: 0 0 0.5rem;
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: $text-muted;
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+
+  .docs-card.newspaper-card {
+    border: none;
+    border-radius: 0;
+    background: $paper-cream;
+    @include newspaper-border;
+    padding: 1.5rem;
+    position: relative;
+    &:hover {
+      box-shadow:
+        inset 0 0 0 1px $paper-cream,
+        inset 0 0 0 3px $soviet-red;
+      transform: translateY(-2px);
+    }
+
+    &:focus-visible {
+      outline: 3px solid $soviet-red;
+      outline-offset: 4px;
+    }
+
+    &.is-active {
+      box-shadow:
+        inset 0 0 0 1px $paper-cream,
+        inset 0 0 0 3px $soviet-red;
+    }
+  }
+
+  // Содержимое документации (Markdown)
+  .docs-body {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: $ink-dark;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+
+    .doc-dates {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem 0.6rem;
+      margin: 0 0 1.5rem;
+      padding: 0.35rem 0;
+      background: $paper-cream;
+      color: $ink-black;
+      font-family: $font-sans;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .doc-dates strong {
+      font-family: $font-display;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    > *:first-child {
+      margin-top: 0;
+    }
+
+    h2 {
+      font-family: $font-display;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $ink-black;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid lighten($border-dark, 30%);
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    h3 {
+      font-family: $font-sans;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: $ink-black;
+      margin: 2rem 0 0.75rem;
+    }
+
+    h4 {
+      font-family: $font-sans;
+      font-size: 1rem;
+      font-weight: 600;
+      color: $ink-black;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    a {
+      color: $soviet-red;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      overflow-wrap: anywhere;
+
+      &:hover {
+        border-bottom-color: $soviet-red;
+      }
+    }
+
+    strong {
+      font-weight: 600;
+      color: $ink-black;
+    }
+
+    // Код
+    code {
+      font-family: $font-mono;
+      font-size: 0.875em;
+      background: rgba($ink-black, 0.06);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      color: $soviet-red-dark;
+      overflow-wrap: anywhere;
+    }
+
+    pre {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1.25rem 1.5rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      font-family: $font-mono;
+
+      code {
+        background: none;
+        padding: 0;
+        color: inherit;
+        font-size: inherit;
+      }
+    }
+
+    // Списки
+    ul, ol {
+      margin: 0 0 1rem;
+      padding-left: 1.5rem;
+
+      li {
+        margin-bottom: 0.5rem;
+
+        &::marker {
+          color: $soviet-red;
+        }
+      }
+
+      ul, ol {
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+      }
+    }
+
+    // Таблицы
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+
+      @media (max-width: 1024px) {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      th, td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid lighten($border-dark, 30%);
+      }
+
+      th {
+        font-family: $font-sans;
+        font-weight: 600;
+        color: $ink-black;
+        background: rgba($ink-black, 0.02);
+      }
+
+      tr:hover td {
+        background: rgba($soviet-red, 0.02);
+      }
+    }
+
+    // Цитаты
+    blockquote {
+      margin: 1.5rem 0;
+      padding: 1rem 1.25rem;
+      border-left: 4px solid $soviet-red;
+      background: rgba($soviet-red, 0.03);
+      border-radius: 0 8px 8px 0;
+
+      p {
+        margin: 0;
+
+        &:not(:last-child) {
+          margin-bottom: 0.75rem;
+        }
+      }
+    }
+
+    // Блоки подсказки/предупреждения/опасности
+    .tip, .info, .warning, .danger {
+      margin: 1.5rem 0;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      border-left: 4px solid;
+
+      p:last-child {
+        margin-bottom: 0;
+      }
+
+      .title {
+        font-family: $font-sans;
+        font-weight: 600;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+    }
+
+    .tip {
+      background: rgba(#10b981, 0.08);
+      border-color: #10b981;
+      .title { color: #059669; }
+    }
+
+    .info {
+      background: rgba(#3b82f6, 0.08);
+      border-color: #3b82f6;
+      .title { color: #2563eb; }
+    }
+
+    .warning {
+      background: rgba(#f59e0b, 0.08);
+      border-color: #f59e0b;
+      .title { color: #d97706; }
+    }
+
+    .danger {
+      background: rgba($soviet-red, 0.08);
+      border-color: $soviet-red;
+      .title { color: $soviet-red; }
+    }
+
+    // Изображения
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+
+    iframe, video, embed {
+      max-width: 100%;
+    }
+
+    // Горизонтальная линия
+    hr {
+      border: none;
+      border-top: 1px solid lighten($border-dark, 30%);
+      margin: 2rem 0;
+    }
+  }
+}

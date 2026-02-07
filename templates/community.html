@@ -1,8 +1,10 @@
-{% extends "base.html" %} {% import "macros/community_sidebar.html" as sidebar
-%} {% block title %}{{ section.title }} - {{ config.extra.site_name }}{%
-endblock %} {% block body_class %}docs-page{% endblock %} {% block content %}
+{% extends "base.html" %}
+{% import "macros/sidebar.html" as sidebar %}
+{% block title %}{{ section.title }} - {{ config.extra.site_name }}{% endblock %}
+{% block body_class %}docs-page{% endblock %}
+{% block content %}
 <div class="docs-layout">
-    {{ sidebar::render(title=section.title) }}
+    {{ sidebar::render(title=section.title, section_path="community/_index.md", create_path="content/community/new-page.md", search_scope="/community/") }}
 
     <main class="docs-main">
         <div class="docs-content">
@@ -14,13 +16,11 @@ endblock %} {% block body_class %}docs-page{% endblock %} {% block content %}
             </header>
 
             <div class="docs-body">
-                {{ section.content | safe }} {% if section.pages %}
+                {{ section.content | safe }}
+                {% if section.pages %}
                 <div class="docs-cards">
                     {% for page in section.pages %}
-                    <a
-                        href="{{ page.permalink }}"
-                        class="docs-card newspaper-card"
-                    >
+                    <a href="{{ page.permalink }}" class="docs-card newspaper-card">
                         <h3>{{ page.title }}</h3>
                         {% if page.description %}
                         <p>{{ page.description }}</p>
