@@ -1,3 +1,4 @@
+{% import "macros/date.html" as date %}
 <!doctype html>
 <html lang="{{ lang | default(value='ru') }}">
     <head>
@@ -35,8 +36,6 @@
         class="{% block body_class %}{% endblock %}"
         data-base-url="{{ config.base_url }}"
     >
-        {% import "macros/date.html" as date %}
-
         <header class="newspaper-header">
             <div class="header-ornament top"></div>
 

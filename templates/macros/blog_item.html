@@ -7,14 +7,15 @@
     - index: индекс для анимации (опционально, по умолчанию 0)
 #}
 {% macro render(page, index=0) %}
-{% import "macros/date.html" as date %}
+{% set short_months = ["", "янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"] %}
+{% set month_index = page.date | date(format="%m") | int %}
 <article
     class="blog-item animate-slide-up"
     style="animation-delay: {{ index * 0.05 }}s"
 >
     <div class="blog-date">
         <span class="day">{{ page.date | date(format="%d") }}</span>
-        <span class="month">{{ date::format(date=page.date, format="short") }}</span>
+        <span class="month">{{ short_months[month_index] }}</span>
         <span class="year">{{ page.date | date(format="%Y") }}</span>
     </div>
     <div class="blog-content">
