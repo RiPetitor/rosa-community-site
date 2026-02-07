@@ -9,17 +9,7 @@
             content="{% block description %}{{ config.description }}{% endblock %}"
         />
 
-        {# Предварительные подключения к внешним ресурсам #}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-        {# Шрифты Google Fonts #}
-        <link
-            href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Old+Standard+TT:wght@400;700&family=PT+Sans+Narrow:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap"
-            rel="stylesheet"
-        />
-
-        {# Основной CSS #}
+        {# Основной CSS (шрифты подключаются через @font-face в SCSS) #}
         <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
         <link
             rel="icon"
@@ -45,20 +35,16 @@
         class="{% block body_class %}{% endblock %}"
         data-base-url="{{ config.base_url }}"
     >
+        {% import "macros/date.html" as date %}
+
         <header class="newspaper-header">
             <div class="header-ornament top"></div>
 
-            {% set today = now() %} {% set month_names = [ "", "января",
-            "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
-            "сентября", "октября", "ноября", "декабря" ] %} {% set month_index =
-            today | date(format="%m") | int %}
-
             <div class="header-meta">
                 <span class="date">
-                    {{ today | date(format="%d") }} {{ month_names[month_index]
-                    }} {{ today | date(format="%Y") }}
+                    {{ date::format(date=now()) }}
                 </span>
-                <span class="issue">{{ config.extra.issue_number }}</span>
+                <span class="issue">№ 1 ({{ now() | date(format="%Y") }})</span>
             </div>
 
             <div class="masthead">
@@ -113,203 +99,9 @@
             </div>
         </footer>
 
-        <div id="download-modal" class="modal" aria-hidden="true">
-            <div class="modal-overlay" tabindex="-1" data-close-modal>
-                <div
-                    class="modal-container"
-                    role="dialog"
-                    aria-modal="true"
-                    aria-labelledby="modal-title"
-                >
-                    <button
-                        class="modal-close"
-                        aria-label="Закрыть"
-                        data-close-modal
-                    >
-                        &times;
-                    </button>
+        {% block modals %}{% endblock %}
 
-                    <header class="modal-header">
-                        <div class="soviet-emblem">☭</div>
-                        <h2 id="modal-title">ВЫБОР РЕДАКЦИИ</h2>
-                        <p>Выберите подходящую версию операционной системы</p>
-                    </header>
-
-                    <div class="modal-body">
-                        <div class="download-options">
-                            <div class="download-card">
-                                <div class="card-badge">НОВЕЙШАЯ</div>
-                                <h3>{{ config.extra.downloads.fresh.name }}</h3>
-                                <p class="version">
-                                    Версия {{
-                                    config.extra.downloads.fresh.version }}
-                                </p>
-                                <p class="desc">
-                                    {{ config.extra.downloads.fresh.description
-                                    }}
-                                </p>
-                                <div class="de-options">
-                                    <a
-                                        href="{{ config.extra.downloads.fresh.plasma_url }}"
-                                        class="btn btn-primary"
-                                        >Plasma 6</a
-                                    >
-                                    <a
-                                        href="{{ config.extra.downloads.fresh.gnome_url }}"
-                                        class="btn btn-secondary"
-                                        >GNOME</a
-                                    >
-                                </div>
-                            </div>
-
-                            <div class="download-card">
-                                <div class="card-badge">СТАБИЛЬНАЯ</div>
-                                <h3>{{ config.extra.downloads.lts.name }}</h3>
-                                <p class="version">
-                                    Версия {{ config.extra.downloads.lts.version
-                                    }}
-                                </p>
-                                <p class="desc">
-                                    {{ config.extra.downloads.lts.description }}
-                                </p>
-                                <div class="de-options">
-                                    <a
-                                        href="{{ config.extra.downloads.lts.plasma_url }}"
-                                        class="btn btn-primary"
-                                        >Plasma 5</a
-                                    >
-                                    <a
-                                        href="{{ config.extra.downloads.lts.gnome_url }}"
-                                        class="btn btn-secondary"
-                                        >GNOME</a
-                                    >
-                                    <div class="de-options-alt">
-                                        <a
-                                            href="{{ config.extra.downloads.lts.xfce_url }}"
-                                            class="btn btn-outline btn-small"
-                                            >XFCE 64-bit</a
-                                        >
-                                        <a
-                                            href="{{ config.extra.downloads.lts.lxqt_url }}"
-                                            class="btn btn-outline btn-small"
-                                            >LXQt 64-bit</a
-                                        >
-                                        <a
-                                            href="{{ config.extra.downloads.lts.lxqt_32_url }}"
-                                            class="btn btn-outline btn-small"
-                                            >LXQt 32-bit</a
-                                        >
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="download-card">
-                                <div class="card-badge">СЕРВЕР</div>
-                                <h3>
-                                    {{ config.extra.downloads.server.name }}
-                                </h3>
-                                <p class="version">
-                                    Версия {{
-                                    config.extra.downloads.server.version }}
-                                </p>
-                                <p class="desc">
-                                    {{ config.extra.downloads.server.description
-                                    }}
-                                </p>
-                                <div class="de-options">
-                                    <a
-                                        href="{{ config.extra.downloads.server.url }}"
-                                        class="btn btn-primary"
-                                        >Server ISO</a
-                                    >
-                                    <a
-                                        href="{{ config.extra.downloads.server_lts.url }}"
-                                        class="btn btn-outline"
-                                        >Server {{
-                                        config.extra.downloads.server_lts.version
-                                        }}</a
-                                    >
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <footer class="modal-footer">
-                        <p>Минимальные требования: 2 ГБ ОЗУ, 20 ГБ на диске</p>
-                    </footer>
-                </div>
-            </div>
-        </div>
-
-        <!-- ABF Modal -->
-        <div id="abf-modal" class="modal" aria-hidden="true">
-            <div class="modal-overlay" tabindex="-1" data-close-modal>
-                <div
-                    class="modal-container"
-                    role="dialog"
-                    aria-modal="true"
-                    aria-labelledby="abf-modal-title"
-                >
-                    <button
-                        class="modal-close"
-                        aria-label="Закрыть"
-                        data-close-modal
-                    >
-                        &times;
-                    </button>
-
-                    <header class="modal-header">
-                        <div class="soviet-emblem">☭</div>
-                        <h2 id="abf-modal-title">СБОРКИ ABF</h2>
-                        <p>Экспериментальные образы с дополнительными DE</p>
-                    </header>
-
-                    <div class="modal-body">
-                        <div class="abf-platforms">
-                            <div class="abf-platform">
-                                <h3>ROSA 13 (Fresh)</h3>
-                                <p>
-                                    Plasma 6, Plasma 5, GNOME, Cinnamon, MATE,
-                                    XFCE, LXQt, Lumina, IceWM, TDE, Server
-                                </p>
-                                <p class="arch-info">x86_64, i686, aarch64</p>
-                                <a
-                                    href="{{ config.extra.abf.rosa13_products }}"
-                                    class="btn btn-primary"
-                                    target="_blank"
-                                >
-                                    Открыть каталог ROSA 13
-                                </a>
-                            </div>
-                            <div class="abf-platform">
-                                <h3>ROSA 12 (LTS)</h3>
-                                <p>
-                                    Plasma 5, GNOME, Cinnamon, MATE, XFCE, LXQt,
-                                    Lumina, IceWM, Server
-                                </p>
-                                <p class="arch-info">x86_64, i686, aarch64</p>
-                                <a
-                                    href="{{ config.extra.abf.rosa12_products }}"
-                                    class="btn btn-primary"
-                                    target="_blank"
-                                >
-                                    Открыть каталог ROSA 12
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <footer class="modal-footer">
-                        <p class="abf-warning">
-                            <strong>Внимание:</strong> Это тестовые сборки. Они
-                            могут быть нестабильны.
-                        </p>
-                    </footer>
-                </div>
-            </div>
-        </div>
-
-        <script src="{{ get_url(path='js/main.js') }}" defer></script>
+        <script src="{{ get_url(path='js/main.js') }}"></script>
         {% block extra_scripts %}{% endblock %}
     </body>
 </html>

@@ -1,0 +1,496 @@
+/**
+ * Документация: боковая панель навигации и поиск
+ */
+
+/// Мобильная панель и выдвижной сайдбар (в духе Docusaurus)
+.docs-mobile-bar {
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid $border-dark;
+  background: $paper-cream;
+  font-family: $font-sans;
+  z-index: 20;
+
+  .docs-mobile-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $ink-black;
+  }
+}
+
+.docs-sidebar-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 38px;
+  border: 2px solid $ink-black;
+  border-radius: 6px;
+  background: $paper-cream;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.05s, box-shadow 0.05s;
+  font-family: $font-sans;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: $ink-black;
+  box-shadow: 0 2px 0 $ink-black;
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 0 0 $ink-black;
+  }
+}
+
+body.docs-sidebar-open .docs-sidebar-toggle {
+  background: $paper-aged;
+  transform: translateY(2px);
+  box-shadow: 0 0 0 $ink-black;
+}
+
+.docs-sidebar-overlay {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  body.has-docs-js .docs-mobile-bar {
+    display: flex;
+  }
+
+  body.has-docs-js .docs-sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba($ink-black, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 35;
+  }
+
+  body.has-docs-js .docs-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(320px, 85vw);
+    height: 100vh;
+    border-right: 1px solid $border-dark;
+    border-bottom: none;
+    transform: translateX(-110%);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    z-index: 40;
+  }
+
+  body.has-docs-js.docs-sidebar-open {
+    overflow: hidden;
+  }
+
+  body.has-docs-js.docs-sidebar-open .docs-sidebar-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  body.has-docs-js.docs-sidebar-open .docs-sidebar {
+    transform: translateX(0);
+    box-shadow: 6px 0 24px rgba($ink-black, 0.2);
+  }
+}
+
+/// Боковая навигация (советский газетный стиль)
+.docs-sidebar {
+  background: $paper-cream;
+  border: 3px double $border-dark;
+  padding: 1.5rem;
+  position: sticky;
+  top: 1rem;
+  height: calc(100vh - 2rem);
+  overflow-y: auto;
+  margin: 1rem 0 1rem 1rem;
+  box-sizing: border-box;
+
+  // Заголовок сайдбара
+  .docs-sidebar-title {
+    font-family: $font-display;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $ink-black;
+    padding-bottom: 0.6rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid $ink-black;
+    position: relative;
+
+    &::before {
+      content: '☆';
+      margin-right: 0.5em;
+      font-size: 0.7rem;
+    }
+
+    &::after {
+      content: '☆';
+      margin-left: 0.5em;
+      font-size: 0.7rem;
+    }
+  }
+
+  .docs-search {
+    position: relative;
+    margin-bottom: 1.5rem;
+
+    input {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      padding-right: 2.5rem;
+      font-family: $font-sans;
+      font-size: 0.95rem;
+      border: 2px solid $border-dark;
+      border-radius: 0;
+      background: white;
+      transition: border-color 0.2s, box-shadow 0.2s;
+
+      &::placeholder {
+        color: $text-muted;
+        font-style: italic;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $soviet-red;
+        box-shadow: inset 0 0 0 1px $soviet-red;
+      }
+    }
+
+    kbd {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: $font-mono;
+      font-size: 0.65rem;
+      padding: 0.15rem 0.4rem;
+      background: $paper-aged;
+      border: 1px solid $border-dark;
+      border-radius: 0;
+      color: $text-muted;
+    }
+  }
+
+  &.search-active .docs-nav {
+    display: none;
+  }
+
+  .docs-search-results {
+    margin-bottom: 1.5rem;
+  }
+
+  .search-result-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .search-result-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px dotted $border-dark;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .search-result-title {
+    display: block;
+    font-family: $font-sans;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: $ink-black;
+    text-decoration: none;
+
+    &:hover {
+      color: $soviet-red;
+    }
+  }
+
+  .search-result-snippet {
+    margin: 0.35rem 0 0.4rem;
+    font-size: 0.85rem;
+    color: $text-muted;
+    line-height: 1.4;
+  }
+
+  .search-result-path {
+    display: block;
+    font-family: $font-sans;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $text-muted;
+  }
+
+  .docs-search-results mark {
+    background: rgba($soviet-red, 0.2);
+    color: $ink-black;
+    padding: 0 0.1em;
+  }
+
+  .search-status {
+    padding: 0.75rem;
+    border: 1px dashed $border-dark;
+    background: rgba($ink-black, 0.03);
+    text-align: center;
+    font-size: 0.85rem;
+    color: $text-muted;
+
+    &.is-error {
+      border-color: $soviet-red;
+      color: $soviet-red;
+      background: rgba($soviet-red, 0.08);
+    }
+  }
+
+  .search-empty {
+    padding: 0.75rem;
+    border: 1px dashed $border-dark;
+    background: rgba($ink-black, 0.03);
+    text-align: center;
+    font-size: 0.85rem;
+    color: $text-muted;
+  }
+
+  .docs-nav {
+    // Сворачиваемые группы навигации
+    .nav-group {
+      margin-bottom: 0.5rem;
+      border: none;
+
+      &::-webkit-details-marker,
+      & > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      &-title {
+        font-family: $font-sans;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: $ink-black;
+        margin: 0;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background 0.15s;
+        list-style: none;
+        user-select: none;
+
+        &:hover {
+          background: rgba($ink-black, 0.04);
+        }
+
+        &:focus {
+          outline: none;
+        }
+
+        &:focus-visible {
+          outline: 2px solid $soviet-red;
+          outline-offset: 2px;
+        }
+      }
+
+      &-icon {
+        font-size: 1rem;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+
+      &-text {
+        flex: 1;
+      }
+
+      &-chevron {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        position: relative;
+        opacity: 0.5;
+        transition: transform 0.2s ease, opacity 0.15s;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 6px;
+          height: 6px;
+          border-right: 2px solid currentColor;
+          border-bottom: 2px solid currentColor;
+          transform: translate(-50%, -70%) rotate(45deg);
+        }
+      }
+
+      &[open] {
+        margin-bottom: 1rem;
+
+        .nav-group-chevron {
+          transform: rotate(180deg);
+          opacity: 0.7;
+        }
+      }
+
+      &-items {
+        list-style: none;
+        padding: 0;
+        margin: 0.25rem 0 0 0;
+        overflow: hidden;
+      }
+
+      li {
+        margin: 0;
+      }
+
+      a {
+        display: block;
+        padding: 0.4rem 0.75rem;
+        font-family: $font-sans;
+        font-size: 0.95rem;
+        color: $ink-dark;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: all 0.15s;
+
+        &:hover {
+          color: $soviet-red;
+          background: rgba($soviet-red, 0.05);
+        }
+
+        &.active {
+          color: $soviet-red;
+          background: rgba($soviet-red, 0.1);
+          font-weight: 600;
+        }
+      }
+    }
+
+    // Вложенные подгруппы
+    .nav-subgroup {
+      margin-top: 0.25rem;
+      padding-left: 0;
+
+      > details {
+        border: none;
+
+        &::-webkit-details-marker,
+        & > summary::-webkit-details-marker {
+          display: none;
+        }
+      }
+
+      &-title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: $font-sans;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: $text-muted;
+        padding: 0.35rem 0.75rem;
+        cursor: pointer;
+        border-radius: 4px;
+        list-style: none;
+        user-select: none;
+        transition: background 0.15s, color 0.15s;
+
+        &:hover {
+          background: rgba($ink-black, 0.04);
+          color: $ink-black;
+        }
+
+        &:focus {
+          outline: none;
+        }
+
+        &:focus-visible {
+          outline: 2px solid $soviet-red;
+          outline-offset: 2px;
+        }
+
+        span:first-child {
+          flex: 1;
+        }
+
+        .nav-subgroup-chevron {
+          font-size: 0.7rem;
+          opacity: 0.6;
+
+          &::before {
+            content: '▸';
+          }
+        }
+      }
+
+      > details[open] .nav-subgroup-chevron::before {
+        content: '▾';
+      }
+
+      > details > ul {
+        padding-left: 0.75rem;
+        margin: 0.25rem 0 0.25rem 0.75rem;
+        list-style: none;
+
+        a {
+          font-size: 0.9rem;
+          padding: 0.3rem 0.75rem;
+        }
+      }
+    }
+  }
+
+  .docs-sidebar-header {
+    margin-bottom: 1rem;
+  }
+
+  .docs-create-btn {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    font-family: $font-sans;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $text-muted;
+    background: transparent;
+    border: 1px dashed $border-dark;
+    border-radius: 0;
+    transition: all 0.2s;
+
+    &:hover {
+      background: $soviet-red;
+      color: white;
+      border-color: $soviet-red;
+      border-style: solid;
+    }
+  }
+
+  // Разделитель после навигации
+  .docs-nav::after {
+    content: '— ★ —';
+    display: block;
+    text-align: center;
+    font-size: 0.8rem;
+    color: $text-muted;
+    margin-top: 1.5rem;
+    letter-spacing: 0.3em;
+  }
+}

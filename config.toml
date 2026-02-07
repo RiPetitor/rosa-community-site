@@ -44,15 +44,13 @@ smart_punctuation = true
 # Информация о сайте
 site_name = "ROSARIUM"
 site_subtitle = "газета советского программиста"
-issue_number = "№ 1 (2026)"
-
 # Репозиторий сайта (для кнопки "Внести правки")
 repo_url = "https://github.com/RiPetitor/rosa-community-site"
 repo_branch = "main"
 
 # Социальные сети
 telegram = "https://t.me/rosalinux"
-github = "https://github.com/AntProBaseworksworkworksG/rosalinux"
+github = "https://github.com/AntProBaseG/rosalinux"
 forum = "https://forum.rosa.ru"
 wiki = "https://wiki.rosa.ru"
 official_site = "https://rosa.ru"
@@ -86,7 +84,7 @@ url = "https://mirror.rosa.ru/rosa/rosa13/iso/ROSA.FRESH.13/server/ROSA.FRESH.SE
 name = "ROSA BFRESH (Community)"
 version = "Community"
 description = "Комьюнити-сборка на базе идей Barium и ROSA Fresh"
-url = "http://barium.rosa.ru/"
+url = "https://barium.rosa.ru/"
 
 [extra.downloads.server_lts]
 name = "ROSA Fresh Server LTS"

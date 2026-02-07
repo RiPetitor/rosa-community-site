@@ -1,6 +1,8 @@
-{% extends "base.html" %} {% block title %}{{ config.extra.site_name }} —
-Народная операционная система{% endblock %} {% block body_class %}home{%
-endblock %} {% block content %}
+{% extends "base.html" %}
+{% import "macros/date.html" as date %}
+{% block title %}{{ config.extra.site_name }} — Народная операционная система{% endblock %}
+{% block body_class %}home{% endblock %}
+{% block content %}
 <!-- Герой-секция -->
 <section class="hero-section animate-fade-in">
     <div class="hero-emblem">☭</div>
@@ -30,38 +32,24 @@ endblock %} {% block content %}
 
     <div class="column-layout two-column">
         <div class="main-column">
-            {% set blog_section = get_section(path="blog/_index.md",
-            metadata_only=false) %} {% set month_names = [ "", "января",
-            "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
-            "сентября", "октября", "ноября", "декабря" ] %} {% if
-            blog_section.pages %} {% set featured = blog_section.pages | first
-            %} {% set featured_month_index = featured.date | date(format="%m") |
-            int %}
+            {% set blog_section = get_section(path="blog/_index.md", metadata_only=false) %}
+            {% if blog_section.pages %}
+            {% set featured = blog_section.pages | first %}
             <article class="article featured">
                 <header class="article-header">
                     {% if featured.taxonomies.categories %}
-                    <span class="article-category"
-                        >{{ featured.taxonomies.categories | first }}</span
-                    >
+                    <span class="article-category">{{ featured.taxonomies.categories | first }}</span>
                     {% endif %}
                     <h2 class="article-title">
-                        <a href="{{ featured.permalink }}"
-                            >{{ featured.title }}</a
-                        >
+                        <a href="{{ featured.permalink }}">{{ featured.title }}</a>
                     </h2>
                     <div class="article-meta">
-                        <span class="date"
-                            >{{ featured.date | date(format="%d") }} {{
-                            month_names[featured_month_index] }} {{
-                            featured.date | date(format="%Y") }}</span
-                        >
+                        <span class="date">{{ date::format(date=featured.date) }}</span>
                     </div>
                 </header>
                 <div class="article-excerpt">{{ featured.summary | safe }}</div>
                 <footer class="article-footer">
-                    <a href="{{ featured.permalink }}" class="read-more"
-                        >Читать далее</a
-                    >
+                    <a href="{{ featured.permalink }}" class="read-more">Читать далее</a>
                 </footer>
             </article>
             {% else %}
@@ -86,38 +74,22 @@ endblock %} {% block content %}
                 <h3 class="sidebar-block-title">★ Быстрые ссылки</h3>
                 <ul>
                     <li>
-                        <a
-                            href="{{ get_url(path='@/docs/01-getting-started/03-installation.md') }}"
-                            >Руководство по установке</a
-                        >
+                        <a href="{{ get_url(path='@/docs/01-getting-started/03-installation.md') }}">Руководство по установке</a>
                     </li>
                     <li>
-                        <a
-                            href="{{ get_url(path='@/docs/01-getting-started/04-first-setup.md') }}"
-                            >Первые шаги</a
-                        >
+                        <a href="{{ get_url(path='@/docs/01-getting-started/04-first-setup.md') }}">Первые шаги</a>
                     </li>
                     <li>
-                        <a
-                            href="{{ get_url(path='@/docs/02-daily-use/02-install-packages.md') }}"
-                            >Установка программ</a
-                        >
+                        <a href="{{ get_url(path='@/docs/02-daily-use/02-install-packages.md') }}">Установка программ</a>
                     </li>
                     <li>
-                        <a
-                            href="{{ get_url(path='@/docs/02-daily-use/01-system-update.md') }}"
-                            >Обновление системы</a
-                        >
+                        <a href="{{ get_url(path='@/docs/02-daily-use/01-system-update.md') }}">Обновление системы</a>
                     </li>
                     <li>
-                        <a href="{{ config.extra.wiki }}" target="_blank"
-                            >Wiki-документация</a
-                        >
+                        <a href="{{ config.extra.wiki }}" target="_blank" rel="noopener">Wiki-документация</a>
                     </li>
                     <li>
-                        <a href="{{ config.extra.forum }}" target="_blank"
-                            >Форум поддержки</a
-                        >
+                        <a href="{{ config.extra.forum }}" target="_blank" rel="noopener">Форум поддержки</a>
                     </li>
                 </ul>
             </div>
@@ -126,25 +98,18 @@ endblock %} {% block content %}
                 <h3 class="sidebar-block-title">★ Текущие версии</h3>
                 <ul>
                     <li>
-                        <strong>РОСА Фреш:</strong> {{
-                        config.extra.downloads.fresh.version }}
+                        <strong>РОСА Фреш:</strong> {{ config.extra.downloads.fresh.version }}
                     </li>
                     <li>
-                        <strong>РОСА Фреш LTS:</strong> {{
-                        config.extra.downloads.lts.version }}
+                        <strong>РОСА Фреш LTS:</strong> {{ config.extra.downloads.lts.version }}
                     </li>
                     <li>
-                        <strong
-                            >{{ config.extra.downloads.server.name }}:</strong
-                        >
+                        <strong>{{ config.extra.downloads.server.name }}:</strong>
                         {{ config.extra.downloads.server.version }}
                     </li>
                 </ul>
                 <div class="text-center mt-2">
-                    <button
-                        class="btn btn-outline"
-                        data-open-modal="download-modal"
-                    >
+                    <button class="btn btn-outline" data-open-modal="download-modal">
                         Все загрузки
                     </button>
                 </div>
@@ -202,35 +167,24 @@ endblock %} {% block content %}
     </div>
 
     <div class="column-layout three-column">
-        {% set blog_section = get_section(path="blog/_index.md",
-        metadata_only=false) %} {% for post in blog_section.pages | slice(end=3)
-        %} {% set post_month_index = post.date | date(format="%m") | int %}
+        {% for post in blog_section.pages | slice(end=3) %}
         <article class="article">
             <header class="article-header">
                 {% if post.taxonomies.categories %}
-                <span class="article-category"
-                    >{{ post.taxonomies.categories | first }}</span
-                >
+                <span class="article-category">{{ post.taxonomies.categories | first }}</span>
                 {% endif %}
                 <h3 class="article-title">
                     <a href="{{ post.permalink }}">{{ post.title }}</a>
                 </h3>
                 <div class="article-meta">
-                    <span class="date"
-                        >{{ post.date | date(format="%d") }} {{
-                        month_names[post_month_index] }} {{ post.date |
-                        date(format="%Y") }}</span
-                    >
+                    <span class="date">{{ date::format(date=post.date) }}</span>
                 </div>
             </header>
             <p>
-                {{ post.description | default(value=post.summary | striptags |
-                truncate(length=150)) }}
+                {{ post.description | default(value=post.summary | striptags | truncate(length=150)) }}
             </p>
             <footer class="article-footer">
-                <a href="{{ post.permalink }}" class="read-more"
-                    >Читать далее</a
-                >
+                <a href="{{ post.permalink }}" class="read-more">Читать далее</a>
             </footer>
         </article>
         {% else %}
@@ -248,11 +202,7 @@ endblock %} {% block content %}
     </div>
 
     <div class="text-center mt-3">
-        <a
-            href="{{ get_url(path='@/blog/_index.md') }}"
-            class="btn btn-secondary"
-            >Все новости</a
-        >
+        <a href="{{ get_url(path='@/blog/_index.md') }}" class="btn btn-secondary">Все новости</a>
     </div>
 </section>
 
@@ -264,27 +214,19 @@ endblock %} {% block content %}
         сообщества свободного программного обеспечения.
     </p>
     <div class="hero-cta">
-        <a
-            href="{{ config.extra.telegram }}"
-            class="btn btn-primary"
-            target="_blank"
-        >
+        <a href="{{ config.extra.telegram }}" class="btn btn-primary" target="_blank" rel="noopener">
             Telegram
         </a>
-        <a
-            href="{{ config.extra.forum }}"
-            class="btn btn-secondary"
-            target="_blank"
-        >
+        <a href="{{ config.extra.forum }}" class="btn btn-secondary" target="_blank" rel="noopener">
             Форум
         </a>
-        <a
-            href="{{ config.extra.official_site }}"
-            class="btn btn-outline"
-            target="_blank"
-        >
+        <a href="{{ config.extra.official_site }}" class="btn btn-outline" target="_blank" rel="noopener">
             Официальный сайт
         </a>
     </div>
 </section>
+{% endblock %}
+
+{% block modals %}
+{% include "partials/download_modals.html" %}
 {% endblock %}
